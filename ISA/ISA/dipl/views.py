@@ -142,3 +142,49 @@ class ChangeUserPassword(APIView):
             content_type="application/json",
         )
         return response;
+
+class ScheduleFights(APIView):
+    def put(self, request, format=None, *args, **kwargs):
+        print("ScheduleFights")
+        red_corner_fighter_id = request.data["redCornerFighter"]
+        blue_corner_fighter_id = request.data["blueCornerFighter"]
+        red_corner_fighter = Fighter.objects.get(id = red_corner_fighter_id)
+        blue_corner_fighter = Fighter.objects.get(id = blue_corner_fighter_id)
+        red_corner_fighter.scheduledFight = True
+        red_corner_fighter.save()
+        blue_corner_fighter.scheduledFight = True
+        blue_corner_fighter.save()
+        response = Response(
+            # serializer_class.data,
+            "true",
+            content_type="application/json",
+        )
+        return response;
+
+class UnscheduledFighters(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        unscheduled_fighters = Fighter.objects.filter(scheduledFight = False)
+        serializer_class = FighterSerializer(unscheduled_fighters, many=True)
+        response = Response(
+            serializer_class.data,
+            content_type="application/json",
+        )
+        return response;
+
+class TestView(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        print("TEST VIEW")
+        fights = Fight.objects.all()
+        print(fights)
+        for fight in fights:
+            print(fight.method)
+            if(fight.redCornerFighter != None):
+                print(fight.redCornerFighter.name)
+            if(fight.blueCornerFighter != None):
+                print(fight.blueCornerFighter.name)
+        response = Response(
+            # serializer_class.data,
+            "TEST VIEW",
+            content_type="application/json",
+        )
+        return response;

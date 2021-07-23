@@ -7,14 +7,14 @@ class FighterSerializer(ModelSerializer):
 
     class Meta:
         model = Fighter
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'scheduledFight']
         #fields = '__all__';
 
 class FightSerializer(ModelSerializer):
 
     class Meta:
         model = Fight
-        fields = ['id', 'method']
+        fields = ['id', 'method', 'redCornerFighter', 'blueCornerFighter', 'date']
 
 class TournamentSerializer(ModelSerializer):
     class Meta:

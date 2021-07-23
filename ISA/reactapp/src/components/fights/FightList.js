@@ -11,7 +11,10 @@ function FightList(props) {
         <FightItem
           key={fight.id}
           id={fight.id}
+          redCornerFighter={fight.redCornerFighter}
+          blueCornerFighter={fight.blueCornerFighter}
           method={fight.method}
+          date={fight.date}
         />
       ))}
     </ul>

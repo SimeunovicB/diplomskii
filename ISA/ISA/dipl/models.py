@@ -5,9 +5,18 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Fighter(models.Model):
     name = models.CharField(max_length=255, null=True)
+    scheduledFight = models.BooleanField(default=False)
+
 
 class Fight(models.Model):
     method = models.CharField(max_length=255,null=True)
+    redCornerFighter = models.ForeignKey(Fighter, on_delete=models.CASCADE, null=True, blank=True,related_name='redCornerFighter',  # Here
+    db_column='redCornerFighter')
+    blueCornerFighter = models.ForeignKey(Fighter, on_delete=models.CASCADE, null=True, blank=True,related_name='blueCornerFighter',  # Here
+    db_column='blueCornerFighter')
+    date = models.CharField(max_length=255, null=True)
+    # redCornerFighter = models.OneToOneField(Fighter, on_delete=models.CASCADE, null=True, blank=True)
+    # blueCornerFighter = models.OneToOneField(Fighter, on_delete=models.CASCADE, null=True, blank=True)
 
 class Tournament(models.Model):
     name = models.CharField(max_length=255,null=True)
