@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import PrimaryKeyRelatedField
 
-from .models import Fighter, User, Tournament
+from .models import Fighter, Fight, User, Tournament
 
 class FighterSerializer(ModelSerializer):
 
@@ -9,6 +9,12 @@ class FighterSerializer(ModelSerializer):
         model = Fighter
         fields = ['id', 'name']
         #fields = '__all__';
+
+class FightSerializer(ModelSerializer):
+
+    class Meta:
+        model = Fight
+        fields = ['id', 'method']
 
 class TournamentSerializer(ModelSerializer):
     class Meta:

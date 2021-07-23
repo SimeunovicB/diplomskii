@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Fighter , User, Tournament
-from .serializers import FighterSerializer, TournamentSerializer
+from .models import Fighter , User, Tournament, Fight
+from .serializers import FighterSerializer, TournamentSerializer, FightSerializer
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -101,6 +101,14 @@ class FighterViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = Fighter.objects.all()
     serializer_class = FighterSerializer
+
+class FightViewSet(viewsets.ModelViewSet):
+    # authentication_classes = (BasicAuthentication,)
+    # permission_classes = (HasPermission,)
+    # authentication_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
+    queryset = Fight.objects.all()
+    serializer_class = FightSerializer
 
 class TournamentViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)

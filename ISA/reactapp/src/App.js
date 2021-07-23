@@ -36,6 +36,8 @@ import Register from "./components/pages/Register";
 import NewTournament from "./components/pages/NewTournament";
 import AllTournaments from "./components/pages/AllTournaments";
 import MyProfile from "./components/pages/MyProfile";
+import AllFights from "./components/pages/AllFights";
+import NewFight from "./components/pages/NewFight";
 
 function App() {
 
@@ -76,6 +78,12 @@ function App() {
           </Route>
           <Route path="/new-fighter">
             <NewFighter/>
+          </Route>
+          <Route path="/all-fights">
+            <AllFights/>
+          </Route>
+          <Route path="/new-fight">
+            <NewFight/>
           </Route>
           <Route path="/login">
             <Login name={name} setName={setName}/>

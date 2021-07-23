@@ -6,6 +6,9 @@ from django.contrib.auth.models import AbstractUser
 class Fighter(models.Model):
     name = models.CharField(max_length=255, null=True)
 
+class Fight(models.Model):
+    method = models.CharField(max_length=255,null=True)
+
 class Tournament(models.Model):
     name = models.CharField(max_length=255,null=True)
 
