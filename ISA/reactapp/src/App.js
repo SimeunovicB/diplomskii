@@ -33,8 +33,8 @@ import AllFighters from "./components/pages/AllFighters";
 import NewFighter from "./components/pages/NewFighter";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
-import NewTournament from "./components/pages/NewTournament";
-import AllTournaments from "./components/pages/AllTournaments";
+import NewEvent from "./components/pages/NewEvent";
+import AllEvents from "./components/pages/AllEvents";
 import MyProfile from "./components/pages/MyProfile";
 import AllFights from "./components/pages/AllFights";
 import NewFight from "./components/pages/NewFight";
@@ -94,11 +94,11 @@ function App() {
           <Route path="/my-profile">
             <MyProfile user={user} changeUser={updateUserStateHandler}/>
           </Route>
-          <Route path="/new-tournament">
-            <NewTournament/>
+          <Route path="/new-event">
+            <NewEvent/>
           </Route>
-          <Route path="/all-tournaments">
-            <AllTournaments/>
+          <Route path="/all-events">
+            <AllEvents/>
           </Route>
         </Switch>
       </Layout>

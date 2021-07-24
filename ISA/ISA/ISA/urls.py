@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from task.views import TaskViewSet
-from dipl.views import FighterViewSet, UserViewSet, TournamentViewSet, FightViewSet
+from dipl.views import FighterViewSet, UserViewSet, EventViewSet, FightViewSet
 from rest_framework import routers
 # from rest_framework_simplejwt.views import (
 #     TokenObtainPairView,
@@ -28,7 +28,7 @@ router = routers.DefaultRouter()
 router.register(r'tasks',TaskViewSet)
 router.register(r'fighters',FighterViewSet)
 router.register(r'users',UserViewSet)
-router.register(r'tournaments', TournamentViewSet)
+router.register(r'events', EventViewSet)
 router.register(r'fights', FightViewSet)
 
 urlpatterns = [

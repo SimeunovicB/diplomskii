@@ -1,7 +1,7 @@
-import classes from "./TournamentItem.module.css";
+import classes from "./EventItem.module.css";
 import Card from "../ui/Card";
 
-function TournamentItem(props) {
+function EventItem(props) {
   
   return (
     <li className={classes.item}>
@@ -14,4 +14,4 @@ function TournamentItem(props) {
   );
 }
 
-export default TournamentItem;
+export default EventItem;

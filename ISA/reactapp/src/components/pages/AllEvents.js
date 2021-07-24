@@ -1,33 +1,33 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import TournamentList from "../tournaments/TournamentList";
+import EventList from "../events/EventList";
 
-function AllTournamentsPage() {
+function AllEvents() {
   const [isLoading, setIsLoading] = useState(false);
-  const [loadedTournaments, setLoadedTournaments] = useState([]);
+  const [loadedEvents, setLoadedEvents] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
 
     axios({
       method: "get",
-      url: "tournaments/",
+      url: "events/",
     }).then((response) => {
-      let tournaments = response.data;
+      let events = response.data;
       let ret = [];
-      console.log("Tournaments", tournaments)
-      for(let i in tournaments) {
+      console.log("Events", events)
+      for(let i in events) {
         // console.log(fighters[i]);
-        ret.push(tournaments[i]);
+        ret.push(events[i]);
       }
       console.log("RET", ret);
-      if(tournaments === ret) {
+      if(events === ret) {
         console.log("ISTO");
       } else {
         console.log("NIJE ISTO")
       }
       setIsLoading(false);
-      setLoadedTournaments(ret);
+      setLoadedEvents(ret);
       // console.log("LOADED",loadedFighters);
     });
   }, []); //ako se drugom argumentu promeni stanje onda se opet pozove funkcija
@@ -42,10 +42,10 @@ function AllTournamentsPage() {
 
   return (
     <div>
-      <h1>All tournaments</h1>
-      <TournamentList tournaments={loadedTournaments} />
+      <h1>All events</h1>
+      <EventList events={loadedEvents} />
     </div>
   );
 }
 
-export default AllTournamentsPage;
+export default AllEvents;

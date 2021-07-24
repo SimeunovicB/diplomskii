@@ -1,8 +1,8 @@
 import Card from "../ui/Card";
-import classes from './NewTournamentForm.module.css'
+import classes from './NewEventForm.module.css'
 import {useRef} from 'react';
 
-function NewTournamentForm(props) {
+function NewEventForm(props) {
 
     const nameInputRef = useRef();
 
@@ -10,23 +10,23 @@ function NewTournamentForm(props) {
         event.preventDefault();
         const enteredName = nameInputRef.current.value;
 
-        const tournamentData = {
+        const eventData = {
             name: enteredName,
         };
 
-        console.log(tournamentData);
-        props.onAddTournament(tournamentData);
+        console.log(eventData);
+        props.onAddEvent(eventData);
     }
     return <Card>
         <form className={classes.form} onSubmit={submitHandler}>
             <div className={classes.control}>
-                <label htmlFor="name">Tournament Name</label>
+                <label htmlFor="name">Event Name</label>
                 <input type="text" required id="title" ref={nameInputRef}/>
             </div>
             <div className={classes.actions}>
-                <button>Add Tournament</button>
+                <button>Add Event</button>
             </div>
         </form>
     </Card>
 }
-export default NewTournamentForm;
+export default NewEventForm;

@@ -13,6 +13,7 @@ function NewFight() {
         redCornerFighter: fightData.redCornerFighter,
         blueCornerFighter: fightData.blueCornerFighter,
         date: fightData.date,
+        redCornerOdds: fightData.redCornerOdds
       }
     }).then((response) => {
       console.log("RESPONSE")

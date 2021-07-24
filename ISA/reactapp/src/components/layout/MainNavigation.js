@@ -60,10 +60,10 @@ function MainNavigation(props) {
             <Link to="/new-fight">Add new fight</Link>
           </li>
           <li>
-            <Link to="/new-tournament">Add new tournament</Link>
+            <Link to="/new-event">Add new event</Link>
           </li>
           <li>
-            <Link to="/all-tournaments">All tournaments</Link>
+            <Link to="/all-events">All events</Link>
           </li>
           {logout}
         </ul>

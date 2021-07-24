@@ -6,11 +6,31 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function NewFightForm(props) {
+
   const dateInputRef = useRef();
+  const redOddsInputRef = useRef();
+  const blueOddsInputRef = useRef();
 
   const [loadedFighters, setLoadedFighters] = useState([]);
   const [selectedOptionRed, setSelectedOptionRed] = useState(null);
   const [selectedOptionBlue, setSelectedOptionBlue] = useState(null);
+
+  function redOddsBlur() {
+    console.log("ide gas")
+    console.log(redOddsInputRef.current.value);
+    if(redOddsInputRef.current.value > 100) {
+      redOddsInputRef.current.value = 100;
+    }
+    blueOddsInputRef.current.value = 100 - redOddsInputRef.current.value;
+  }
+
+  function blueOddsBlur() {
+    if(blueOddsInputRef.current.value > 100) {
+      blueOddsInputRef.current.value = 100;
+    }
+    redOddsInputRef.current.value = 100 - blueOddsInputRef.current.value;
+  }
+  
 
   useEffect(() => {
     axios({
@@ -31,13 +51,14 @@ function NewFightForm(props) {
   function submitHandler(event) {
     event.preventDefault();
     const enteredDate = dateInputRef.current.value;
-
+    const enteredOdds = redOddsInputRef.current.value;
 
 
     const fightData = {
       redCornerFighter: selectedOptionRed.value,
       blueCornerFighter: selectedOptionBlue.value,
-      date: enteredDate
+      date: enteredDate,
+      redCornerOdds: enteredOdds
     };
 
     console.log(fightData);
@@ -63,6 +84,14 @@ function NewFightForm(props) {
             onChange={setSelectedOptionBlue}
             options={loadedFighters}
           />
+        </div>
+        <div className={classes.control}>
+          <label htmlFor="redOdds">Red corner fighter odds(%)</label>
+          <input type="number" required id="redOdds" max="100" ref={redOddsInputRef} onBlur={redOddsBlur}/>
+        </div>
+        <div className={classes.control}>
+          <label htmlFor="blueOdds">Blue corner fighter odds(%)</label>
+          <input type="number" required id="blueOdds" max="100" ref={blueOddsInputRef} onBlur={blueOddsBlur}/>
         </div>
         <div className={classes.control}>
           <label htmlFor="date">Fight Date</label>
