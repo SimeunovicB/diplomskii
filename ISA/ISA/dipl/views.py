@@ -98,6 +98,7 @@ class FighterViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BasicAuthentication,)
     # permission_classes = (HasPermission,)
     # authentication_classes = (IsAuthenticated,)
+    print("DLKSAJ")
     permission_classes = (AllowAny,)
     queryset = Fighter.objects.all()
     serializer_class = FighterSerializer
@@ -174,14 +175,8 @@ class UnscheduledFighters(APIView):
 class TestView(APIView):
     def get(self, request, format=None, *args, **kwargs):
         print("TEST VIEW")
-        fights = Fight.objects.all()
-        print(fights)
-        for fight in fights:
-            print(fight.method)
-            if(fight.redCornerFighter != None):
-                print(fight.redCornerFighter.name)
-            if(fight.blueCornerFighter != None):
-                print(fight.blueCornerFighter.name)
+        fighters = Fighter.objects.all()
+        print(fighters)
         response = Response(
             # serializer_class.data,
             "TEST VIEW",

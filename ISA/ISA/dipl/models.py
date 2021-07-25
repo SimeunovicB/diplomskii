@@ -5,7 +5,14 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Fighter(models.Model):
     name = models.CharField(max_length=255, null=True)
-    scheduledFight = models.BooleanField(default=False)
+    surname = models.CharField(max_length=255, null=True)
+    wins = models.IntegerField(null=True)
+    losses = models.IntegerField(null=True)
+    age = models.IntegerField(null=True)
+    height = models.IntegerField(null=True)
+    weight = models.IntegerField(null=True)
+    reach = models.IntegerField(null=True)
+    scheduledFight = models.BooleanField(null=True, default=False)
 
 
 class Fight(models.Model):

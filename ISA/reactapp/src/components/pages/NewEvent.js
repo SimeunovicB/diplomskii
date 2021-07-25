@@ -9,7 +9,9 @@ function NewEvent() {
       method: "post",
       url: "events/",
       data: {
-        name: eventData.name
+        name: eventData.name,
+        date: eventData.date,
+        finishTime: eventData.finishTime
       }
     }).then((response) => {
       console.log("namee", eventData.name);

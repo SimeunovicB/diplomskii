@@ -7,7 +7,6 @@ import axios from "axios";
 
 function NewFightForm(props) {
 
-  const dateInputRef = useRef();
   const redOddsInputRef = useRef();
   const blueOddsInputRef = useRef();
 
@@ -50,14 +49,12 @@ function NewFightForm(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-    const enteredDate = dateInputRef.current.value;
     const enteredOdds = redOddsInputRef.current.value;
 
 
     const fightData = {
       redCornerFighter: selectedOptionRed.value,
       blueCornerFighter: selectedOptionBlue.value,
-      date: enteredDate,
       redCornerOdds: enteredOdds
     };
 
@@ -92,10 +89,6 @@ function NewFightForm(props) {
         <div className={classes.control}>
           <label htmlFor="blueOdds">Blue corner fighter odds(%)</label>
           <input type="number" required id="blueOdds" max="100" ref={blueOddsInputRef} onBlur={blueOddsBlur}/>
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="date">Fight Date</label>
-          <input type="date" required id="date" ref={dateInputRef} />
         </div>
         <div className={classes.actions}>
           <button>Add Fight</button>
