@@ -6,9 +6,10 @@ function NewFighter() {
   const history = useHistory();
   function addFighterHandler(fighterData) {
     console.log("ispis unosa", fighterData);
+    console.log("ispis image", fighterData.image);
     axios({
       method: "post",
-      url: "fighters/",
+      url: "api/fighter",
       data: {
         name: fighterData.name,
         surname: fighterData.surname,
@@ -17,14 +18,15 @@ function NewFighter() {
         age: fighterData.age,
         height: fighterData.height,
         weight: fighterData.weight,
-        reach: fighterData.reach
+        reach: fighterData.reach,
+        image: fighterData.image
         // scheduledFight: fighterData.scheduledFight
       }
     }).then((response) => {
       console.log("namee", fighterData.name);
       console.log(response);
       console.log(response.data)
-      history.replace('/all-fighters');
+      // history.replace('/all-fighters');
     })
     .catch(error => {
       console.log(error);

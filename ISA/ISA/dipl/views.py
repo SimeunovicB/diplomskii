@@ -98,10 +98,10 @@ class FighterViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BasicAuthentication,)
     # permission_classes = (HasPermission,)
     # authentication_classes = (IsAuthenticated,)
-    print("DLKSAJ")
     permission_classes = (AllowAny,)
     queryset = Fighter.objects.all()
     serializer_class = FighterSerializer
+
 
 class FightViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BasicAuthentication,)
@@ -166,6 +166,44 @@ class UnscheduledFighters(APIView):
     def get(self, request, format=None, *args, **kwargs):
         unscheduled_fighters = Fighter.objects.filter(scheduledFight = False)
         serializer_class = FighterSerializer(unscheduled_fighters, many=True)
+        response = Response(
+            serializer_class.data,
+            content_type="application/json",
+        )
+        return response;
+
+
+class CreateFighter(APIView):
+    queryset = Fighter.objects.all();
+
+    def post(self, request, format=None, *args, **kwargs):
+        print("CreateFighter")
+        name = request.data['name'];
+        surname = request.data['surname'];
+        wins = request.data['wins'];
+        losses = request.data['losses'];
+        age = request.data['age'];
+        height = request.data['height'];
+        weight = request.data['weight'];
+        reach = request.data['reach'];
+        # image = request.data['image']
+        Fighter.objects.create(name=name,surname=surname,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
+        # print(image);
+        # serializer_class = FighterSerializer(queryset,many=True);
+        response = Response(
+            {
+                "message": "Fighter created"
+            },
+            content_type="application/json",
+        )
+        return response;
+
+class GetFighters(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        print("GetFighters")
+        fighters = Fighter.objects.all()
+        print(fighters)
+        serializer_class = FighterSerializer(fighters, many=True)
         response = Response(
             serializer_class.data,
             content_type="application/json",

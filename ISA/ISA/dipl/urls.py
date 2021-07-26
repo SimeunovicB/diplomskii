@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import RegisterView , LoginView, UserView, LogoutView, ChangeUserPassword, TestView, ScheduleFights, UnscheduledFighters
-
+from .views import CreateFighter, GetFighters
 urlpatterns = [
     path('register', RegisterView.as_view()),
     path('login', LoginView.as_view()),
@@ -11,4 +11,6 @@ urlpatterns = [
     path('test', TestView.as_view()),
     path('fighter/schedule', ScheduleFights.as_view()),
     path('unscheduled/fighters', UnscheduledFighters.as_view()),
+    path('fighter', CreateFighter.as_view()),
+    path('fighters', GetFighters.as_view()),
 ]
