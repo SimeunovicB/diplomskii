@@ -8,7 +8,7 @@ class FighterSerializer(ModelSerializer):
     class Meta:
         model = Fighter
         # fields = ['id', 'name', 'surname', 'wins', 'losses', 'age', 'height', 'weight' 'reach', 'scheduledFight']
-        fields = ['id', 'name', 'surname', 'wins', 'losses', 'age', 'height', 'weight', 'reach', 'scheduledFight']
+        fields = ['id', 'name', 'surname','image', 'wins', 'losses', 'age', 'height', 'weight', 'reach', 'scheduledFight']
         #fields = '__all__';
 
 class FightSerializer(ModelSerializer):

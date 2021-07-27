@@ -186,8 +186,8 @@ class CreateFighter(APIView):
         height = request.data['height'];
         weight = request.data['weight'];
         reach = request.data['reach'];
-        # image = request.data['image']
-        Fighter.objects.create(name=name,surname=surname,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
+        image = request.data['image']
+        Fighter.objects.create(name=name,surname=surname,image=image,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
         # print(image);
         # serializer_class = FighterSerializer(queryset,many=True);
         response = Response(

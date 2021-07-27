@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class Fighter(models.Model):
     name = models.CharField(max_length=255, null=True)
     surname = models.CharField(max_length=255, null=True)
-    # image = models.ImageField(null=True, blank=True, upload_to="images/")
+    image = models.ImageField(null=True, blank=True, upload_to="images/")
     wins = models.IntegerField(null=True)
     losses = models.IntegerField(null=True)
     age = models.IntegerField(null=True)
