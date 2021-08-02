@@ -1,14 +1,19 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import PrimaryKeyRelatedField
 
+from rest_framework import serializers
 from .models import Fighter, Fight, User, Event
 
 class FighterSerializer(ModelSerializer):
 
+    # image = serializers.ImageField(max_length=None,use_url=True)
+    image = serializers.ImageField(max_length=None,use_url=True)
+
+
     class Meta:
         model = Fighter
         # fields = ['id', 'name', 'surname', 'wins', 'losses', 'age', 'height', 'weight' 'reach', 'scheduledFight']
-        fields = ['id', 'name', 'surname','image', 'wins', 'losses', 'age', 'height', 'weight', 'reach', 'scheduledFight']
+        fields = ['id', 'name', 'surname', 'image', 'wins', 'losses', 'age', 'height', 'weight', 'reach', 'scheduledFight']
         #fields = '__all__';
 
 class FightSerializer(ModelSerializer):

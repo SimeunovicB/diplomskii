@@ -102,6 +102,31 @@ class FighterViewSet(viewsets.ModelViewSet):
     queryset = Fighter.objects.all()
     serializer_class = FighterSerializer
 
+    def post(self, request, *args, **kwargs):
+        print("ide gas post")
+
+    # def create(self, request):
+    #     print("CreateFighter")
+    #     name = request.data['name'];
+    #     surname = request.data['surname'];
+    #     wins = request.data['wins'];
+    #     losses = request.data['losses'];
+    #     age = request.data['age'];
+    #     height = request.data['height'];
+    #     weight = request.data['weight'];
+    #     reach = request.data['reach'];
+    #     image = request.data['image']
+    #     Fighter.objects.create(name=name,surname=surname,image=image,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
+    #     print("image", image);
+    #     # serializer_class = FighterSerializer(queryset,many=True);
+    #     response = Response(
+    #         {
+    #             "message": "Fighter created"
+    #         },
+    #         content_type="application/json",
+    #     )
+    #     return response;
+
 
 class FightViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BasicAuthentication,)
@@ -110,6 +135,8 @@ class FightViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = Fight.objects.all()
     serializer_class = FightSerializer
+
+
 
 class EventViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
@@ -174,10 +201,12 @@ class UnscheduledFighters(APIView):
 
 
 class CreateFighter(APIView):
-    queryset = Fighter.objects.all();
+    queryset = Fighter.objects.all()
+    serializer_class = FighterSerializer
 
     def post(self, request, format=None, *args, **kwargs):
         print("CreateFighter")
+        print(request)
         name = request.data['name'];
         surname = request.data['surname'];
         wins = request.data['wins'];
@@ -187,9 +216,21 @@ class CreateFighter(APIView):
         weight = request.data['weight'];
         reach = request.data['reach'];
         image = request.data['image']
+        print("name", name);
+        print("surname", surname);
+        print("wins", wins);
+        print("losses", losses);
+        print("age", age);
+        print("height", height);
+        print("weight", weight);
+        print("reach", reach);
+        print("image", image);
         Fighter.objects.create(name=name,surname=surname,image=image,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
-        # print(image);
+
+        # Fighter.objects.create(name=name,surname=surname,image=image,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
+        # print("image", image);
         # serializer_class = FighterSerializer(queryset,many=True);
+
         response = Response(
             {
                 "message": "Fighter created"

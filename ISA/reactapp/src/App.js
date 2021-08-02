@@ -38,6 +38,7 @@ import AllEvents from "./components/pages/AllEvents";
 import MyProfile from "./components/pages/MyProfile";
 import AllFights from "./components/pages/AllFights";
 import NewFight from "./components/pages/NewFight";
+import Prezime from "./components/pages/Prezime";
 
 function App() {
 
@@ -72,6 +73,9 @@ function App() {
         <Switch>
           <Route path="/" exact>
             <Home name={name}/>
+          </Route>
+          <Route path="/prezime" exact>
+            <Prezime/>
           </Route>
           <Route path="/all-fighters">
             <AllFighters/>

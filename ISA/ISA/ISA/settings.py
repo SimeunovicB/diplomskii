@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+# import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print("BASE_DIR", BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'r8a50#337lp+s5vmp=vvk5#(8vm-=h__2ymidfz25%@&z0^5#9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
+THUMBNAIL_DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
@@ -78,6 +79,7 @@ INSTALLED_APPS = [
     'task',
     'dipl',
     'rest_framework.authtoken',
+    'easy_thumbnails',
 ]
 
 MIDDLEWARE = [
@@ -196,9 +198,29 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# MEDIA_ROOT = BASE_DIR / 'media'
 
+import os
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
+
+# MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+
+# print("MEDIA_ROOT", MEDIA_ROOT)
+
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
+
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
+print("STATICFILES_DIRS", STATICFILES_DIRS)
 AUTH_USER_MODEL = 'dipl.User' #sa yt tutoriala Scalable Scripts, ne koristimo vise djangov User model
+
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (50, 50), 'crop': True},
+    },
+}

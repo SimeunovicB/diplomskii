@@ -33,18 +33,18 @@ function NewFighterForm(props) {
     const enteredWeight = weightInputRef.current.value;
     const enteredReach = reachInputRef.current.value;
 
-    const fighterData = {
-      name: enteredName,
-      surname: enteredSurname,
-      image: (image,image.name),
-      wins: enteredWins,
-      losses: enteredLosses,
-      age: enteredAge,
-      height: enteredHeight,
-      weight: enteredWeight,
-      reach: enteredReach,
-      // image: image,
-    };
+    // const fighterData = {
+    //   name: enteredName,
+    //   surname: enteredSurname,
+    //   // image: (image,image.name),
+    //   wins: enteredWins,
+    //   losses: enteredLosses,
+    //   age: enteredAge,
+    //   height: enteredHeight,
+    //   weight: enteredWeight,
+    //   reach: enteredReach,
+    //   image: image,
+    // };
 
     // const fighterData = new FormData();
 
@@ -55,24 +55,50 @@ function NewFighterForm(props) {
     //   'image': (image,image.name)
     // }
 
-    console.log("fighterData", fighterData);
+    // console.log("fighterData", fighterData);
     // console.log("image",image);
 
-    props.onAddFighter(fighterData);
+    // props.onAddFighter(fighterData);
+
+    console.log("jel radi ")
+    const uploadData = new FormData();
+    uploadData.append('name', enteredName);
+    uploadData.append('surname', enteredSurname);
+    uploadData.append('image', image);
+    uploadData.append('wins', enteredWins);
+    uploadData.append('losses', enteredLosses);
+    uploadData.append('age', enteredAge);
+    uploadData.append('height', enteredHeight);
+    uploadData.append('weight', enteredWeight);
+    uploadData.append('reach', enteredReach);
+    for (var key of uploadData.entries()) {
+      console.log(key[0] + ', ' + key[1]);
+  }
+    
+    props.onAddFighter(uploadData);
+
   }
 
   const provera = () => {
-    console.log("provera");
+    console.log("proveraa");
     console.log(image);
+    console.log(nameInputRef.current.value);
+    const uploadData = new FormData();
+    uploadData.append('image', image);
+    uploadData.append('name', nameInputRef.current.value);
+    console.log(uploadData);
+    for (var key of uploadData.entries()) {
+      console.log(key[0] + ', ' + key[1]);
+  }
   };
 
   return (
     <Card>
-      <form
+      {/* <form
         className={classes.form}
         onSubmit={submitHandler}
         encType="multipart/form-data"
-      >
+      > */}
         <div className={classes.control}>
           <label htmlFor="name">Fighter Name</label>
           <input type="text" required id="title" ref={nameInputRef} />
@@ -114,7 +140,7 @@ function NewFighterForm(props) {
           <input type="number" required id="reach" ref={reachInputRef} />
         </div>
         <div className={classes.actions}>
-          <button>Add Fighter</button>
+          <button onClick={submitHandler}>Add Fighter</button>
         </div>
         {/* <div>
                 <ImageUpload onAddImage={addImageHandler}/>
@@ -122,7 +148,7 @@ function NewFighterForm(props) {
             <div>
             <img src='/media/20150114_083215.jpg' alt="myprofilepic"/>
             </div>
-      </form>
+      {/* </form> */}
       <div>
         <button onClick={provera}>Provera image</button>
       </div>

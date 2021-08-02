@@ -12,6 +12,7 @@ function FighterList(props) {
           key={fighter.id}
           id={fighter.id}
           name={fighter.name}
+          image={fighter.image}
         />
       ))}
     </ul>
