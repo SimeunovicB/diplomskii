@@ -33,9 +33,12 @@ import AllFighters from "./components/pages/AllFighters";
 import NewFighter from "./components/pages/NewFighter";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
-import NewTournament from "./components/pages/NewTournament";
-import AllTournaments from "./components/pages/AllTournaments";
+import NewEvent from "./components/pages/NewEvent";
+import AllEvents from "./components/pages/AllEvents";
 import MyProfile from "./components/pages/MyProfile";
+import AllFights from "./components/pages/AllFights";
+import NewFight from "./components/pages/NewFight";
+import Prezime from "./components/pages/Prezime";
 
 function App() {
 
@@ -71,11 +74,20 @@ function App() {
           <Route path="/" exact>
             <Home name={name}/>
           </Route>
+          <Route path="/prezime" exact>
+            <Prezime/>
+          </Route>
           <Route path="/all-fighters">
             <AllFighters/>
           </Route>
           <Route path="/new-fighter">
             <NewFighter/>
+          </Route>
+          <Route path="/all-fights">
+            <AllFights/>
+          </Route>
+          <Route path="/new-fight">
+            <NewFight/>
           </Route>
           <Route path="/login">
             <Login name={name} setName={setName}/>
@@ -86,11 +98,11 @@ function App() {
           <Route path="/my-profile">
             <MyProfile user={user} changeUser={updateUserStateHandler}/>
           </Route>
-          <Route path="/new-tournament">
-            <NewTournament/>
+          <Route path="/new-event">
+            <NewEvent/>
           </Route>
-          <Route path="/all-tournaments">
-            <AllTournaments/>
+          <Route path="/all-events">
+            <AllEvents/>
           </Route>
         </Switch>
       </Layout>

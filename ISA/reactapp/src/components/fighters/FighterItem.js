@@ -8,6 +8,7 @@ function FighterItem(props) {
       <Card>
         <div className={classes.content}>
           <h3>{props.name}</h3>
+          <img src={props.image} alt="slika borca" height="200" width="200"></img>
         </div>
       </Card>
     </li>

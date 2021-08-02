@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Fighter , User, Tournament
-from .serializers import FighterSerializer, TournamentSerializer
+from .models import Fighter , User, Event, Fight
+from .serializers import FighterSerializer, EventSerializer, FightSerializer
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -102,10 +102,46 @@ class FighterViewSet(viewsets.ModelViewSet):
     queryset = Fighter.objects.all()
     serializer_class = FighterSerializer
 
-class TournamentViewSet(viewsets.ModelViewSet):
+    def post(self, request, *args, **kwargs):
+        print("ide gas post")
+
+    # def create(self, request):
+    #     print("CreateFighter")
+    #     name = request.data['name'];
+    #     surname = request.data['surname'];
+    #     wins = request.data['wins'];
+    #     losses = request.data['losses'];
+    #     age = request.data['age'];
+    #     height = request.data['height'];
+    #     weight = request.data['weight'];
+    #     reach = request.data['reach'];
+    #     image = request.data['image']
+    #     Fighter.objects.create(name=name,surname=surname,image=image,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
+    #     print("image", image);
+    #     # serializer_class = FighterSerializer(queryset,many=True);
+    #     response = Response(
+    #         {
+    #             "message": "Fighter created"
+    #         },
+    #         content_type="application/json",
+    #     )
+    #     return response;
+
+
+class FightViewSet(viewsets.ModelViewSet):
+    # authentication_classes = (BasicAuthentication,)
+    # permission_classes = (HasPermission,)
+    # authentication_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
-    queryset = Tournament.objects.all()
-    serializer_class = TournamentSerializer
+    queryset = Fight.objects.all()
+    serializer_class = FightSerializer
+
+
+
+class EventViewSet(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BasicAuthentication,)
@@ -131,6 +167,98 @@ class ChangeUserPassword(APIView):
         response = Response(
             # serializer_class.data,
             user.password,
+            content_type="application/json",
+        )
+        return response;
+
+class ScheduleFights(APIView):
+    def put(self, request, format=None, *args, **kwargs):
+        print("ScheduleFights")
+        red_corner_fighter_id = request.data["redCornerFighter"]
+        blue_corner_fighter_id = request.data["blueCornerFighter"]
+        red_corner_fighter = Fighter.objects.get(id = red_corner_fighter_id)
+        blue_corner_fighter = Fighter.objects.get(id = blue_corner_fighter_id)
+        red_corner_fighter.scheduledFight = True
+        red_corner_fighter.save()
+        blue_corner_fighter.scheduledFight = True
+        blue_corner_fighter.save()
+        response = Response(
+            # serializer_class.data,
+            "true",
+            content_type="application/json",
+        )
+        return response;
+
+class UnscheduledFighters(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        unscheduled_fighters = Fighter.objects.filter(scheduledFight = False)
+        serializer_class = FighterSerializer(unscheduled_fighters, many=True)
+        response = Response(
+            serializer_class.data,
+            content_type="application/json",
+        )
+        return response;
+
+
+class CreateFighter(APIView):
+    queryset = Fighter.objects.all()
+    serializer_class = FighterSerializer
+
+    def post(self, request, format=None, *args, **kwargs):
+        print("CreateFighter")
+        print(request)
+        name = request.data['name'];
+        surname = request.data['surname'];
+        wins = request.data['wins'];
+        losses = request.data['losses'];
+        age = request.data['age'];
+        height = request.data['height'];
+        weight = request.data['weight'];
+        reach = request.data['reach'];
+        image = request.data['image']
+        print("name", name);
+        print("surname", surname);
+        print("wins", wins);
+        print("losses", losses);
+        print("age", age);
+        print("height", height);
+        print("weight", weight);
+        print("reach", reach);
+        print("image", image);
+        Fighter.objects.create(name=name,surname=surname,image=image,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
+
+        # Fighter.objects.create(name=name,surname=surname,image=image,wins=wins,losses=losses,age=age,height=height,weight=weight,reach=reach);
+        # print("image", image);
+        # serializer_class = FighterSerializer(queryset,many=True);
+
+        response = Response(
+            {
+                "message": "Fighter created"
+            },
+            content_type="application/json",
+        )
+        return response;
+
+class GetFighters(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        print("GetFighters")
+        fighters = Fighter.objects.all()
+        print(fighters)
+        serializer_class = FighterSerializer(fighters, many=True)
+        response = Response(
+            serializer_class.data,
+            content_type="application/json",
+        )
+        return response;
+
+class TestView(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        print("TEST VIEW")
+        fighters = Fighter.objects.all()
+        print(fighters)
+        response = Response(
+            # serializer_class.data,
+            "TEST VIEW",
             content_type="application/json",
         )
         return response;

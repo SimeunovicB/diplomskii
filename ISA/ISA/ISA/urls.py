@@ -17,18 +17,19 @@ from django.contrib import admin
 from django.urls import path, include
 
 from task.views import TaskViewSet
-from dipl.views import FighterViewSet, UserViewSet, TournamentViewSet
+from dipl.views import FighterViewSet, UserViewSet, EventViewSet, FightViewSet
 from rest_framework import routers
-# from rest_framework_simplejwt.views import (
-#     TokenObtainPairView,
-#     TokenRefreshView,
-# )
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 router = routers.DefaultRouter()
 router.register(r'tasks',TaskViewSet)
 router.register(r'fighters',FighterViewSet)
 router.register(r'users',UserViewSet)
-router.register(r'tournaments', TournamentViewSet)
+router.register(r'events', EventViewSet)
+router.register(r'fights', FightViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),
@@ -38,8 +39,7 @@ urlpatterns = [
 
 
 
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-]
+# if settings.DEBUG:
+    # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

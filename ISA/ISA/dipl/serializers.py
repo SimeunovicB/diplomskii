@@ -1,19 +1,31 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import PrimaryKeyRelatedField
 
-from .models import Fighter, User, Tournament
+from rest_framework import serializers
+from .models import Fighter, Fight, User, Event
 
 class FighterSerializer(ModelSerializer):
 
+    # image = serializers.ImageField(max_length=None,use_url=True)
+    image = serializers.ImageField(max_length=None,use_url=True)
+
+
     class Meta:
         model = Fighter
-        fields = ['id', 'name']
+        # fields = ['id', 'name', 'surname', 'wins', 'losses', 'age', 'height', 'weight' 'reach', 'scheduledFight']
+        fields = ['id', 'name', 'surname', 'image', 'wins', 'losses', 'age', 'height', 'weight', 'reach', 'scheduledFight']
         #fields = '__all__';
 
-class TournamentSerializer(ModelSerializer):
+class FightSerializer(ModelSerializer):
+
     class Meta:
-        model = Tournament
-        fields = ['id', 'name']
+        model = Fight
+        fields = ['id',  'redCornerFighter', 'blueCornerFighter', 'redCornerOdds', 'winner_id', 'method',]
+
+class EventSerializer(ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['id', 'name', 'date', 'finishTime']
 
 # class UserProfileSerializer(ModelSerializer):
 #     # allergies = PrimaryKeyRelatedField(queryset=Medicine.objects.all(), many=True)

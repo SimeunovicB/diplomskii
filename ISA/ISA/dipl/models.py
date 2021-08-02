@@ -1,13 +1,38 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+def upload_path(instance, filename):
+    return '/'.join(['images', str(instance.title), filename])
 
 # Create your models here.
 class Fighter(models.Model):
     name = models.CharField(max_length=255, null=True)
+    surname = models.CharField(max_length=255, null=True)
+    # image = models.ImageField(null=True, blank=True, upload_to=upload_path)
+    image = models.ImageField(null=True, blank=True, upload_to="images")
+    wins = models.IntegerField(null=True)
+    losses = models.IntegerField(null=True)
+    age = models.IntegerField(null=True)
+    height = models.IntegerField(null=True)
+    weight = models.IntegerField(null=True)
+    reach = models.IntegerField(null=True)
+    scheduledFight = models.BooleanField(null=True, default=False)
 
-class Tournament(models.Model):
+
+class Fight(models.Model):
+    redCornerFighter = models.ForeignKey(Fighter, on_delete=models.CASCADE, null=True, blank=True,related_name='redCornerFighter',  # Here
+    db_column='redCornerFighter')
+    blueCornerFighter = models.ForeignKey(Fighter, on_delete=models.CASCADE, null=True, blank=True,related_name='blueCornerFighter',  # Here
+    db_column='blueCornerFighter')
+    redCornerOdds = models.IntegerField(null=True)
+    winner_id = models.IntegerField(null=True)
+    method = models.CharField(max_length=255,null=True)
+
+
+class Event(models.Model):
     name = models.CharField(max_length=255,null=True)
+    date = models.CharField(max_length=255, null=True)
+    finishTime = models.CharField(max_length=255, null=True)
 
 
 class User(AbstractUser):
