@@ -19,6 +19,16 @@ class Fighter(models.Model):
     scheduledFight = models.BooleanField(null=True, default=False)
 
 
+class Event(models.Model):
+    name = models.CharField(max_length=255,null=True)
+    date = models.CharField(max_length=255, null=True)
+    finishTime = models.CharField(max_length=255, null=True)
+    # fights = models.ForeignKey(Fight, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+
 class Fight(models.Model):
     redCornerFighter = models.ForeignKey(Fighter, on_delete=models.CASCADE, null=True, blank=True,related_name='redCornerFighter',  # Here
     db_column='redCornerFighter')
@@ -27,12 +37,9 @@ class Fight(models.Model):
     redCornerOdds = models.IntegerField(null=True)
     winner_id = models.IntegerField(null=True)
     method = models.CharField(max_length=255,null=True)
+    event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
 
 
-class Event(models.Model):
-    name = models.CharField(max_length=255,null=True)
-    date = models.CharField(max_length=255, null=True)
-    finishTime = models.CharField(max_length=255, null=True)
 
 
 class User(AbstractUser):

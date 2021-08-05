@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import RegisterView , LoginView, UserView, LogoutView, ChangeUserPassword, TestView, ScheduleFights, UnscheduledFighters
-from .views import CreateFighter, GetFighters
+from .views import CreateFighter, GetFighters, GetFightsForEvent
 from django.conf import settings
+from .eventsView import EventTestView
 
 
 urlpatterns = [
@@ -16,6 +17,8 @@ urlpatterns = [
     path('unscheduled/fighters', UnscheduledFighters.as_view()),
     path('fighter', CreateFighter.as_view()),
     path('fighters', GetFighters.as_view()),
+    path('fights/event', GetFightsForEvent.as_view()),
+    path('test/event', EventTestView.as_view()),
 ]
 
 # if settings.DEBUG:

@@ -2,16 +2,49 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import FightList from "../fights/FightList";
 
-function AllFights() {
+function AllFights(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [loadedFights, setLoadedFights] = useState([]);
+  const [numberOfFights, setNumberOfFights] = useState("");
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+
+  //   axios({
+  //     method: "get",
+  //     url: "fights",
+  //   }).then((response) => {
+  //     let fights = response.data;
+  //     let ret = [];
+  //     console.log("FAJTOVI", fights)
+  //     for(let i in fights) {
+  //       // console.log(fighters[i]);
+  //       ret.push(fights[i]);
+  //     }
+  //     console.log("RET", ret);
+  //     if(fights === ret) {
+  //       console.log("ISTO");
+  //     } else {
+  //       console.log("NIJE ISTO")
+  //     }
+  //     setIsLoading(false);
+  //     setLoadedFights(ret);
+  //     // console.log("LOADED",loadedFighters);
+  //   });
+  // }, []); //ako se drugom argumentu promeni stanje onda se opet pozove funkcija
+
+
+  console.log("ALL FIGHTS", props.eventId);
 
   useEffect(() => {
     setIsLoading(true);
 
     axios({
       method: "get",
-      url: "fights",
+      url: "api/fights/event?eventId=" + props.eventId,
+      // data: {
+      //   eventId: props.eventId
+      // }
     }).then((response) => {
       let fights = response.data;
       let ret = [];
@@ -26,11 +59,13 @@ function AllFights() {
       } else {
         console.log("NIJE ISTO")
       }
+      console.log("KOLIKO IH IMA ", ret.length);
+      setNumberOfFights(ret.length);
       setIsLoading(false);
       setLoadedFights(ret);
       // console.log("LOADED",loadedFighters);
     });
-  }, []); //ako se drugom argumentu promeni stanje onda se opet pozove funkcija
+  }, []);
 
   if (isLoading) {
     return (
@@ -38,6 +73,12 @@ function AllFights() {
         <p>Loading...</p>
       </section>
     );
+  } else if(numberOfFights === 0) {
+    return (
+      <section>
+        <p>No scheduled fights for this event.</p>
+      </section>
+    )
   }
 
   return (

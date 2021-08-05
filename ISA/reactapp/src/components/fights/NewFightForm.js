@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function NewFightForm(props) {
-
   const redOddsInputRef = useRef();
   const blueOddsInputRef = useRef();
 
@@ -15,21 +14,20 @@ function NewFightForm(props) {
   const [selectedOptionBlue, setSelectedOptionBlue] = useState(null);
 
   function redOddsBlur() {
-    console.log("ide gas")
+    console.log("ide gas");
     console.log(redOddsInputRef.current.value);
-    if(redOddsInputRef.current.value > 100) {
+    if (redOddsInputRef.current.value > 100) {
       redOddsInputRef.current.value = 100;
     }
     blueOddsInputRef.current.value = 100 - redOddsInputRef.current.value;
   }
 
   function blueOddsBlur() {
-    if(blueOddsInputRef.current.value > 100) {
+    if (blueOddsInputRef.current.value > 100) {
       blueOddsInputRef.current.value = 100;
     }
     redOddsInputRef.current.value = 100 - blueOddsInputRef.current.value;
   }
-  
 
   useEffect(() => {
     axios({
@@ -51,17 +49,20 @@ function NewFightForm(props) {
     event.preventDefault();
     const enteredOdds = redOddsInputRef.current.value;
 
-
     const fightData = {
       redCornerFighter: selectedOptionRed.value,
       blueCornerFighter: selectedOptionBlue.value,
-      redCornerOdds: enteredOdds
+      redCornerOdds: enteredOdds,
     };
 
     console.log(fightData);
     props.onAddFight(fightData);
   }
 
+  const goBackToEventsAction = () => {
+    console.log("prvi");
+    props.goBackToEvents();
+  };
 
   return (
     <Card>
@@ -84,16 +85,33 @@ function NewFightForm(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor="redOdds">Red corner fighter odds(%)</label>
-          <input type="number" required id="redOdds" max="100" ref={redOddsInputRef} onBlur={redOddsBlur}/>
+          <input
+            type="number"
+            required
+            id="redOdds"
+            max="100"
+            ref={redOddsInputRef}
+            onBlur={redOddsBlur}
+          />
         </div>
         <div className={classes.control}>
           <label htmlFor="blueOdds">Blue corner fighter odds(%)</label>
-          <input type="number" required id="blueOdds" max="100" ref={blueOddsInputRef} onBlur={blueOddsBlur}/>
+          <input
+            type="number"
+            required
+            id="blueOdds"
+            max="100"
+            ref={blueOddsInputRef}
+            onBlur={blueOddsBlur}
+          />
         </div>
         <div className={classes.actions}>
           <button>Add Fight</button>
         </div>
       </form>
+      <div className={classes.actions}>
+        <button onClick={goBackToEventsAction}>Back to events</button>
+      </div>
     </Card>
   );
 }

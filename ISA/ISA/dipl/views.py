@@ -137,11 +137,35 @@ class FightViewSet(viewsets.ModelViewSet):
     serializer_class = FightSerializer
 
 
+    def create(self, request):
+        print("ALO DRUGARI")
+        redCornerFighterId = request.data["redCornerFighter"];
+        redCornerFighter = Fighter.objects.get(id=redCornerFighterId);
+        blueCornerFighterId = request.data["blueCornerFighter"];
+        blueCornerFighter = Fighter.objects.get(id=blueCornerFighterId);
+        redCornerOdds = request.data["redCornerOdds"];
+        eventId = request.data["eventId"];
+        event = Event.objects.get(id=eventId);
+        print("EVENT ",event);
+        redCornerFighter.scheduledFight = True;
+        redCornerFighter.save();
+        blueCornerFighter.scheduledFight = True;
+        blueCornerFighter.save();
+        addedFight = Fight.objects.create(redCornerFighter=redCornerFighter,blueCornerFighter=blueCornerFighter,redCornerOdds=redCornerOdds,event=event)
+        # serializer_class = FightSerializer(addedFight, many=True)
+        response = Response(
+            # serializer_class.data,
+            "Cao brate moj",
+            content_type="application/json",
+        )
+        return response;
+
 
 class EventViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+
 
 class UserViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BasicAuthentication,)
@@ -251,11 +275,41 @@ class GetFighters(APIView):
         )
         return response;
 
+class GetFightsForEvent(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        queryset = [];
+        eventId = request.query_params['eventId'];
+        print("EVENT ID ", eventId);
+        event = Event.objects.get(id=eventId);
+        print("EVENT ", event);
+        fightsFromEvent = event.fight_set.all();
+        print("FIGHTS FROM EVENT", fightsFromEvent);
+        print("TYPE OF FIGHTS FROM EVENT ", type(fightsFromEvent));
+
+        # for fight in fightsFromEvent:
+        #     queryset.append(fight);
+
+        events = Event.objects.all();
+        print("EVENTS ", events);
+        print("TYPE OF EVENTS ", type(events));
+        serializer_class = FightSerializer(fightsFromEvent, many=True)
+        print("SERIALIZER ", serializer_class)
+        response = Response(
+            serializer_class.data,
+            content_type="application/json",
+        )
+        return response;
+
 class TestView(APIView):
     def get(self, request, format=None, *args, **kwargs):
         print("TEST VIEW")
-        fighters = Fighter.objects.all()
-        print(fighters)
+        # fights = Fight.objects.all()
+        # for fight in fights:
+        #     print(fight.redCornerFighter.name)
+        events = Event.objects.all()
+        for event in events:
+            print(event.fight_set.all())
+        # print(events)
         response = Response(
             # serializer_class.data,
             "TEST VIEW",

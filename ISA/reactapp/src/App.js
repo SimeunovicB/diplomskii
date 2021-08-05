@@ -83,12 +83,13 @@ function App() {
           <Route path="/new-fighter">
             <NewFighter/>
           </Route>
-          <Route path="/all-fights">
+           <Route path="/all-fights">
             <AllFights/>
           </Route>
+          {/*
           <Route path="/new-fight">
             <NewFight/>
-          </Route>
+          </Route> */}
           <Route path="/login">
             <Login name={name} setName={setName}/>
           </Route>
