@@ -1,16 +1,11 @@
-import { useHistory } from "react-router-dom";
 import NewFightForm from "../fights/NewFightForm";
 import axios from 'axios';
 
 
 function NewFight(props) {
-  const history = useHistory();
 
   console.log("PROPS")
   console.log("NEW FIGHT KONACNO", props.eventId);
-  // console.log(props.location);
-  // const { state } = props.location;
-  // console.log(state);
 
 
   function addFightHandler(fightData) {
@@ -46,7 +41,7 @@ function NewFight(props) {
             console.log(error);
           });
       }
-      history.replace('/all-fights');
+      props.addFightDone(props.eventId, props.eventName);
     });
   }
 

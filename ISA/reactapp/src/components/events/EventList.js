@@ -3,21 +3,24 @@ import classes from "./EventList.module.css";
 
 import { useState } from "react";
 import NewFight from "../pages/NewFight";
-import AllFights from "../pages/AllFights";
+import EventFights from "../pages/EventFights";
 
 function EventList(props) {
   const [addFightForEvent, setAddFightForEvent] = useState(false);
   const [viewFightsForEvent, setViewFightsForEvent] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState("");
+  const [selectedEventName, setSelectedEventName] = useState("");
 
-  const newFightSelectEventHandler = (eventId) => {
+  const newFightSelectEventHandler = (eventId, eventName) => {
     console.log("Id eventa je", eventId);
     setSelectedEventId(eventId);
+    setSelectedEventName(eventName);
     setAddFightForEvent(true);
   };
 
-  const showFightsSelectEventHandler = (eventId) => {
+  const showFightsSelectEventHandler = (eventId, eventName) => {
     setSelectedEventId(eventId);
+    setSelectedEventName(eventName);
     setViewFightsForEvent(true);
   }
 
@@ -29,6 +32,11 @@ function EventList(props) {
   const goBackToEventsFromAllFightsHandler = () => {
     setViewFightsForEvent(false);
   };
+
+  const addFightDoneHandler = (eventId) => {
+    setAddFightForEvent(false);
+    showFightsSelectEventHandler(eventId);
+  }
 
   return (
     <div>
@@ -47,11 +55,14 @@ function EventList(props) {
       ) : addFightForEvent === true && viewFightsForEvent === false ? (
         <NewFight
           eventId={selectedEventId}
+          eventName={selectedEventName}
           goBackToEvents={goBackToEventsFromNewFightHandler}
+          addFightDone={addFightDoneHandler}
         />
       ) : addFightForEvent === false && viewFightsForEvent === true ? (
-        <AllFights
+        <EventFights
           eventId={selectedEventId}
+          eventName={selectedEventName}
           goBackToEvents={goBackToEventsFromAllFightsHandler}
         />
       ) : (

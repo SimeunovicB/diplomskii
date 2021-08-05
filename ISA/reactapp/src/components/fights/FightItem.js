@@ -20,7 +20,7 @@ function FightItem(props) {
       setBlueCornerFighter(blueFighter.name);
       setBlueCornerFighterImg(blueFighter.image);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     axios({
@@ -32,7 +32,7 @@ function FightItem(props) {
       setRedCornerFighter(redFighter.name);
       setRedCornerFighterImg(redFighter.image);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <li className={classes.item}>

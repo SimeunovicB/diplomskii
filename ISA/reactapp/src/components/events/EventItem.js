@@ -1,30 +1,18 @@
 import classes from "./EventItem.module.css";
 import Card from "../ui/Card";
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import NewFight from "../pages/NewFight";
 
 function EventItem(props) {
-  const history = useHistory();
 
   const addFight = () => {
     console.log("addFight");
     console.log(props.id, props.name);
-    props.newFightSelectEvent(props.id);
-    // history.push('/new-fight');
-    // setAddFightForEvent(true);
-    // history.push({
-    //   pathname: "/new-fight",
-    //   state: [{ name: "Dokle" }], // your data array of objects
-    // });
-
-
+    props.newFightSelectEvent(props.id, props.name);
   };
 
   const showFightsForEvent = () => {
     console.log("showFightsForEvent");
-    props.showFightsSelectEvent(props.id);
+    console.log(props.id, props.name);
+    props.showFightsSelectEvent(props.id, props.name);
   }
 
   return (
