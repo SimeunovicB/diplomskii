@@ -25,7 +25,7 @@ class FightSerializer(ModelSerializer):
 class EventSerializer(ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'name', 'date', 'finishTime']
+        fields = ['id', 'name', 'date', 'finishTime', 'fight_set']
 
 # class UserProfileSerializer(ModelSerializer):
 #     # allergies = PrimaryKeyRelatedField(queryset=Medicine.objects.all(), many=True)

@@ -36,6 +36,7 @@ import Register from "./components/pages/Register";
 import NewEvent from "./components/pages/NewEvent";
 import AllEvents from "./components/pages/AllEvents";
 import MyProfile from "./components/pages/MyProfile";
+import UpcomingEventsAndFights from "./components/pages/UpcomingEventsAndFights";
 // import Prezime from "./components/pages/Prezime";
 
 function App() {
@@ -88,6 +89,9 @@ function App() {
           <Route path="/new-fight">
             <NewFight/>
           </Route> */}
+          <Route path="/upcoming-events-and-fights">
+            <UpcomingEventsAndFights/>
+          </Route>
           <Route path="/login">
             <Login name={name} setName={setName}/>
           </Route>

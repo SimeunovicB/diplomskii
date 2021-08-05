@@ -3,7 +3,7 @@ from django.urls import path, include
 from .views import RegisterView , LoginView, UserView, LogoutView, ChangeUserPassword, TestView, ScheduleFights, UnscheduledFighters
 from .views import CreateFighter, GetFighters, GetFightsForEvent
 from django.conf import settings
-from .eventsView import EventTestView
+from .eventsView import EventTestView, UpcomingEvents
 
 
 urlpatterns = [
@@ -19,6 +19,7 @@ urlpatterns = [
     path('fighters', GetFighters.as_view()),
     path('fights/event', GetFightsForEvent.as_view()),
     path('test/event', EventTestView.as_view()),
+    path('events/upcoming', UpcomingEvents.as_view()),
 ]
 
 # if settings.DEBUG:
