@@ -66,6 +66,9 @@ function MainNavigation(props) {
             <Link to="/upcoming-events-and-fights">Upcoming fights</Link>
           </li>
           <li>
+            <Link to="/past-events-and-fights">Past fights</Link>
+          </li>
+          <li>
             <Link to="/new-event">Add new event</Link>
           </li>
           <li>

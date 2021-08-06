@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
-import EventAndFightList from "../eventAndFight/EventAndFightList";
+import axios from "axios";
+import PastEventAndFightList from "../eventAndFight/PastEventAndFightList";
 
-
-function UpcomingEventsAndFights() {
-    const [isLoading, setIsLoading] = useState(false);
+function PastEventsAndFights() {
+  const [isLoading, setIsLoading] = useState(false);
   const [loadedEvents, setLoadedEvents] = useState([]);
 
   useEffect(() => {
@@ -12,12 +11,12 @@ function UpcomingEventsAndFights() {
 
     axios({
       method: "get",
-      url: "api/events/upcoming",
+      url: "api/events/past",
     }).then((response) => {
       let events = response.data;
       let ret = [];
-      console.log("Events", events)
-      for(let i in events) {
+      console.log("Events", events);
+      for (let i in events) {
         ret.push(events[i]);
       }
       console.log("RET", ret);
@@ -36,10 +35,11 @@ function UpcomingEventsAndFights() {
 
   return (
     <div>
-      <h1>Upcoming events</h1>
-      <EventAndFightList events={loadedEvents} />
+      <h1>Past events</h1>
+      <PastEventAndFightList events={loadedEvents} />
+      {/* <PastEventAndFightList events={loadedEvents} /> */}
     </div>
   );
 }
 
-export default UpcomingEventsAndFights;
+export default PastEventsAndFights;

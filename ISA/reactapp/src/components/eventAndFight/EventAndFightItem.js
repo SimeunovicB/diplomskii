@@ -5,19 +5,11 @@ import { useState, useEffect } from "react";
 import FightForEvent from "./FightForEvent";
 
 function EventAndFightItem(props) {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [loadedFights, setLoadedFights] = useState([]);
   const [numberOfFights, setNumberOfFights] = useState("");
 
-  // axios({
-  //     method: "POST", //post je zato sto ne znam koliko ce se id-eva slati
-  //     url: "fights/event",
-  //     data: {
-  //         fights: props.fights
-  //     }
-  // }).then(response => {
-  //     console.log(response);
-  // })
+
 
   useEffect(() => {
     axios({
@@ -31,27 +23,35 @@ function EventAndFightItem(props) {
         ret.push(fights[i]);
       }
       setNumberOfFights(ret.length);
-      setIsLoading(false);
+      // setIsLoading(false);
       setLoadedFights(ret);
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const zeroFights = (
+    <div>There are no scheduled fights for this event currently.</div>
+  );
 
   return (
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
           <h3>{props.name}</h3>
-          <ul className={classes.list}>
-            {loadedFights.map((fight) => (
-              <FightForEvent
-                key={fight.id}
-                id={fight.id}
-                redCornerFighter={fight.redCornerFighter}
-                blueCornerFighter={fight.blueCornerFighter}
-                redCornerOdds={fight.redCornerOdds}
-              />
-            ))}
-          </ul>
+          {numberOfFights === 0 ? (
+            zeroFights
+          ) : (
+            <ul className={classes.list}>
+              {loadedFights.map((fight) => (
+                <FightForEvent
+                  key={fight.id}
+                  id={fight.id}
+                  redCornerFighter={fight.redCornerFighter}
+                  blueCornerFighter={fight.blueCornerFighter}
+                  redCornerOdds={fight.redCornerOdds}
+                />
+              ))}
+            </ul>
+          )}
         </div>
       </Card>
     </li>
