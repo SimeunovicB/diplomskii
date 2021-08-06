@@ -24,7 +24,6 @@
 
 // export default App;
 
-
 import React, { useEffect, useState } from "react";
 import Layout from "./components/layout/Layout";
 import { Route, Switch } from "react-router-dom";
@@ -39,12 +38,12 @@ import MyProfile from "./components/pages/MyProfile";
 import UpcomingEventsAndFights from "./components/pages/UpcomingEventsAndFights";
 import PastEventsAndFights from "./components/pages/PastEventsAndFights";
 import Prezime from "./components/pages/Prezime";
+import PastFightList from "./components/eventAndFight/PastFightList";
 
 function App() {
+  const [name, setName] = useState("");
 
-  const [name, setName] = useState('');
-
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -58,34 +57,36 @@ function App() {
       setName(content.name);
       setUser(content);
     })();
-  },[]);
+  }, []);
 
   function updateUserStateHandler(event) {
-    console.log(event.target.value)
+    console.log(event.target.value);
     setName(event.target.value);
   }
-
-  
 
   return (
     <div>
       <Layout name={name} setName={setName}>
         <Switch>
           <Route path="/" exact>
-            <Home name={name}/>
+            <Home name={name} />
           </Route>
           <Route path="/all-fighters">
-            <AllFighters/>
+            <AllFighters />
           </Route>
           <Route path="/new-fighter">
-            <NewFighter/>
+            <NewFighter />
           </Route>
           <Route path="/prezime/:numberOfFights">
-            <Prezime/>
+            <Prezime />
           </Route>
+          <Route path="/past-fight-list/:eventId">
+            <PastFightList />
+          </Route>
+
           {/* <Route name="user" path="/prezime/:numberOfFights"/> */}
 
-           {/* <Route path="/all-fights">
+          {/* <Route path="/all-fights">
             <EventFights/>
           </Route> */}
           {/*
@@ -93,25 +94,25 @@ function App() {
             <NewFight/>
           </Route> */}
           <Route path="/upcoming-events-and-fights">
-            <UpcomingEventsAndFights/>
+            <UpcomingEventsAndFights />
           </Route>
           <Route path="/past-events-and-fights">
-            <PastEventsAndFights/>
+            <PastEventsAndFights />
           </Route>
           <Route path="/login">
-            <Login name={name} setName={setName}/>
+            <Login name={name} setName={setName} />
           </Route>
           <Route path="/register">
-            <Register/>
+            <Register />
           </Route>
           <Route path="/my-profile">
-            <MyProfile user={user} changeUser={updateUserStateHandler}/>
+            <MyProfile user={user} changeUser={updateUserStateHandler} />
           </Route>
           <Route path="/new-event">
-            <NewEvent/>
+            <NewEvent />
           </Route>
           <Route path="/all-events">
-            <AllEvents/>
+            <AllEvents />
           </Route>
         </Switch>
       </Layout>

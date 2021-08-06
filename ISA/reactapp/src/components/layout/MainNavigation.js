@@ -72,7 +72,7 @@ function MainNavigation(props) {
             <Link to="/new-event">Add new event</Link>
           </li>
           <li>
-            <Link to="/all-events">All events</Link>
+            <Link to="/all-events">Upcoming events</Link>
           </li>
           {logout}
         </ul>

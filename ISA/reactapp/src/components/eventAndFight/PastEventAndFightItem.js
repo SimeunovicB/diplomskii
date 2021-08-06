@@ -2,13 +2,15 @@ import classes from "./PastEventAndFightItem.module.css";
 import Card from "../ui/Card";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Route } from "react-router";
+// import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function PastEventAndFightItem(props) {
   const [loadedFights, setLoadedFights] = useState([]);
   const [event, setEvent] = useState([""]);
   const [resultsAdded, setResultsAdded] = useState(true);
+
+  const history = useHistory();
 
     useEffect(() => {
       axios({
@@ -30,14 +32,24 @@ function PastEventAndFightItem(props) {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
-  // const variable = true;
+
+    const viewFightsHandler = () => {
+      console.log("view fights");
+      history.push("/past-fight-list/" + props.id)
+    }
+
+
 
   const numberOfFights = loadedFights.length;
   console.log(numberOfFights);
 
   let ret = null;
   if(numberOfFights > 0 && resultsAdded === false) {
-    ret = <button>Add results</button>
+    ret = <div><button onClick={viewFightsHandler}>View fights</button><button>Add results</button></div>
+  } else if(numberOfFights > 0 && resultsAdded === true) {
+    ret = <button onClick={viewFightsHandler}>View fights</button>
+  } else if(numberOfFights === 0) {
+    ret = <div>No fights were held on this event.</div>
   }
   // const ret = <button>Add results</button>;
 
@@ -47,7 +59,6 @@ function PastEventAndFightItem(props) {
         <div className={classes.content}>
           <h3>{props.name}</h3>
           <div className={classes.actions}>
-            <button>View fights</button>
             {ret}
             <div>
               {/* <Link to={{
@@ -56,7 +67,7 @@ function PastEventAndFightItem(props) {
                   fromNotifications: true
                 }
               }}>Ide gas</Link> */}
-              <Link to="/prezime/5">Ide gas</Link>
+              {/* <Link to="/prezime/5">Ide gas</Link> */}
             </div>
           </div>
         </div>
