@@ -12,6 +12,7 @@ function EventAndFightList(props) {
           key={event.id}
           id={event.id}
           name={event.name}
+          fights={event.fight_set}
         />
       ))}
     </ul>

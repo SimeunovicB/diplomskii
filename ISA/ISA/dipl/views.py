@@ -300,6 +300,23 @@ class GetFightsForEvent(APIView):
         )
         return response;
 
+
+class GetFighterForFight(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        queryset = [];
+        fighter_id = request.query_params['id'];
+        fighter = Fighter.objects.get(id=fighter_id);
+        print("fighter ", fighter);
+        queryset.append(fighter);
+        serializer_class = FighterSerializer(queryset, many=True)
+        print("SERIALIZER ", serializer_class)
+        response = Response(
+            serializer_class.data,
+            content_type="application/json",
+        )
+        return response;
+
+
 class TestView(APIView):
     def get(self, request, format=None, *args, **kwargs):
         print("TEST VIEW")
