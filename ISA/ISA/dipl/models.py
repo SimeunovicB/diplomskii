@@ -23,6 +23,7 @@ class Event(models.Model):
     name = models.CharField(max_length=255,null=True)
     date = models.CharField(max_length=255, null=True)
     finishTime = models.CharField(max_length=255, null=True)
+    results = models.BooleanField(default=False)
     # fights = models.ForeignKey(Fight, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):

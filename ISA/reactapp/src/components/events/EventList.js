@@ -29,7 +29,7 @@ function EventList(props) {
     setAddFightForEvent(false);
   };
 
-  const goBackToEventsFromAllFightsHandler = () => {
+  const goBackToEventsFromEventFightsHandler = () => {
     setViewFightsForEvent(false);
   };
 
@@ -63,7 +63,7 @@ function EventList(props) {
         <EventFights
           eventId={selectedEventId}
           eventName={selectedEventName}
-          goBackToEvents={goBackToEventsFromAllFightsHandler}
+          goBackToEvents={goBackToEventsFromEventFightsHandler}
         />
       ) : (
         <div></div>

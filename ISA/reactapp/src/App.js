@@ -38,6 +38,7 @@ import AllEvents from "./components/pages/AllEvents";
 import MyProfile from "./components/pages/MyProfile";
 import UpcomingEventsAndFights from "./components/pages/UpcomingEventsAndFights";
 import PastEventsAndFights from "./components/pages/PastEventsAndFights";
+import Prezime from "./components/pages/Prezime";
 
 function App() {
 
@@ -79,6 +80,11 @@ function App() {
           <Route path="/new-fighter">
             <NewFighter/>
           </Route>
+          <Route path="/prezime/:numberOfFights">
+            <Prezime/>
+          </Route>
+          {/* <Route name="user" path="/prezime/:numberOfFights"/> */}
+
            {/* <Route path="/all-fights">
             <EventFights/>
           </Route> */}
