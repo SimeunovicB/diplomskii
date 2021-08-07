@@ -2,12 +2,10 @@ import classes from "./PastEventAndFightItem.module.css";
 import Card from "../ui/Card";
 import axios from "axios";
 import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 function PastEventAndFightItem(props) {
   const [loadedFights, setLoadedFights] = useState([]);
-  const [event, setEvent] = useState([""]);
   const [resultsAdded, setResultsAdded] = useState(true);
 
   const history = useHistory();
@@ -35,7 +33,12 @@ function PastEventAndFightItem(props) {
 
     const viewFightsHandler = () => {
       console.log("view fights");
-      history.push("/past-fight-list/" + props.id)
+      history.push("/past-fight-list", {eventId: props.id})
+    }
+
+    const addResultsHandler = () => {
+      console.log("addResultsHandler");
+      history.push("/add-results-for-fights-list", {eventId: props.id})
     }
 
 
@@ -45,13 +48,14 @@ function PastEventAndFightItem(props) {
 
   let ret = null;
   if(numberOfFights > 0 && resultsAdded === false) {
-    ret = <div><button onClick={viewFightsHandler}>View fights</button><button>Add results</button></div>
+    ret = <div><button onClick={viewFightsHandler}>View fights</button><button onClick={addResultsHandler}>Add results</button></div>
   } else if(numberOfFights > 0 && resultsAdded === true) {
     ret = <button onClick={viewFightsHandler}>View fights</button>
   } else if(numberOfFights === 0) {
     ret = <div>No fights were held on this event.</div>
   }
-  // const ret = <button>Add results</button>;
+
+
 
   return (
     <li className={classes.item}>
@@ -60,15 +64,6 @@ function PastEventAndFightItem(props) {
           <h3>{props.name}</h3>
           <div className={classes.actions}>
             {ret}
-            <div>
-              {/* <Link to={{
-                pathname: '/prezime',
-                state: {
-                  fromNotifications: true
-                }
-              }}>Ide gas</Link> */}
-              {/* <Link to="/prezime/5">Ide gas</Link> */}
-            </div>
           </div>
         </div>
       </Card>

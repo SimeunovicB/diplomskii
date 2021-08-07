@@ -47,9 +47,9 @@ function MainNavigation(props) {
           {login}
           {register}
           {myProfile}
-          <li>
+          {/* <li>
             <Link to="/prezime">Prezime</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/all-fighters">All fighters</Link>
           </li>

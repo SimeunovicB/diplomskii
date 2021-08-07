@@ -1,32 +1,59 @@
 // import PastFightItem from "./PastFightItem";
 // import classes from "./FightList.module.css";
-
+import classes from "./PastFightList.module.css";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import FightItem from "../fights/FightItem";
 
-    
+function PastFightList() {
+  const [fights, setFights] = useState([]);
+  const location = useLocation();
 
-function PastFightList(props) {
+  console.log("LOCATION ", location);
+  console.log("STATE ", location.state);
+  console.log("eventId ", location.state.eventId);
 
-    const location = useLocation();
-    console.log("LINK ", location.pathname);
-    const eventIdArray = location.pathname.split("/");
-    const eventId = eventIdArray[2];
-    console.log(eventId);
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "api/fights/event?eventId=" + location.state.eventId,
+    })
+      .then((response) => {
+        console.log(response);
+        let responseFights = response.data;
+        setFights(responseFights);
+        // let fights = [];
+        // for(let i in responseFights) {
+        //   fights.push(responseFights[i]);
+        // }
+        // setFights(fights);
+        // if(responseFights === fights) {
+        //   console.log("isto");
+        // } else {
+        //   console.log("nije isto")
+        // }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+
 
   return (
-      <div>Ide gas</div>
-    // <ul className={classes.list}>
-    //   {props.fights.map((fight) => (
-    //     <PastFightItem
-    //       key={fight.id}
-    //       id={fight.id}
-    //       redCornerFighter={fight.redCornerFighter}
-    //       blueCornerFighter={fight.blueCornerFighter}
-    //       method={fight.method}
-    //       date={fight.date}
-    //     />
-    //   ))}
-    // </ul>
+    <ul className={classes.list}>
+      {fights.map((fight) => (
+        <FightItem
+          key={fight.id}
+          id={fight.id}
+          redCornerFighter={fight.redCornerFighter}
+          blueCornerFighter={fight.blueCornerFighter}
+          winner_id={fight.winner_id}
+          method={fight.method}
+        />
+      ))}
+    </ul>
   );
 }
 export default PastFightList;

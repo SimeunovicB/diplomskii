@@ -37,8 +37,9 @@ import AllEvents from "./components/pages/AllEvents";
 import MyProfile from "./components/pages/MyProfile";
 import UpcomingEventsAndFights from "./components/pages/UpcomingEventsAndFights";
 import PastEventsAndFights from "./components/pages/PastEventsAndFights";
-import Prezime from "./components/pages/Prezime";
 import PastFightList from "./components/eventAndFight/PastFightList";
+import AddResultsForFightsList from "./components/results/AddResultsForFightsList";
+// import Prezime from "./components/pages/Prezime";
 
 function App() {
   const [name, setName] = useState("");
@@ -77,11 +78,14 @@ function App() {
           <Route path="/new-fighter">
             <NewFighter />
           </Route>
-          <Route path="/prezime/:numberOfFights">
+          {/* <Route path="/prezime/:numberOfFights">
             <Prezime />
-          </Route>
-          <Route path="/past-fight-list/:eventId">
+          </Route> */}
+          <Route path="/past-fight-list">
             <PastFightList />
+          </Route>
+          <Route path="/add-results-for-fights-list">
+            <AddResultsForFightsList />
           </Route>
 
           {/* <Route name="user" path="/prezime/:numberOfFights"/> */}

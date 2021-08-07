@@ -10,6 +10,12 @@ function FightItem(props) {
   const [redCornerFighterImg, setRedCornerFighterImg] = useState(null);
   const [blueCornerFighterImg, setBlueCornerFighterImg] = useState(null);
 
+
+  console.log("RED CORNER FIGHTER ", props.redCornerFighter);
+  console.log("BLUE CORNER FIGHTER ", props.blueCornerFighter);
+  console.log("WINNER_ID ", props.winner_id);
+
+
   useEffect(() => {
     axios({
       method: "get",
