@@ -11,7 +11,8 @@ function NewEvent() {
       data: {
         name: eventData.name,
         date: eventData.date,
-        finishTime: eventData.finishTime
+        finishTime: eventData.finishTime,
+        fight_set: []
       }
     }).then((response) => {
       console.log("namee", eventData.name);

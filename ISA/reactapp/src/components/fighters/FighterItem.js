@@ -7,7 +7,7 @@ function FighterItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
-          <h3>{props.name}</h3>
+          <h3>{props.name} {props.surname}</h3>
           <img src={props.image} alt="slika borca" height="200" width="200"></img>
         </div>
       </Card>

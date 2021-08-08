@@ -142,15 +142,8 @@ function NewFighterForm(props) {
         <div className={classes.actions}>
           <button onClick={submitHandler}>Add Fighter</button>
         </div>
-        {/* <div>
-                <ImageUpload onAddImage={addImageHandler}/>
-            </div> */}
-            <div>
-            <img src='/media/20150114_083215.jpg' alt="myprofilepic"/>
-            </div>
       {/* </form> */}
       <div>
-        <button onClick={provera}>Provera image</button>
       </div>
     </Card>
   );

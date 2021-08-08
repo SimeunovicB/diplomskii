@@ -293,7 +293,6 @@ class GetFightsForEvent(APIView):
         print("EVENTS ", events);
         print("TYPE OF EVENTS ", type(events));
         serializer_class = FightSerializer(fightsFromEvent, many=True)
-        print("SERIALIZER ", serializer_class)
         response = Response(
             serializer_class.data,
             content_type="application/json",
@@ -318,15 +317,11 @@ class GetFighterForFight(APIView):
 
 
 class TestView(APIView):
-    def get(self, request, format=None, *args, **kwargs):
+    def post(self, request, format=None, *args, **kwargs):
         print("TEST VIEW")
-        # fights = Fight.objects.all()
-        # for fight in fights:
-        #     print(fight.redCornerFighter.name)
-        events = Event.objects.all()
-        for event in events:
-            print(event.fight_set.all())
-        # print(events)
+        niz = request.data["niz"];
+        print(niz);
+        print(niz[2]);
         response = Response(
             # serializer_class.data,
             "TEST VIEW",

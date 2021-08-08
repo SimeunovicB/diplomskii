@@ -37,7 +37,7 @@ function NewFightForm(props) {
       let fighters = response.data;
       let ret = [];
       for (let i in fighters) {
-        ret.push({ value: fighters[i].id, label: fighters[i].name });
+        ret.push({ value: fighters[i].id, label: (fighters[i].name + " " + fighters[i].surname) });
       }
       setLoadedFighters(ret);
     });

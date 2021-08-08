@@ -49,7 +49,7 @@ function FightItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
-          {redCornerFighterName} {redCornerFighterSurname} vs {blueCornerFighterName} {blueCornerFighterSurname}
+          <h3>{redCornerFighterName} {redCornerFighterSurname} vs {blueCornerFighterName} {blueCornerFighterSurname}</h3>
         </div>
         <div className={classes.content}>
           <img
@@ -58,7 +58,7 @@ function FightItem(props) {
             height="200"
             width="200"
           ></img>{" "}
-          vs
+          vs{" "}
           <img
             src={blueCornerFighterImg}
             alt="slika borca"

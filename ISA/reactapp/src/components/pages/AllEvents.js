@@ -11,7 +11,8 @@ function AllEvents() {
 
     axios({
       method: "get",
-      url: "api/events/upcoming",
+      // url: "api/events/upcoming",
+      url: "events"
     }).then((response) => {
       let events = response.data;
       let ret = [];
