@@ -1,10 +1,9 @@
-// import PastFightItem from "./PastFightItem";
-// import classes from "./FightList.module.css";
 import classes from "./PastFightList.module.css";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import FightItem from "../fights/FightItem";
+import Card from "../ui/Card";
 
 function PastFightList() {
   const [fights, setFights] = useState([]);
@@ -39,21 +38,24 @@ function PastFightList() {
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-
-
   return (
-    <ul className={classes.list}>
-      {fights.map((fight) => (
-        <FightItem
-          key={fight.id}
-          id={fight.id}
-          redCornerFighter={fight.redCornerFighter}
-          blueCornerFighter={fight.blueCornerFighter}
-          winner_id={fight.winner_id}
-          method={fight.method}
-        />
-      ))}
-    </ul>
+    <Card>
+      <div className={classes.content}>
+        <h2>{location.state.eventName}</h2>
+      </div>
+      <ul className={classes.list}>
+        {fights.map((fight) => (
+          <FightItem
+            key={fight.id}
+            id={fight.id}
+            redCornerFighter={fight.redCornerFighter}
+            blueCornerFighter={fight.blueCornerFighter}
+            winner_id={fight.winner_id}
+            method={fight.method}
+          />
+        ))}
+      </ul>
+    </Card>
   );
 }
 export default PastFightList;

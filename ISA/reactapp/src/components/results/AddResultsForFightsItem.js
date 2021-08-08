@@ -85,9 +85,9 @@ function AddResultsForFightsItem(props) {
 
   const changeResultsHandler = () => {
     console.log("ide gaaaas");
-    if(selectedOptionWinner !== null && selectedOptionMethod !== "") {
+    if (selectedOptionWinner !== null && selectedOptionMethod !== "") {
       console.log("selectedOptionWinner", selectedOptionWinner);
-      console.log("selectedOptionMethod", selectedOptionMethod)
+      console.log("selectedOptionMethod", selectedOptionMethod);
       props.changeResults(props.id, selectedOptionWinner, selectedOptionMethod);
       // console.log("PROBA AXIOS");
       // axios({
@@ -109,13 +109,14 @@ function AddResultsForFightsItem(props) {
     }
   };
 
-
   return (
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
-          {redCornerFighterName} {redCornerFighterSurname} vs{" "}
-          {blueCornerFighterName} {blueCornerFighterSurname}
+          <h3>
+            {redCornerFighterName} {redCornerFighterSurname} vs{" "}
+            {blueCornerFighterName} {blueCornerFighterSurname}
+          </h3>
         </div>
         <div className={classes.content}>
           <img

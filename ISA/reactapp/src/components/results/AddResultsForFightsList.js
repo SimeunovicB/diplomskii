@@ -41,10 +41,10 @@ function AddResultsForFightsList() {
 
   const changeResultsHandler = (fightId, winnerId, winningMethod) => {
     console.log("changeResultsHandler");
-    console.log("FIGHT ID ", fightId)
+    console.log("FIGHT ID ", fightId);
     console.log("WINNER ID ", winnerId);
     console.log("WINNING METHOD ", winningMethod);
-    fightsResults.set(fightId, [winnerId,winningMethod]);
+    fightsResults.set(fightId, [winnerId, winningMethod]);
   };
 
   const submitHandler = () => {
@@ -67,22 +67,23 @@ function AddResultsForFightsList() {
       data: {
         fightIds: returnFightIds,
         winnerIds: returnWinnerIds,
-        methods: returnMethods
+        methods: returnMethods,
       },
-    }).then((response) => {
+    })
+      .then((response) => {
         console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
 
-
-    history.replace('/past-events-and-fights')
+    history.replace("/past-events-and-fights");
   };
 
   return (
     <div>
       <Card>
+        <div className={classes.content}><h2>{location.state.eventName}</h2></div>
         <ul className={classes.list}>
           {fights.map((fight) => (
             <AddResultsForFightsItem
