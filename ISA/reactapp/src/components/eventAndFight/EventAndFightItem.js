@@ -36,7 +36,7 @@ function EventAndFightItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
-          <h3>{props.name}</h3>
+          <h2>{props.name}</h2>
           {numberOfFights === 0 ? (
             zeroFights
           ) : (

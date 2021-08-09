@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import PrimaryKeyRelatedField
 
 from rest_framework import serializers
-from .models import Fighter, Fight, User, Event
+from .models import Fighter, Fight, User, Event, Bet
 
 class FighterSerializer(ModelSerializer):
 
@@ -26,6 +26,11 @@ class EventSerializer(ModelSerializer):
     class Meta:
         model = Event
         fields = ['id', 'name', 'date', 'finishTime', 'fight_set']
+
+class BetSerializer(ModelSerializer):
+    class Meta:
+        model = Bet
+        fields = ['id', 'fight', 'predicted_winner', 'stake']
 
 # class UserProfileSerializer(ModelSerializer):
 #     # allergies = PrimaryKeyRelatedField(queryset=Medicine.objects.all(), many=True)

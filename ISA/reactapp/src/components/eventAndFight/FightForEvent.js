@@ -1,7 +1,12 @@
+import classes from "./FightForEvent.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 function FightForEvent(props) {
+
+  const history = useHistory();
+
   const [isLoadingRed, setIsLoadingRed] = useState(false);
   const [isLoadingBlue, setIsLoadingBlue] = useState(false);
   const [redCornerFighter, setRedCornerFighter] = useState("");
@@ -49,6 +54,12 @@ function FightForEvent(props) {
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const makeABetHandler = () => {
+    console.log("zivot je igra")
+    console.log("fight id ", props.id);
+    history.push("/add-bet", {fightId: props.id, redCornerFighterId: props.redCornerFighter, blueCornerFighterId: props.blueCornerFighter, redCornerOdds: props.redCornerOdds})
+  }
+
   const istina = true;
   if (istina) {
     console.log("idemo gas");
@@ -59,9 +70,16 @@ function FightForEvent(props) {
       {isLoadingRed || isLoadingBlue ? (
         <div>Loading...</div>
       ) : (
-        <div>
-          {redCornerFighter.name} {redCornerFighter.surname} vs{" "}
-          {blueCornerFighter.name} {blueCornerFighter.surname}
+        <div className={classes.fight}>
+          {/* <div className={classes.actions}> */}
+          <div>
+            {redCornerFighter.name} {redCornerFighter.surname} vs{" "}
+            {blueCornerFighter.name} {blueCornerFighter.surname}
+          </div>
+          <div>
+            <button onClick={makeABetHandler}>Bet on fight</button>
+          </div>
+          {/* </div> */}
         </div>
       )}
     </div>

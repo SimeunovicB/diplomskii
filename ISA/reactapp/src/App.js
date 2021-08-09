@@ -39,6 +39,7 @@ import UpcomingEventsAndFights from "./components/pages/UpcomingEventsAndFights"
 import PastEventsAndFights from "./components/pages/PastEventsAndFights";
 import PastFightList from "./components/eventAndFight/PastFightList";
 import AddResultsForFightsList from "./components/results/AddResultsForFightsList";
+import AddBet from "./components/bets/AddBet";
 // import Prezime from "./components/pages/Prezime";
 
 function App() {
@@ -87,16 +88,9 @@ function App() {
           <Route path="/add-results-for-fights-list">
             <AddResultsForFightsList />
           </Route>
-
-          {/* <Route name="user" path="/prezime/:numberOfFights"/> */}
-
-          {/* <Route path="/all-fights">
-            <EventFights/>
-          </Route> */}
-          {/*
-          <Route path="/new-fight">
-            <NewFight/>
-          </Route> */}
+          <Route path="/add-bet">
+            <AddBet />
+          </Route>
           <Route path="/upcoming-events-and-fights">
             <UpcomingEventsAndFights />
           </Route>

@@ -83,7 +83,9 @@ function AddResultsForFightsList() {
   return (
     <div>
       <Card>
-        <div className={classes.content}><h2>{location.state.eventName}</h2></div>
+        <div className={classes.content}>
+          <h2>{location.state.eventName}</h2>
+        </div>
         <ul className={classes.list}>
           {fights.map((fight) => (
             <AddResultsForFightsItem

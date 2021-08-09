@@ -18,6 +18,7 @@ from django.urls import path, include
 
 from task.views import TaskViewSet
 from dipl.views import FighterViewSet, UserViewSet, EventViewSet, FightViewSet
+from dipl.betsView import BetViewSet
 from rest_framework import routers
 
 from django.conf import settings
@@ -30,6 +31,7 @@ router.register(r'fighters',FighterViewSet)
 router.register(r'users',UserViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'fights', FightViewSet)
+router.register(r'bets', BetViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),
