@@ -1,10 +1,13 @@
-import { useHistory } from "react-router-dom";
 import NewFightForm from "../fights/NewFightForm";
 import axios from 'axios';
 
 
-function NewFight() {
-  const history = useHistory();
+function NewFight(props) {
+
+  console.log("PROPS")
+  console.log("NEW FIGHT KONACNO", props.eventId);
+
+
   function addFightHandler(fightData) {
     axios({
       method: "post",
@@ -12,8 +15,8 @@ function NewFight() {
       data: {
         redCornerFighter: fightData.redCornerFighter,
         blueCornerFighter: fightData.blueCornerFighter,
-        date: fightData.date,
-        redCornerOdds: fightData.redCornerOdds
+        redCornerOdds: fightData.redCornerOdds,
+        eventId: props.eventId
       }
     }).then((response) => {
       console.log("RESPONSE")
@@ -38,14 +41,21 @@ function NewFight() {
             console.log(error);
           });
       }
-      history.replace('/all-fights');
+      props.addFightDone(props.eventId, props.eventName);
     });
   }
+
+
+  const goBackToEventsHandler = () => {
+    console.log("Drugi")
+    props.goBackToEvents();
+  }
+
 
   return (
     <section>
       <h1>Add new fight</h1>
-      <NewFightForm onAddFight={addFightHandler} />
+      <NewFightForm onAddFight={addFightHandler} goBackToEvents={goBackToEventsHandler}/>
     </section>
   );
 }

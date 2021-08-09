@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import RegisterView , LoginView, UserView, LogoutView, ChangeUserPassword, TestView, ScheduleFights, UnscheduledFighters
-from .views import CreateFighter, GetFighters
+from .views import CreateFighter, GetFighters, GetFightsForEvent, GetFighterForFight
 from django.conf import settings
+from .eventsView import EventTestView, UpcomingEvents, PastEvents, AddResultsForEvent
 
 
 urlpatterns = [
@@ -16,7 +17,10 @@ urlpatterns = [
     path('unscheduled/fighters', UnscheduledFighters.as_view()),
     path('fighter', CreateFighter.as_view()),
     path('fighters', GetFighters.as_view()),
+    path('fights/event', GetFightsForEvent.as_view()),
+    path('test/event', EventTestView.as_view()),
+    path('events/upcoming', UpcomingEvents.as_view()),
+    path('events/past', PastEvents.as_view()),
+    path('fighter/fight', GetFighterForFight.as_view()),
+    path('results/event', AddResultsForEvent.as_view()),
 ]
-
-# if settings.DEBUG:
-#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

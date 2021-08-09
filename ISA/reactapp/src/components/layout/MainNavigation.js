@@ -47,26 +47,32 @@ function MainNavigation(props) {
           {login}
           {register}
           {myProfile}
-          <li>
+          {/* <li>
             <Link to="/prezime">Prezime</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/all-fighters">All fighters</Link>
           </li>
           <li>
             <Link to="/new-fighter">Add new fighter</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/all-fights">All fights</Link>
           </li>
           <li>
             <Link to="/new-fight">Add new fight</Link>
+          </li> */}
+          <li>
+            <Link to="/upcoming-events-and-fights">Upcoming fights</Link>
+          </li>
+          <li>
+            <Link to="/past-events-and-fights">Past fights</Link>
           </li>
           <li>
             <Link to="/new-event">Add new event</Link>
           </li>
           <li>
-            <Link to="/all-events">All events</Link>
+            <Link to="/all-events">Upcoming events</Link>
           </li>
           {logout}
         </ul>

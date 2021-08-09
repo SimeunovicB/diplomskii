@@ -24,7 +24,6 @@
 
 // export default App;
 
-
 import React, { useEffect, useState } from "react";
 import Layout from "./components/layout/Layout";
 import { Route, Switch } from "react-router-dom";
@@ -36,15 +35,17 @@ import Register from "./components/pages/Register";
 import NewEvent from "./components/pages/NewEvent";
 import AllEvents from "./components/pages/AllEvents";
 import MyProfile from "./components/pages/MyProfile";
-import AllFights from "./components/pages/AllFights";
-import NewFight from "./components/pages/NewFight";
-import Prezime from "./components/pages/Prezime";
+import UpcomingEventsAndFights from "./components/pages/UpcomingEventsAndFights";
+import PastEventsAndFights from "./components/pages/PastEventsAndFights";
+import PastFightList from "./components/eventAndFight/PastFightList";
+import AddResultsForFightsList from "./components/results/AddResultsForFightsList";
+import AddBet from "./components/bets/AddBet";
+// import Prezime from "./components/pages/Prezime";
 
 function App() {
+  const [name, setName] = useState("");
 
-  const [name, setName] = useState('');
-
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -58,51 +59,58 @@ function App() {
       setName(content.name);
       setUser(content);
     })();
-  },[]);
+  }, []);
 
   function updateUserStateHandler(event) {
-    console.log(event.target.value)
+    console.log(event.target.value);
     setName(event.target.value);
   }
-
-  
 
   return (
     <div>
       <Layout name={name} setName={setName}>
         <Switch>
           <Route path="/" exact>
-            <Home name={name}/>
-          </Route>
-          <Route path="/prezime" exact>
-            <Prezime/>
+            <Home name={name} />
           </Route>
           <Route path="/all-fighters">
-            <AllFighters/>
+            <AllFighters />
           </Route>
           <Route path="/new-fighter">
-            <NewFighter/>
+            <NewFighter />
           </Route>
-          <Route path="/all-fights">
-            <AllFights/>
+          {/* <Route path="/prezime/:numberOfFights">
+            <Prezime />
+          </Route> */}
+          <Route path="/past-fight-list">
+            <PastFightList />
           </Route>
-          <Route path="/new-fight">
-            <NewFight/>
+          <Route path="/add-results-for-fights-list">
+            <AddResultsForFightsList />
+          </Route>
+          <Route path="/add-bet">
+            <AddBet />
+          </Route>
+          <Route path="/upcoming-events-and-fights">
+            <UpcomingEventsAndFights />
+          </Route>
+          <Route path="/past-events-and-fights">
+            <PastEventsAndFights />
           </Route>
           <Route path="/login">
-            <Login name={name} setName={setName}/>
+            <Login name={name} setName={setName} />
           </Route>
           <Route path="/register">
-            <Register/>
+            <Register />
           </Route>
           <Route path="/my-profile">
-            <MyProfile user={user} changeUser={updateUserStateHandler}/>
+            <MyProfile user={user} changeUser={updateUserStateHandler} />
           </Route>
           <Route path="/new-event">
-            <NewEvent/>
+            <NewEvent />
           </Route>
           <Route path="/all-events">
-            <AllEvents/>
+            <AllEvents />
           </Route>
         </Switch>
       </Layout>

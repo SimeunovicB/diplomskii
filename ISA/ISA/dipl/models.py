@@ -19,6 +19,16 @@ class Fighter(models.Model):
     scheduledFight = models.BooleanField(null=True, default=False)
 
 
+class Event(models.Model):
+    name = models.CharField(max_length=255,null=True)
+    date = models.CharField(max_length=255, null=True)
+    finishTime = models.CharField(max_length=255, null=True)
+    # fights = models.ForeignKey(Fight, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+
 class Fight(models.Model):
     redCornerFighter = models.ForeignKey(Fighter, on_delete=models.CASCADE, null=True, blank=True,related_name='redCornerFighter',  # Here
     db_column='redCornerFighter')
@@ -27,12 +37,8 @@ class Fight(models.Model):
     redCornerOdds = models.IntegerField(null=True)
     winner_id = models.IntegerField(null=True)
     method = models.CharField(max_length=255,null=True)
+    event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
 
-
-class Event(models.Model):
-    name = models.CharField(max_length=255,null=True)
-    date = models.CharField(max_length=255, null=True)
-    finishTime = models.CharField(max_length=255, null=True)
 
 
 class User(AbstractUser):
@@ -50,49 +56,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-# class UserProfileMenager(BaseUserManager):
-#
-#     def create_user(self, email, name, surname, first, password=None):
-#
-#         if not email:
-#             raise ValueError('Users must have an email')
-#
-#         email = self.normalize_email(email)
-#         user = self.model(email=email, name=name, surname=surname, first=first)
-#
-#         user.set_password(password)
-#         user.save(using=self._db)
-#
-#         return user
-#
-#
-#     def create_superuser(self, email, name, password=None):
-#         user = self.model(email=email, name=name)
-#         user.is_superuser = True
-#         user.is_staff = True
-#         user.set_password(password)
-#         user.save(using=self._db)
-#         return user
-#
-#
-# class UserProfile(AbstractBaseUser, PermissionsMixin):
-#     email = models.EmailField(max_length=254, unique=True)
-#     name = models.CharField(max_length=255)
-#     surname = models.CharField(max_length=255,null=True)
-#     # type = models.CharField(max_length=255, default="patient")
-#     first = models.BooleanField(default=False)
-#     is_active = models.BooleanField(default=True)
-#     is_staff = models.BooleanField(default=False)
-#     objects = UserProfileMenager()
-#
-#     USERNAME_FIELD = 'email'
-#     REQUIRED_FIELDS = ['name']
-#
-#     def get_full_name(self):
-#         return self.name
-#
-#     def get_short_name(self):
-#         return self.name
-#
-#     def __str__(self):
-#         return self.email
+class Bet(models.Model):
+    fight = models.ForeignKey(Fight, on_delete=models.CASCADE)
+    predicted_winner = models.IntegerField(null=False)
+    stake = models.FloatField(null=False)
