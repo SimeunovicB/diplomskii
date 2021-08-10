@@ -9,6 +9,8 @@ function NewFight(props) {
 
 
   function addFightHandler(fightData) {
+    console.log("redCornerFighter ", fightData.redCornerFighter);
+    console.log("blueCornerFighter ", fightData.blueCornerFighter);
     axios({
       method: "post",
       url: "fights/",

@@ -58,5 +58,9 @@ class User(AbstractUser):
 
 class Bet(models.Model):
     fight = models.ForeignKey(Fight, on_delete=models.CASCADE)
+    # fight = models.ForeignKey(Fight, on_delete=models.CASCADE, null=False, blank=True,related_name='fight',  # Here
+    # db_column='fight')
     predicted_winner = models.IntegerField(null=False)
     stake = models.FloatField(null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    success = models.CharField(max_length=255, default="upcoming")

@@ -279,19 +279,9 @@ class GetFightsForEvent(APIView):
     def get(self, request, format=None, *args, **kwargs):
         queryset = [];
         eventId = request.query_params['eventId'];
-        print("EVENT ID ", eventId);
         event = Event.objects.get(id=eventId);
-        print("EVENT ", event);
         fightsFromEvent = event.fight_set.all();
-        print("FIGHTS FROM EVENT", fightsFromEvent);
-        print("TYPE OF FIGHTS FROM EVENT ", type(fightsFromEvent));
-
-        # for fight in fightsFromEvent:
-        #     queryset.append(fight);
-
         events = Event.objects.all();
-        print("EVENTS ", events);
-        print("TYPE OF EVENTS ", type(events));
         serializer_class = FightSerializer(fightsFromEvent, many=True)
         response = Response(
             serializer_class.data,
@@ -305,10 +295,8 @@ class GetFighterForFight(APIView):
         queryset = [];
         fighter_id = request.query_params['id'];
         fighter = Fighter.objects.get(id=fighter_id);
-        print("fighter ", fighter);
         queryset.append(fighter);
         serializer_class = FighterSerializer(queryset, many=True)
-        print("SERIALIZER ", serializer_class)
         response = Response(
             serializer_class.data,
             content_type="application/json",

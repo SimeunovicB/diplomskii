@@ -48,6 +48,7 @@ function EventAndFightItem(props) {
                   redCornerFighter={fight.redCornerFighter}
                   blueCornerFighter={fight.blueCornerFighter}
                   redCornerOdds={fight.redCornerOdds}
+                  eventId={props.id}
                 />
               ))}
             </ul>
