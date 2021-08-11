@@ -87,7 +87,7 @@ function MyBets(props) {
 
   return (
     <div>
-      <h1>My bets</h1>
+      {/* <h1>My bets</h1> */}
       <BetList upcomingBets={upcomingBets} successfulBets={successfulBets} failedBets={failedBets} />
     </div>
   );
