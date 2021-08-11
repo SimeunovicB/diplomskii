@@ -20,7 +20,7 @@ class FightSerializer(ModelSerializer):
 
     class Meta:
         model = Fight
-        fields = ['id',  'redCornerFighter', 'blueCornerFighter', 'redCornerOdds', 'winner_id', 'method', 'event']
+        fields = ['id',  'redCornerFighter', 'blueCornerFighter', 'redCornerOdds', 'winner_id', 'method', 'event', 'bet_set']
 
 class EventSerializer(ModelSerializer):
     class Meta:

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import EventList from "../events/EventList";
+import Card from "../ui/Card";
+import classes from "./AllEvents.module.css";
 
 function AllEvents() {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,12 +14,12 @@ function AllEvents() {
     axios({
       method: "get",
       // url: "api/events/upcoming",
-      url: "events"
+      url: "events",
     }).then((response) => {
       let events = response.data;
       let ret = [];
-      console.log("Events", events)
-      for(let i in events) {
+      console.log("Events", events);
+      for (let i in events) {
         ret.push(events[i]);
       }
       console.log("RET", ret);
@@ -36,8 +38,12 @@ function AllEvents() {
 
   return (
     <div>
-      <h1>Upcoming events</h1>
-      <EventList events={loadedEvents} />
+      <Card>
+        <div className={classes.header}>
+          <h1>Upcoming events</h1>
+        </div>
+        <EventList events={loadedEvents} />
+      </Card>
     </div>
   );
 }

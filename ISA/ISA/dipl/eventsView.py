@@ -14,12 +14,16 @@ class EventTestView(APIView):
         for fight in fights:
             print(fight.blueCornerFighter)
         # print("EVENTS", events)
+        ide_gas("majmo")
         response = Response(
             # serializer_class.data,
             "EVENT TEST VIEW",
             content_type="application/json",
         )
         return response;
+
+def ide_gas(markan):
+    print("ma da li ide gas ", markan)
 
 
 class UpcomingEvents(APIView):
@@ -64,6 +68,7 @@ class PastEvents(APIView):
 
 class AddResultsForEvent(APIView):
     def put(self, request, format=None, *args, **kwargs):
+        print("AddResultsForEvent")
         print(request.data["fightIds"]);
         print(request.data["winnerIds"]);
         print(request.data["methods"]);
@@ -92,9 +97,33 @@ class AddResultsForEvent(APIView):
                 loser = fight.blueCornerFighter;
                 loser.losses = loser.losses + 1;
                 loser.save();
+            dealing_with_bets(fight);
             i = i + 1;
         response = Response(
             "ide gas",
             content_type="application/json"
         )
         return response;
+
+
+def dealing_with_bets(fight):
+    print("dealing_with_bets")
+    print("fight ", fight)
+    bets = fight.bet_set.all();
+    print("bets ", bets)
+    for bet in bets:
+        if fight.winner_id == bet.predicted_winner:
+            bet.success = "success";
+            if fight.redCornerFighter.id == fight.winner_id:
+                coins_won = bet.stake / fight.redCornerOdds * 100;
+                user = bet.user;
+                user.coins = user.coins + coins_won;
+                user.save();
+            elif fight.blueCornerFighter.id == fight.winner_id:
+                coins_won = bet.stake / (100 - fight.redCornerOdds) * 100;
+                user = bet.user;
+                user.coins = user.coins + coins_won;
+                user.save();
+        elif fight.winner_id != bet.predicted_winner:
+            bet.success = "failure";
+        bet.save();

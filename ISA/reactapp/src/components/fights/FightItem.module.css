@@ -44,3 +44,20 @@
   .actions button:active {
     background-color: #ffe2ed;
   }
+
+  .winner {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-gap: 5px;
+  }
+
+  .red {
+    float: right;
+    text-align: right;
+    
+  }
+
+  .blue {
+    float: left;
+    text-align: left;
+  }

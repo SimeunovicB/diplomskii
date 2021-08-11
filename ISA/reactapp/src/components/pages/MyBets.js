@@ -1,6 +1,7 @@
 import BetList from "../bets/BetList";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import classes from "./MyBets.module.css";
 
 function MyBets(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,32 +15,13 @@ function MyBets(props) {
   console.log("USER ID ", props.user.id);
   console.log("DZET SET ", props.user.bet_set);
 
-  //   useEffect(() => {
-  //     setIsLoading(true);
-
-  //     axios({
-  //       method: "get",
-  //       url: "api/bets/user?userId=" + props.user.id,
-  //     }).then((response) => {
-  //       let bets = response.data;
-  //       let ret = [];
-  //       console.log("Bets", bets);
-  //       for (let i in bets) {
-  //         ret.push(bets[i]);
-  //       }
-  //       console.log("RET", ret);
-  //       setIsLoading(false);
-  //       setLoadedBets(ret);
-  //     });
-  //   }, []); //ako se drugom argumentu promeni stanje onda se opet pozove funkcija
-
   useEffect(() => {
     (async () => {
       const response = await fetch("http://127.0.0.1:8000/api/user", {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
-
+      setIsLoading(true);
       const content = await response.json();
       console.log("IDE CONTENT", content);
       setUser(content);
@@ -54,28 +36,26 @@ function MyBets(props) {
         let failedBets = [];
         console.log("Bets", bets);
         for (let i in bets) {
-            if(bets[i].success === "upcoming") {
-                console.log("ceka se jos")
-                upcomingBets.push(bets[i]);
-            } else if(bets[i].success === "success") {
-                console.log("kasirao ga");
-                successfulBets.push(bets[i]);
-            } else if(bets[i].success === "failure") {
-                console.log("bezis od kase");
-                failedBets.push(bets[i]);
-            }
+          if (bets[i].success === "upcoming") {
+            console.log("ceka se jos");
+            upcomingBets.push(bets[i]);
+          } else if (bets[i].success === "success") {
+            console.log("kasirao ga");
+            successfulBets.push(bets[i]);
+          } else if (bets[i].success === "failure") {
+            console.log("bezis od kase");
+            failedBets.push(bets[i]);
+          }
         }
         setIsLoading(false);
         setUpcomingBets(upcomingBets);
         setSuccessfulBets(successfulBets);
         setFailedBets(failedBets);
+        setIsLoading(false);
       });
     })();
   }, []);
 
-  useEffect(() => {}, []);
-
-  console.log("to je moj user ", user);
 
   if (isLoading) {
     return (
@@ -88,7 +68,21 @@ function MyBets(props) {
   return (
     <div>
       {/* <h1>My bets</h1> */}
-      <BetList upcomingBets={upcomingBets} successfulBets={successfulBets} failedBets={failedBets} />
+      {upcomingBets.length === 0 &&
+      successfulBets.length === 0 &&
+      failedBets.length === 0 ? (
+        <div className={classes.card}>
+          <h1>All bets</h1>
+          <h3>You made no bets!</h3>
+        </div>
+      ) : (
+        <BetList
+          upcomingBets={upcomingBets}
+          successfulBets={successfulBets}
+          failedBets={failedBets}
+          isLoading={isLoading}
+        />
+      )}
     </div>
   );
 }

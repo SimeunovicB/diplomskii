@@ -18,7 +18,7 @@ function Register() {
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
     const enteredUsername = usernameInputRef.current.value;
-    console.log(enteredName, enteredEmail, enteredPassword);
+    console.log(enteredName, enteredSurname,  enteredEmail, enteredUsername, enteredPassword);
 
     // const responses = await fetch('http://127.0.0.1:8000/api/register', {
     //     method: 'POST',
@@ -42,7 +42,7 @@ function Register() {
         surname: enteredSurname,
         email: enteredEmail,
         password: enteredPassword,
-        username: enteredUsername
+        username: enteredUsername,
       },
     }).then((response) => {
       console.log(response);

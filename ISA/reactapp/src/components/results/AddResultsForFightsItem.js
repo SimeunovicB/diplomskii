@@ -113,52 +113,46 @@ function AddResultsForFightsItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
-          <h3>
-            {redCornerFighterName} {redCornerFighterSurname} vs{" "}
-            {blueCornerFighterName} {blueCornerFighterSurname}
-          </h3>
-        </div>
-        <div className={classes.content}>
           <img
             src={redCornerFighterImg}
             alt="slika borca"
             height="200"
             width="200"
           ></img>{" "}
-          vs{" "}
           <img
             src={blueCornerFighterImg}
             alt="slika borca"
             height="200"
             width="200"
           ></img>
+          <h3>
+            {redCornerFighterName} {redCornerFighterSurname} vs{" "}
+            {blueCornerFighterName} {blueCornerFighterSurname}
+          </h3>
         </div>
 
-        {/* <form className={classes.form} onSubmit={submitHandler}> */}
-        <div className={classes.control}>
-          <label htmlFor="redCornerFighter">Winner</label>
-          <div onBlur={changeResultsHandler}>
-            <Select
-              defaultValue={selectedOptionWinner}
-              onChange={setSelectedOptionWinner}
-              options={loadedFighters}
-            />
+        <div className={classes.form}>
+          <div className={classes.control}>
+            <label htmlFor="redCornerFighter">Winner</label>
+            <div onBlur={changeResultsHandler}>
+              <Select
+                defaultValue={selectedOptionWinner}
+                onChange={setSelectedOptionWinner}
+                options={loadedFighters}
+              />
+            </div>
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="blueCornerFighter">Method</label>
+            <div onBlur={changeResultsHandler}>
+              <Select
+                defaultValue={selectedOptionMethod}
+                onChange={setSelectedOptionMethod}
+                options={methodOptions}
+              />
+            </div>
           </div>
         </div>
-        <div className={classes.control}>
-          <label htmlFor="blueCornerFighter">Method</label>
-          <div onBlur={changeResultsHandler}>
-            <Select
-              defaultValue={selectedOptionMethod}
-              onChange={setSelectedOptionMethod}
-              options={methodOptions}
-            />
-          </div>
-        </div>
-        {/* <div className={classes.actions}>
-            <button onClick={submitHandler}>Add result</button>
-          </div> */}
-        {/* </form> */}
       </Card>
     </li>
   );
