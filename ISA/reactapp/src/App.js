@@ -41,7 +41,7 @@ import PastFightList from "./components/eventAndFight/PastFightList";
 import AddResultsForFightsList from "./components/results/AddResultsForFightsList";
 import AddBet from "./components/bets/AddBet";
 import MyBets from "./components/pages/MyBets";
-// import Prezime from "./components/pages/Prezime";
+import Prezime from "./components/pages/Prezime";
 
 function App() {
   const [name, setName] = useState("");
@@ -80,9 +80,9 @@ function App() {
           <Route path="/new-fighter">
             <NewFighter />
           </Route>
-          {/* <Route path="/prezime/:numberOfFights">
+          <Route path="/prezime">
             <Prezime />
-          </Route> */}
+          </Route>
           <Route path="/past-fight-list">
             <PastFightList />
           </Route>
