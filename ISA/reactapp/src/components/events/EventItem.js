@@ -2,7 +2,6 @@ import classes from "./EventItem.module.css";
 import Card from "../ui/Card";
 
 function EventItem(props) {
-
   const addFight = () => {
     console.log("addFight");
     console.log(props.id, props.name);
@@ -13,7 +12,7 @@ function EventItem(props) {
     console.log("showFightsForEvent");
     console.log(props.id, props.name);
     props.showFightsSelectEvent(props.id, props.name);
-  }
+  };
 
   return (
     <li className={classes.item}>
@@ -21,14 +20,16 @@ function EventItem(props) {
         <div className={classes.content}>
           <h3>{props.name}</h3>
           <div className={classes.actions}>
-            <button onClick={showFightsForEvent}>View fights on event</button>
-            <button onClick={addFight}>Add Fight For Event</button>
-            {/* <Link
-              to={{
-                pathname: "/new-fight",
-                state: [{ name: "Dokle" }], // your data array of objects
-              }}
-            >New fight</Link> */}
+            <div className={classes.father}>
+              <div className={classes.first}>
+                <button onClick={showFightsForEvent}>
+                  View fights on event
+                </button>
+              </div>
+              <div className={classes.second}>
+                <button onClick={addFight}>Add Fight For Event</button>
+              </div>
+            </div>
           </div>
         </div>
       </Card>

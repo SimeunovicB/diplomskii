@@ -44,3 +44,17 @@
   .actions button:active {
     background-color: #ffe2ed;
   }
+
+  .atribute {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-gap: 3%;
+  }
+
+  .first {
+    text-align: right;
+  }
+
+  .second {
+    text-align: left;
+  }

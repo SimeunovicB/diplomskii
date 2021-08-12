@@ -14,6 +14,12 @@ function FighterList(props) {
           name={fighter.name}
           surname={fighter.surname}
           image={fighter.image}
+          wins={fighter.wins}
+          losses={fighter.losses}
+          age={fighter.age}
+          height={fighter.height}
+          weight={fighter.weight}
+          reach={fighter.reach}
         />
       ))}
     </ul>

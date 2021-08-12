@@ -17,7 +17,8 @@ function FightForEvent(props) {
     props.id,
     props.redCornerFighter,
     props.blueCornerFighter,
-    props.redCornerOdds
+    props.redCornerOdds,
+    props.eventId
   );
 
   useEffect(() => {
@@ -57,7 +58,7 @@ function FightForEvent(props) {
   const makeABetHandler = () => {
     console.log("zivot je igra")
     console.log("fight id ", props.id);
-    history.push("/add-bet", {fightId: props.id, redCornerFighterId: props.redCornerFighter, blueCornerFighterId: props.blueCornerFighter, redCornerOdds: props.redCornerOdds})
+    history.push("/add-bet", {fightId: props.id, redCornerFighterId: props.redCornerFighter, blueCornerFighterId: props.blueCornerFighter, redCornerOdds: props.redCornerOdds, eventId: props.eventId})
   }
 
   const istina = true;

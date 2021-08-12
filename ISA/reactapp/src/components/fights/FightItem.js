@@ -4,7 +4,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 function FightItem(props) {
-
   const [redCornerFighterId, setRedCornerFighterId] = useState(null);
   const [blueCornerFighterId, setBlueCornerFighterId] = useState(null);
 
@@ -50,14 +49,25 @@ function FightItem(props) {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-
   let finishedFightData = "";
-  if(props.winner_id !== null) {
+  if (props.winner_id !== null) {
     console.log("rezultat je unesen");
-    if(redCornerFighterId === props.winner_id) {
-      finishedFightData += "Winner is " + redCornerFighterName + " " + redCornerFighterSurname + " by " + props.method;
-    } else if(blueCornerFighterId === props.winner_id) {
-      finishedFightData += "Winner is " + blueCornerFighterName + " " + blueCornerFighterSurname + " by " + props.method;
+    if (redCornerFighterId === props.winner_id) {
+      finishedFightData +=
+        "Winner is " +
+        redCornerFighterName +
+        " " +
+        redCornerFighterSurname +
+        " by " +
+        props.method;
+    } else if (blueCornerFighterId === props.winner_id) {
+      finishedFightData +=
+        "Winner is " +
+        blueCornerFighterName +
+        " " +
+        blueCornerFighterSurname +
+        " by " +
+        props.method;
     }
   }
 
@@ -69,24 +79,29 @@ function FightItem(props) {
             {redCornerFighterName} {redCornerFighterSurname} vs{" "}
             {blueCornerFighterName} {blueCornerFighterSurname}
           </h3>
-        {/* </div> */}
-        {/* <div className={classes.content}> */}
-          <img
-            src={redCornerFighterImg}
-            alt="slika borca"
-            height="200"
-            width="200"
-          ></img>{" "}
-          vs{" "}
-          <img
-            src={blueCornerFighterImg}
-            alt="slika borca"
-            height="200"
-            width="200"
-          ></img>
-          <h3>
-            {finishedFightData}
-          </h3>
+          {/* </div> */}
+          {/* <div className={classes.content}> */}
+          <div className={classes.winner}>
+            <div className={classes.red}>
+              <div className={classes.unutri}>
+              <img
+                src={redCornerFighterImg}
+                alt="slika borca"
+                height="200"
+                width="200"
+              ></img>
+              </div>
+            </div>
+            <div className={classes.blue}>
+              <img
+                src={blueCornerFighterImg}
+                alt="slika borca"
+                height="200"
+                width="200"
+              ></img>
+            </div>
+          </div>
+          <h3>{finishedFightData}</h3>
         </div>
       </Card>
     </li>

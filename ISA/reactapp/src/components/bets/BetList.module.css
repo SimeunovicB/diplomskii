@@ -1,0 +1,17 @@
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+.success {
+  border: 5px solid #03C04A;
+}
+
+.pending {
+  border: 5px solid yellow;
+}
+
+.failure {
+  border: 5px solid red;
+}

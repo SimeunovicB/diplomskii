@@ -39,7 +39,7 @@ class Fight(models.Model):
     method = models.CharField(max_length=255,null=True)
     event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
 
-
+# from django.contrib.postgres.fields import ArrayField
 
 class User(AbstractUser):
     name = models.CharField(max_length=255)
@@ -49,6 +49,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=255, unique = True)
     wallet_address = models.CharField(max_length = 255, default="Wallet address")
     coins = models.FloatField(default = 100)
+    # bet_set = ArrayField(Bet, default = [])
     # username = None
     # USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -58,5 +59,9 @@ class User(AbstractUser):
 
 class Bet(models.Model):
     fight = models.ForeignKey(Fight, on_delete=models.CASCADE)
+    # fight = models.ForeignKey(Fight, on_delete=models.CASCADE, null=False, blank=True,related_name='fight',  # Here
+    # db_column='fight')
     predicted_winner = models.IntegerField(null=False)
     stake = models.FloatField(null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    success = models.CharField(max_length=255, default="upcoming")

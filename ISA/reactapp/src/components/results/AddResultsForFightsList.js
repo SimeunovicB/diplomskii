@@ -83,24 +83,26 @@ function AddResultsForFightsList() {
   return (
     <div>
       <Card>
-        <div className={classes.content}>
-          <h2>{location.state.eventName}</h2>
-        </div>
-        <ul className={classes.list}>
-          {fights.map((fight) => (
-            <AddResultsForFightsItem
-              key={fight.id}
-              id={fight.id}
-              redCornerFighter={fight.redCornerFighter}
-              blueCornerFighter={fight.blueCornerFighter}
-              redCornerOdds={fight.redCornerOdds}
-              event={fight.event}
-              changeResults={changeResultsHandler}
-            />
-          ))}
-        </ul>
-        <div className={classes.actions}>
-          <button onClick={submitHandler}>Add result</button>
+        <div className={classes.form}>
+          <div className={classes.content}>
+            <h2>{location.state.eventName}</h2>
+          </div>
+          <ul className={classes.list}>
+            {fights.map((fight) => (
+              <AddResultsForFightsItem
+                key={fight.id}
+                id={fight.id}
+                redCornerFighter={fight.redCornerFighter}
+                blueCornerFighter={fight.blueCornerFighter}
+                redCornerOdds={fight.redCornerOdds}
+                event={fight.event}
+                changeResults={changeResultsHandler}
+              />
+            ))}
+          </ul>
+          <div className={classes.actions}>
+            <button onClick={submitHandler}>Add result</button>
+          </div>
         </div>
       </Card>
     </div>

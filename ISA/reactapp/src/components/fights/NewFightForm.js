@@ -37,7 +37,10 @@ function NewFightForm(props) {
       let fighters = response.data;
       let ret = [];
       for (let i in fighters) {
-        ret.push({ value: fighters[i].id, label: (fighters[i].name + " " + fighters[i].surname) });
+        ret.push({
+          value: fighters[i].id,
+          label: fighters[i].name + " " + fighters[i].surname,
+        });
       }
       setLoadedFighters(ret);
     });
@@ -106,12 +109,13 @@ function NewFightForm(props) {
           />
         </div>
         <div className={classes.actions}>
-          <button>Add Fight</button>
+          <div className={classes.father}>
+            <button onClick={goBackToEventsAction}>Back to events</button>
+            <div></div>
+            <button>Add Fight</button>
+          </div>
         </div>
       </form>
-      <div className={classes.actions}>
-        <button onClick={goBackToEventsAction}>Back to events</button>
-      </div>
     </Card>
   );
 }

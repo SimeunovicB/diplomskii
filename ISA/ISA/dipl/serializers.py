@@ -20,7 +20,7 @@ class FightSerializer(ModelSerializer):
 
     class Meta:
         model = Fight
-        fields = ['id',  'redCornerFighter', 'blueCornerFighter', 'redCornerOdds', 'winner_id', 'method','event']
+        fields = ['id',  'redCornerFighter', 'blueCornerFighter', 'redCornerOdds', 'winner_id', 'method', 'event', 'bet_set']
 
 class EventSerializer(ModelSerializer):
     class Meta:
@@ -30,7 +30,7 @@ class EventSerializer(ModelSerializer):
 class BetSerializer(ModelSerializer):
     class Meta:
         model = Bet
-        fields = ['id', 'fight', 'predicted_winner', 'stake']
+        fields = ['id', 'fight', 'predicted_winner', 'stake', 'user', 'success']
 
 # class UserProfileSerializer(ModelSerializer):
 #     # allergies = PrimaryKeyRelatedField(queryset=Medicine.objects.all(), many=True)
@@ -72,7 +72,7 @@ class BetSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = [ 'id', 'name', 'surname', 'username', 'email', 'wallet_address', 'coins', 'password']
+        fields = [ 'id', 'name', 'surname', 'username', 'email', 'wallet_address', 'coins', 'bet_set', 'password']
         # extra_kwargs = { 'password': {'write_only' : True} }
 
         # fields = [ 'id', 'username', 'name', 'email', 'password']
