@@ -52,7 +52,7 @@ function Login(props) {
           <input
             type="text"
             className="form-control"
-            placeholder="username"
+            placeholder="Username"
             ref={usernameInputRef}
           />
         </div>

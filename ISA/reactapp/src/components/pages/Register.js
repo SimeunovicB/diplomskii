@@ -33,6 +33,14 @@ function Register() {
       enteredPassword
     );
 
+    if(enteredWalletAddress[0] !== '0' || enteredWalletAddress[1] !== 'x') {
+      throw 'Not a valid wallet address';
+    }
+
+    if(enteredWalletAddress.length !== 42) {
+      throw 'Not a valid wallet addresssss';
+    }
+
     // const responses = await fetch('http://127.0.0.1:8000/api/register', {
     //     method: 'POST',
     //     headers: {'Content-type': 'application/json'},
@@ -66,6 +74,7 @@ function Register() {
       });
     } else {
       console.log("sifre se ne poklapaju!")
+      throw 'Passwords not matching!';
     }
   }
 

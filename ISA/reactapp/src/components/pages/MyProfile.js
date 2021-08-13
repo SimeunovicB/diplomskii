@@ -21,9 +21,11 @@ function MyProfile(props) {
 
   // const [walletAddress, setWalletAddress] = useState(props.user.wallet_address);
   const [walletAddress, setWalletAddress] = useState(
-    "0x2C466ade72BFE409EC41522Ed77D257B171ddE66"
+    ""
   );
   const [balance, setBalance] = useState(null);
+  const [state, setState] = useState({hasError: false});
+
 
   useEffect(() => {
     (async () => {
@@ -356,9 +358,14 @@ function MyProfile(props) {
     console.log(window.contract);
     console.log(window.contract.methods);
     console.log("EVO GA ON ", walletAddress);
-    let balanceOfMe = await window.contract.methods
+    let balanceOfMe = 0;
+    try {
+    balanceOfMe = await window.contract.methods
       .balanceOf(walletAddress)
       .call();
+    } catch {
+      console.log("Not a valid address")
+    }
     setBalance(balanceOfMe / 100);
     // setStatus("Ready!");
     console.log("USAO U LOAD");
@@ -368,7 +375,10 @@ function MyProfile(props) {
     load(this);
   }
 
+
+
   console.log("BALANS JE ", balance);
+  console.log("STATE JE ", state);
 
   return (
     <div>
