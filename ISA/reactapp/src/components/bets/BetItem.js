@@ -2,7 +2,6 @@ import classes from "./BetItem.module.css";
 import Card from "../ui/Card";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import UpcomingBetItem from "./UpcomingBetItem";
 
 function BetItem(props) {
   console.log(props);
@@ -66,7 +65,7 @@ function BetItem(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   //   console.log("FIGHT USE STATE ", fight);
   //   console.log("RED FIGHTER USE STATE ", redCornerFighter);

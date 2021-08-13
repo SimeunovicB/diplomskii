@@ -19,14 +19,11 @@
 // }
 // export default Prezime;
 
-import Card from "../ui/Card";
 import classes from "./Prezime.module.css";
 import Web3 from "web3";
-import { useState, useEffect } from "react";
-// import { useEffect } from 'react-router-dom';
+import { useState } from "react";
 
 const Prezime = () => {
-  const [constant, setConstant] = useState(0);
   const [status, setStatus] = useState("Loading...");
   const [balance, setBalance] = useState(null);
 

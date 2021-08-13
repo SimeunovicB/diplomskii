@@ -47,6 +47,7 @@ function AddBet(props) {
 
   const [loadedFighters, setLoadedFighters] = useState([]);
 
+
   useEffect(() => {
     axios({
       method: "get",
@@ -67,6 +68,7 @@ function AddBet(props) {
         value: blueFighter.id,
         label: blueFighter.name + " " + blueFighter.surname,
       });
+      console.log(setLoadedFighters);
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
