@@ -1,14 +1,12 @@
 import { useRef } from "react";
 import axios from "axios";
 import Web3 from "web3";
-// import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import classes from "./MyProfile.module.css";
 import Card from "../ui/Card";
 import { useEffect } from "react";
 
 function MyProfile(props) {
-  //   const history = useHistory();
 
   console.log("LOGED USER", props.user);
 
@@ -19,7 +17,13 @@ function MyProfile(props) {
     typeof props.user.wallet_address
   );
 
-  // const [walletAddress, setWalletAddress] = useState(props.user.wallet_address);
+  const [id, setId] = useState(null);
+  const [name, setName] = useState(null);
+  const [surname, setSurname] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState(null);
+
+
   const [walletAddress, setWalletAddress] = useState(
     ""
   );
@@ -34,9 +38,14 @@ function MyProfile(props) {
         credentials: "include",
       });
 
-      const content = await response.json();
-      console.log("IDE CONTENT", content);
-      setWalletAddress(content.wallet_address);
+      const user = await response.json();
+      console.log("IDE CONTENT", user);
+      setWalletAddress(user.wallet_address);
+      setId(user.id);
+      setName(user.name);
+      setSurname(user.surname);
+      setEmail(user.email);
+      setUsername(user.username);
     })();
   }, []);
 
@@ -68,7 +77,7 @@ function MyProfile(props) {
 
     axios({
       method: "put",
-      url: "users/" + props.user.id + "/",
+      url: "users/" + id + "/",
       data: {
         name: enteredName,
         surname: enteredSurname,
@@ -393,7 +402,7 @@ function MyProfile(props) {
               placeholder="name"
               ref={nameInputRef}
               // onChange={props.changeUser}
-              defaultValue={props.user.name}
+              defaultValue={name}
             />
           </div>
           <div className={classes.control}>
@@ -403,7 +412,7 @@ function MyProfile(props) {
               className="form-control"
               placeholder="surname"
               ref={surnameInputRef}
-              defaultValue={props.user.surname}
+              defaultValue={surname}
             />
           </div>
           <div className={classes.control}>
@@ -413,7 +422,7 @@ function MyProfile(props) {
               className="form-control"
               placeholder="name@example.com"
               ref={emailInputRef}
-              defaultValue={props.user.email}
+              defaultValue={email}
             />
           </div>
           <div className={classes.control}>
@@ -423,7 +432,7 @@ function MyProfile(props) {
               className="form-control"
               placeholder="username"
               ref={usernameInputRef}
-              defaultValue={props.user.username}
+              defaultValue={username}
             />
           </div>
           <div className={classes.control}>
@@ -433,7 +442,7 @@ function MyProfile(props) {
               className="form-control"
               placeholder="wallet address"
               ref={walletAddressInputRef}
-              defaultValue={props.user.wallet_address}
+              defaultValue={walletAddress}
             />
           </div>
           <div className={classes.control}>

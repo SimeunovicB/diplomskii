@@ -313,6 +313,25 @@ const Prezime = () => {
     setStatus("Finished");
   }
 
+
+
+  (async () => {
+    const response = await fetch("http://127.0.0.1:8000/api/test", {
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      method: "post",
+      body: JSON.stringify({
+        title: 'New Pirate Captain',
+        body: 'Arrrrrr-ent you excited?',
+        userId: 3
+      }),
+    });
+    const map = await response.json();
+    console.log("IDE CONTENT", map);
+    console.log("MAPA ", map);
+      console.log("TIP MAPE ", typeof map);
+  })();
+
   return (
     <div>
       <div className={classes.okvir}>

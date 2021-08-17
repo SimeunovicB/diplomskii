@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import Select from "react-select";
 import { useLocation, useHistory } from "react-router-dom";
+import Web3 from "web3";
 
 function AddBet(props) {
   const location = useLocation();
@@ -14,6 +15,9 @@ function AddBet(props) {
   console.log("USER U ADD BET ", props.user);
 
   const stakeInputRef = useRef();
+
+  const [walletAddress, setWalletAddress] = useState("");
+  const [balance, setBalance] = useState(null);
 
   const [selectedOptionWinner, setSelectedOptionWinner] = useState(null);
 
@@ -47,6 +51,18 @@ function AddBet(props) {
 
   const [loadedFighters, setLoadedFighters] = useState([]);
 
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/user", {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      const content = await response.json();
+      console.log("IDE CONTENT", content);
+      setWalletAddress(content.wallet_address);
+    })();
+  }, []);
 
   useEffect(() => {
     axios({
@@ -94,34 +110,316 @@ function AddBet(props) {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const makeABet = () => {
-    console.log("ide gasic");
+  async function loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      window.ethereum.enable();
+      console.log("USAO U IF");
+    }
+    console.log("USAO U loadWeb3");
+  }
+
+  async function loadContract() {
+    console.log("VERZIJA WEB3");
+    console.log(window.web3.version);
+    return await new window.web3.eth.Contract(
+      [
+        {
+          constant: true,
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              name: "",
+              type: "string",
+            },
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          constant: false,
+          inputs: [
+            {
+              name: "_spender",
+              type: "address",
+            },
+            {
+              name: "_value",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+            },
+          ],
+          payable: false,
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+            },
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          constant: false,
+          inputs: [
+            {
+              name: "_from",
+              type: "address",
+            },
+            {
+              name: "_to",
+              type: "address",
+            },
+            {
+              name: "_value",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+            },
+          ],
+          payable: false,
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: "decimals",
+          outputs: [
+            {
+              name: "",
+              type: "uint8",
+            },
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          constant: true,
+          inputs: [
+            {
+              name: "_owner",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              name: "balance",
+              type: "uint256",
+            },
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              name: "",
+              type: "string",
+            },
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          constant: false,
+          inputs: [
+            {
+              name: "_to",
+              type: "address",
+            },
+            {
+              name: "_value",
+              type: "uint256",
+            },
+          ],
+          name: "transfer",
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+            },
+          ],
+          payable: false,
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          constant: true,
+          inputs: [
+            {
+              name: "_owner",
+              type: "address",
+            },
+            {
+              name: "_spender",
+              type: "address",
+            },
+          ],
+          name: "allowance",
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+            },
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          payable: true,
+          stateMutability: "payable",
+          type: "fallback",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              name: "spender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+      ],
+      "0x3e6c08800313ae6a225a3f72c691bc4ce971dd03"
+    );
+  }
+
+  async function load() {
+    console.log("EVO GA");
+    await loadWeb3();
+    window.contract = await loadContract();
+    console.log(window.contract);
+    console.log(window.contract.methods);
+    console.log("EVO GA ON ", walletAddress);
+    let balanceOfMe = 0;
+    try {
+      balanceOfMe = await window.contract.methods
+        .balanceOf(walletAddress)
+        .call();
+    } catch {
+      console.log("Not a valid address");
+    }
+    setBalance(balanceOfMe / 100);
+    // setStatus("Ready!");
+    console.log("USAO U LOAD");
+  }
+
+  if (props.user.wallet_address !== null) {
+    load(this);
+  }
+
+  console.log("WALLET ADDRESS U ADDBET", walletAddress);
+  console.log("BALANCE U ADDBET ", balance);
+
+  async function makeABet() {
+    console.log("window contract ide gasic", window.contract.methods);
     if (stakeInputRef.current.value === "" || selectedOptionWinner === null) {
       console.log("alo nisi uneo ulog i pobednika");
-    } else if(stakeInputRef.current.value > props.user.coins) {
-      console.log("nemas dovoljno coin-a gari")
+      throw "Fill up all the fields in the form!";
+    } else if (stakeInputRef.current.value > props.user.coins) {
+      console.log("nemas dovoljno coin-a gari");
+      throw "You don't have enough Perpers for transaction";
     } else {
       console.log("fight ", location.state.fightId);
       console.log("predicted_winner ", selectedOptionWinner.value);
       console.log("stake ", stakeInputRef.current.value);
+      let transferSuccess;
+      try {
+        transferSuccess = await window.contract.methods
+          .transfer(
+            "0x7f78c74b3C360d9452E94051C302e491A042024f",
+            stakeInputRef.current.value * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
+          )
+          .send({ from: walletAddress });
+      } catch {
+        console.log("Transaction failed!");
+      }
+      console.log(transferSuccess);
       axios({
-        method: 'post',
-        url: 'bets/',
+        method: "post",
+        url: "bets/",
         data: {
           fight: location.state.fightId,
           predicted_winner: selectedOptionWinner.value,
           stake: stakeInputRef.current.value,
-          user: props.user.id
-        }
-      }).then(response => {
-        console.log(response);
-        console.log(response.data);
-        history.replace("/upcoming-events-and-fights")
-      }).catch(error => {
-        console.log(error);
+          user: props.user.id,
+        },
       })
+        .then((response) => {
+          console.log(response);
+          console.log(response.data);
+          history.replace("/upcoming-events-and-fights");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  };
+  }
 
   return (
     <Card>
@@ -147,9 +445,13 @@ function AddBet(props) {
         ></img>
       </div>
       <div className={classes.father}>
-        <div className={classes.red}>{redCornerFighterWins}W : {redCornerFighterLosses}L</div>
+        <div className={classes.red}>
+          {redCornerFighterWins}W : {redCornerFighterLosses}L
+        </div>
         <div className={classes.atribute}>Record</div>
-        <div className={classes.blue}>{blueCornerFighterWins}W : {blueCornerFighterLosses}L</div>
+        <div className={classes.blue}>
+          {blueCornerFighterWins}W : {blueCornerFighterLosses}L
+        </div>
       </div>
       <div className={classes.father}>
         <div className={classes.red}>{redCornerFighterAge}</div>
@@ -184,7 +486,7 @@ function AddBet(props) {
           </div>
         </div>
         <div className={classes.control}>
-          <label htmlFor="age">Amount of coins to bet</label>
+          <label htmlFor="age">Amount of PER to bet</label>
           <input type="number" required id="stake" ref={stakeInputRef} />
         </div>
         <div className={classes.actions}>

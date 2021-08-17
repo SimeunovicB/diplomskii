@@ -307,9 +307,8 @@ class GetFighterForFight(APIView):
 class TestView(APIView):
     def post(self, request, format=None, *args, **kwargs):
         print("TEST VIEW")
-        niz = request.data["niz"];
-        print(niz);
-        print(niz[2]);
+        print(request);
+        print(request.data["title"]);
         response = Response(
             # serializer_class.data,
             "TEST VIEW",
