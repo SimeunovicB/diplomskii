@@ -15,23 +15,6 @@ function AddResultsForFightsItem(props) {
   const [redCornerFighterImg, setRedCornerFighterImg] = useState(null);
   const [blueCornerFighterImg, setBlueCornerFighterImg] = useState(null);
 
-  // const [redCornerFighterWins, setRedCornerFighterWins] = useState(null);
-  // const [blueCornerFighterWins, setBlueCornerFighterWins] = useState(null);
-
-  // const [redCornerFighterLosses, setRedCornerFighterLosses] = useState(null);
-  // const [blueCornerFighterLosses, setBlueCornerFighterLosses] = useState(null);
-
-  // const [redCornerFighterAge, setRedCornerFighterAge] = useState(null);
-  // const [blueCornerFighterAge, setBlueCornerFighterAge] = useState(null);
-
-  // const [redCornerFighterLosses, setRedCornerFighterLosses] = useState(null);
-  // const [blueCornerFighterLosses, setBlueCornerFighterLosses] = useState(null);
-
-  // const [redCornerFighterWins, setRedCornerFighterWins] = useState(null);
-  // const [blueCornerFighterWins, setBlueCornerFighterWins] = useState(null);
-
-  // const [redCornerFighterLosses, setRedCornerFighterLosses] = useState(null);
-  // const [blueCornerFighterLosses, setBlueCornerFighterLosses] = useState(null);
 
   const [selectedOptionWinner, setSelectedOptionWinner] = useState(null);
   const [selectedOptionMethod, setSelectedOptionMethod] = useState("");
@@ -42,11 +25,6 @@ function AddResultsForFightsItem(props) {
     { value: "KO/TKO", label: "KO/TKO" },
     { value: "Submission", label: "Submission" },
   ];
-
-  // console.log("RED CORNER FIGHTER ", props.redCornerFighter);
-  // console.log("BLUE CORNER FIGHTER ", props.blueCornerFighter);
-  // console.log("WINNER_ID ", props.winner_id);
-  // console.log("ID OD FIGHT JE ", props.id);
 
   console.log("PROPS ", props);
 
@@ -64,6 +42,7 @@ function AddResultsForFightsItem(props) {
         value: blueFighter.id,
         label: blueFighter.name + " " + blueFighter.surname,
       });
+      console.log(setLoadedFighters);
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

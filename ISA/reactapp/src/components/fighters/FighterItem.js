@@ -18,25 +18,25 @@ function FighterItem(props) {
             width="200"
           ></img>
           <div className={classes.atribute}>
-            <div className={classes.first}>Record</div>
+            <div className={classes.first}><b>Record</b></div>
             <div className={classes.second}>
               {props.wins}:{props.losses}
             </div>
           </div>
           <div className={classes.atribute}>
-            <div className={classes.first}>Age</div>
+            <div className={classes.first}><b>Age</b></div>
             <div className={classes.second}>
               {props.age}y
             </div>
           </div>
           <div className={classes.atribute}>
-            <div className={classes.first}>Height</div>
+            <div className={classes.first}><b>Height</b></div>
             <div className={classes.second}>
               {props.height}cm
             </div>
           </div>
           <div className={classes.atribute}>
-            <div className={classes.first}>Weight</div>
+            <div className={classes.first}><b>Weight</b></div>
             <div className={classes.second}>
               {props.weight}kg
             </div>

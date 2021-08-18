@@ -72,7 +72,7 @@ class BetSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = [ 'id', 'name', 'surname', 'username', 'email', 'wallet_address', 'coins', 'bet_set', 'password']
+        fields = [ 'id', 'name', 'surname', 'username', 'email', 'wallet_address', 'coins', 'password', 'is_active', 'is_superuser'] #
         # extra_kwargs = { 'password': {'write_only' : True} }
 
         # fields = [ 'id', 'username', 'name', 'email', 'password']

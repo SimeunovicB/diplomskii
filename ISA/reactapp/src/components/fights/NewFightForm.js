@@ -32,7 +32,8 @@ function NewFightForm(props) {
   useEffect(() => {
     axios({
       method: "get",
-      url: "api/unscheduled/fighters",
+      url: "fighters",
+      // url: "api/unscheduled/fighters",
     }).then((response) => {
       let fighters = response.data;
       let ret = [];

@@ -2,6 +2,8 @@ import "./Login.css";
 import { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import classes from "./Login.module.css";
+// import Card from "../ui/Card";
 
 function Login(props) {
   const usernameInputRef = useRef("");
@@ -15,73 +17,63 @@ function Login(props) {
     const enteredPassword = passwordInputRef.current.value;
     console.log(enteredUsername, enteredPassword);
 
-
-      await fetch('http://127.0.0.1:8000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        credentials: 'include',
-        body: JSON.stringify( {
-          enteredUsername,
-          enteredPassword
-        })
-      })
-      .then(response => {
-        if(response.status === 200) {
-          axios.get('api/user',{ withCredentials: true })
+    await fetch("http://127.0.0.1:8000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        enteredUsername,
+        enteredPassword,
+      }),
+    }).then((response) => {
+      if (response.status === 200) {
+        axios
+          .get("api/user", { withCredentials: true })
           .then(function (response) {
             const content = response.data;
-            history.replace('/');
+            history.replace("/");
+            props.setId(content.id);
             props.setName(content.name);
           })
           .catch(function (error) {
             console.log(error);
           });
-        }
-      })
-    }
+      }
+    });
+  }
 
   return (
     <div>
-      <form onSubmit={submitHandler}>
-        <img
-          className="mb-4"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN6PSb90rGnT4WTxYC7HBxNWs2Ig-mSP2b0g&usqp=CAU"
-          alt=""
-          width="72"
-          height="57"
-        />
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+      <div className={classes.card}>
+      <form className={classes.form} onSubmit={submitHandler}>
+        <h1 className="h3 mb-3 fw-normal">Sign in and win!</h1>
 
-        <div className="form-floating">
+        <div className={classes.control}>
+          <label htmlFor="floatingInput">Username</label>
           <input
             type="text"
             className="form-control"
-            placeholder="username"
+            placeholder="Username"
             ref={usernameInputRef}
           />
-          <label htmlFor="floatingInput">Username</label>
         </div>
-        <div className="form-floating">
+        <div className={classes.control}>
+          <label htmlFor="floatingPassword">Password</label>
           <input
             type="password"
             className="form-control"
             placeholder="Password"
             ref={passwordInputRef}
           />
-          <label htmlFor="floatingPassword">Password</label>
         </div>
 
-        <div className="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
+        <div className={classes.actions}>
+          <button className="w-100 btn btn-lg btn-primary" type="submit">
+            Sign in
+          </button>
         </div>
-        <button className="w-100 btn btn-lg btn-primary" type="submit">
-          Sign in
-        </button>
-        <p className="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
-        <p className="ide">Ide gas</p>
       </form>
+      </div>
     </div>
   );
 }

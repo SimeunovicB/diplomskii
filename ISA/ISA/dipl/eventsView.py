@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-from .models import Event, Fight, Fighter
+from .models import Event, Fight, Fighter, Bet
 from .serializers import EventSerializer
 from rest_framework import viewsets
 from rest_framework.views import APIView
@@ -68,6 +68,7 @@ class PastEvents(APIView):
 
 class AddResultsForEvent(APIView):
     def put(self, request, format=None, *args, **kwargs):
+        walletAddresAndPrizeMap = dict({})
         print("AddResultsForEvent")
         print(request.data["fightIds"]);
         print(request.data["winnerIds"]);
@@ -97,10 +98,16 @@ class AddResultsForEvent(APIView):
                 loser = fight.blueCornerFighter;
                 loser.losses = loser.losses + 1;
                 loser.save();
-            dealing_with_bets(fight);
+            return_price_for_one_fight = dealing_with_bets(fight);
+            for key in return_price_for_one_fight:
+                if key not in walletAddresAndPrizeMap:
+                    walletAddresAndPrizeMap[key] = return_price_for_one_fight[key];
+                elif key in walletAddresAndPrizeMap:
+                    walletAddresAndPrizeMap[key] = walletAddresAndPrizeMap[key] + return_price_for_one_fight[key];
             i = i + 1;
+        print(walletAddresAndPrizeMap);
         response = Response(
-            "ide gas",
+            walletAddresAndPrizeMap,
             content_type="application/json"
         )
         return response;
@@ -109,6 +116,7 @@ class AddResultsForEvent(APIView):
 def dealing_with_bets(fight):
     print("dealing_with_bets")
     print("fight ", fight)
+    walletAddresAndPrizeMap = dict({})
     bets = fight.bet_set.all();
     print("bets ", bets)
     for bet in bets:
@@ -117,13 +125,25 @@ def dealing_with_bets(fight):
             if fight.redCornerFighter.id == fight.winner_id:
                 coins_won = bet.stake / fight.redCornerOdds * 100;
                 user = bet.user;
-                user.coins = user.coins + coins_won;
+                user.coins = user.coins + round(coins_won, 2);
                 user.save();
+                if user.wallet_address not in walletAddresAndPrizeMap:
+                    walletAddresAndPrizeMap[user.wallet_address] = round(coins_won, 2);
+                elif user.wallet_address in walletAddresAndPrizeMap:
+                    walletAddresAndPrizeMap[user.wallet_address] = walletAddresAndPrizeMap[user.wallet_address] + round(coins_won, 2);
             elif fight.blueCornerFighter.id == fight.winner_id:
                 coins_won = bet.stake / (100 - fight.redCornerOdds) * 100;
                 user = bet.user;
-                user.coins = user.coins + coins_won;
+                user.coins = user.coins + round(coins_won, 2);
                 user.save();
+                if user.wallet_address not in walletAddresAndPrizeMap:
+                    walletAddresAndPrizeMap[user.wallet_address] = round(coins_won, 2);
+                elif user.wallet_address in walletAddresAndPrizeMap:
+                    walletAddresAndPrizeMap[user.wallet_address] = walletAddresAndPrizeMap[user.wallet_address] + round(coins_won, 2);
         elif fight.winner_id != bet.predicted_winner:
             bet.success = "failure";
+            user = bet.user;
+            if user.wallet_address not in walletAddresAndPrizeMap:
+                walletAddresAndPrizeMap[user.wallet_address] = 0;
         bet.save();
+    return walletAddresAndPrizeMap;

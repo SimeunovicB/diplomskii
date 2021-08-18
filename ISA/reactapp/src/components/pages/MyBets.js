@@ -9,7 +9,6 @@ function MyBets(props) {
   const [successfulBets, setSuccessfulBets] = useState([]);
   const [failedBets, setFailedBets] = useState([]);
 
-  const [user, setUser] = useState(null);
 
   console.log(props.user);
   console.log("USER ID ", props.user.id);
@@ -24,7 +23,6 @@ function MyBets(props) {
       setIsLoading(true);
       const content = await response.json();
       console.log("IDE CONTENT", content);
-      setUser(content);
       axios({
         method: "get",
         url: "api/bets/user?userId=" + content.id,
