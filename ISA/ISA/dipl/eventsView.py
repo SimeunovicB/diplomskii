@@ -125,21 +125,21 @@ def dealing_with_bets(fight):
             if fight.redCornerFighter.id == fight.winner_id:
                 coins_won = bet.stake / fight.redCornerOdds * 100;
                 user = bet.user;
-                user.coins = user.coins + coins_won;
+                user.coins = user.coins + round(coins_won, 2);
                 user.save();
                 if user.wallet_address not in walletAddresAndPrizeMap:
-                    walletAddresAndPrizeMap[user.wallet_address] = coins_won;
+                    walletAddresAndPrizeMap[user.wallet_address] = round(coins_won, 2);
                 elif user.wallet_address in walletAddresAndPrizeMap:
-                    walletAddresAndPrizeMap[user.wallet_address] = walletAddresAndPrizeMap[user.wallet_address] + coins_won;
+                    walletAddresAndPrizeMap[user.wallet_address] = walletAddresAndPrizeMap[user.wallet_address] + round(coins_won, 2);
             elif fight.blueCornerFighter.id == fight.winner_id:
                 coins_won = bet.stake / (100 - fight.redCornerOdds) * 100;
                 user = bet.user;
-                user.coins = user.coins + coins_won;
+                user.coins = user.coins + round(coins_won, 2);
                 user.save();
                 if user.wallet_address not in walletAddresAndPrizeMap:
-                    walletAddresAndPrizeMap[user.wallet_address] = coins_won;
+                    walletAddresAndPrizeMap[user.wallet_address] = round(coins_won, 2);
                 elif user.wallet_address in walletAddresAndPrizeMap:
-                    walletAddresAndPrizeMap[user.wallet_address] = walletAddresAndPrizeMap[user.wallet_address] + coins_won;
+                    walletAddresAndPrizeMap[user.wallet_address] = walletAddresAndPrizeMap[user.wallet_address] + round(coins_won, 2);
         elif fight.winner_id != bet.predicted_winner:
             bet.success = "failure";
             user = bet.user;

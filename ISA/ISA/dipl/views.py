@@ -304,11 +304,54 @@ class GetFighterForFight(APIView):
         return response;
 
 
+class GetInactiveUsers(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        print("ide gas");
+        users = []
+        users = User.objects.filter(is_active=False);
+        print(users);
+        serializer_class = UserSerializer(users, many=True);
+        response = Response(serializer_class.data, content_type="application/json");
+        return response;
+
+
+class MakeUserActive(APIView):
+    def put(self, request, format=None, *args, **kwargs):
+        print("MakeUserActive");
+        user_id = request.data["userId"];
+        user = User.objects.get(id=user_id);
+        user.is_active = True;
+        user.save();
+        serializer_class = UserSerializer(user);
+        response = Response(serializer_class.data, content_type="application/json");
+        return response;
+
+
+class SetUserAdmin(APIView):
+    def put(self, request, format=None, *args, **kwargs):
+        print("SetUserAdmin");
+        user_id = request.data["userId"];
+        user = User.objects.get(id=user_id);
+        user.is_superuser = True
+        user.is_active = True
+        user.save();
+        response = Response("true", content_type="application/json");
+        return response;
+
+
+class GetUserAdmin(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        print("GetUserAdmin");
+        user = User.objects.get(id=1);
+        serializer_class = UserSerializer(user);
+        response = Response(serializer_class.data, content_type="application/json");
+        return response;
+
+
 class TestView(APIView):
-    def post(self, request, format=None, *args, **kwargs):
+    def get(self, request, format=None, *args, **kwargs):
         print("TEST VIEW")
         print(request);
-        print(request.data["title"]);
         response = Response(
             # serializer_class.data,
             "TEST VIEW",

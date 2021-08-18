@@ -33,12 +33,12 @@ function Register() {
       enteredPassword
     );
 
-    if(enteredWalletAddress[0] !== '0' || enteredWalletAddress[1] !== 'x') {
-      throw 'Not a valid wallet address';
+    if (enteredWalletAddress[0] !== "0" || enteredWalletAddress[1] !== "x") {
+      throw "Not a valid wallet address";
     }
 
-    if(enteredWalletAddress.length !== 42) {
-      throw 'Not a valid wallet addresssss';
+    if (enteredWalletAddress.length !== 42) {
+      throw "Not a valid wallet addresssss"; //MOZES STAVITI DA POKUSA DA UZME BALANS PA AKO NE POSTOJI BACI ERROR UMESTO OVA DVA SRANJA OD ZASTITE
     }
 
     // const responses = await fetch('http://127.0.0.1:8000/api/register', {
@@ -65,16 +65,30 @@ function Register() {
           email: enteredEmail,
           wallet_address: enteredWalletAddress,
           username: enteredUsername,
-          password: enteredPassword
+          password: enteredPassword,
         },
       }).then((response) => {
         console.log(response);
         console.log(response.data);
+        let user = response.data;
+        if (user.id === 1) {
+          axios({
+            method: "put",
+            url: "api/user/admin",
+            data: {
+              userId: user.id,
+            },
+          }).then((response) => {
+            console.log(response);
+          }).catch(error => {
+            console.log(error);
+          })
+        }
         history.replace("/login");
       });
     } else {
-      console.log("sifre se ne poklapaju!")
-      throw 'Passwords not matching!';
+      console.log("sifre se ne poklapaju!");
+      throw "Passwords not matching!";
     }
   }
 

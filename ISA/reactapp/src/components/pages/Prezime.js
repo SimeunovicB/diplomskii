@@ -307,30 +307,12 @@ const Prezime = () => {
     setStatus("Started transaction to second acc");
     //OD KECA KA DVOJCI
     let transferSuccess = await window.contract.methods
-      .transfer("0x2C466ade72BFE409EC41522Ed77D257B171ddE66", 1000)
+      .transfer("0x2C466ade72BFE409EC41522Ed77D257B171ddE66", 10000)
       .send({ from: "0x7f78c74b3C360d9452E94051C302e491A042024f" });
     console.log("Transfer success: ", transferSuccess);
     setStatus("Finished");
   }
 
-
-
-  (async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/test", {
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      method: "post",
-      body: JSON.stringify({
-        title: 'New Pirate Captain',
-        body: 'Arrrrrr-ent you excited?',
-        userId: 3
-      }),
-    });
-    const map = await response.json();
-    console.log("IDE CONTENT", map);
-    console.log("MAPA ", map);
-      console.log("TIP MAPE ", typeof map);
-  })();
 
   return (
     <div>

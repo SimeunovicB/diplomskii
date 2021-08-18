@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import RegisterView , LoginView, UserView, LogoutView, ChangeUserPassword, TestView, ScheduleFights, UnscheduledFighters
-from .views import CreateFighter, GetFighters, GetFightsForEvent, GetFighterForFight
+from .views import CreateFighter, GetFighters, GetFightsForEvent, GetFighterForFight, GetInactiveUsers, MakeUserActive, SetUserAdmin, GetUserAdmin
 from django.conf import settings
 from .eventsView import EventTestView, UpcomingEvents, PastEvents, AddResultsForEvent
 from .betsView import GetBetsForUser
@@ -25,4 +25,8 @@ urlpatterns = [
     path('fighter/fight', GetFighterForFight.as_view()),
     path('results/event', AddResultsForEvent.as_view()),
     path('bets/user', GetBetsForUser.as_view()),
+    path('users/inactive', GetInactiveUsers.as_view()),
+    path('user/active', MakeUserActive.as_view()),
+    path('user/admin', SetUserAdmin.as_view()),
+    path('admin', GetUserAdmin.as_view()),
 ]

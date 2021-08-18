@@ -43,8 +43,10 @@ import AddBet from "./components/bets/AddBet";
 import MyBets from "./components/pages/MyBets";
 import Prezime from "./components/pages/Prezime";
 import Web3 from "web3";
+import InactiveUsers from "./components/users/InactiveUsers";
 
 function App() {
+  const [id, setId] = useState("");
   const [name, setName] = useState("");
 
   const [user, setUser] = useState("");
@@ -58,10 +60,11 @@ function App() {
 
       const content = await response.json();
       console.log("IDE CONTENT", content);
+      setId(content.id);
       setName(content.name);
       setUser(content);
     })();
-  }, []);
+  }, [name]);
 
   async function loadWeb3() {
     if (window.ethereum) {
@@ -325,11 +328,11 @@ function App() {
 
   return (
     <div>
-      <Layout name={name} setName={setName}>
+      <Layout id={id} setId={setId} name={name} setName={setName}>
         <Switch>
-          <Route path="/" exact>
+          {/* <Route path="/" exact>
             <Home name={name} />
-          </Route>
+          </Route> */}
           <Route path="/all-fighters">
             <AllFighters />
           </Route>
@@ -338,6 +341,9 @@ function App() {
           </Route>
           <Route path="/prezime">
             <Prezime />
+          </Route>
+          <Route path="/inactive-users">
+            <InactiveUsers />
           </Route>
           <Route path="/past-fight-list">
             <PastFightList />
@@ -351,14 +357,14 @@ function App() {
           <Route path="/my-bets">
             <MyBets user={user}/>
           </Route>
-          <Route path="/upcoming-events-and-fights">
+          <Route path="/" exact>
             <UpcomingEventsAndFights />
           </Route>
           <Route path="/past-events-and-fights">
             <PastEventsAndFights />
           </Route>
           <Route path="/login">
-            <Login name={name} setName={setName} />
+            <Login id={id} setId={setId} name={name} setName={setName} />
           </Route>
           <Route path="/register">
             <Register />

@@ -16,6 +16,7 @@ function AddBet(props) {
 
   const stakeInputRef = useRef();
 
+  const [adminWalletAddress, setAdminWalletAddress] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
   const [balance, setBalance] = useState(null);
 
@@ -63,6 +64,19 @@ function AddBet(props) {
       setWalletAddress(content.wallet_address);
     })();
   }, []);
+
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "api/admin",
+    }).then((response) => {
+      console.log("API ADMIN ", response.data);
+      let admin = response.data;
+      setAdminWalletAddress(admin.wallet_address);
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   useEffect(() => {
     axios({
@@ -381,9 +395,10 @@ function AddBet(props) {
     if (stakeInputRef.current.value === "" || selectedOptionWinner === null) {
       console.log("alo nisi uneo ulog i pobednika");
       throw "Fill up all the fields in the form!";
-    } else if (stakeInputRef.current.value > props.user.coins) {
-      console.log("nemas dovoljno coin-a gari");
-      throw "You don't have enough Perpers for transaction";
+    // } 
+    // else if (stakeInputRef.current.value > props.user.coins) {
+      // console.log("nemas dovoljno coin-a gari");
+      // throw "You don't have enough Perpers for transaction";
     } else {
       console.log("fight ", location.state.fightId);
       console.log("predicted_winner ", selectedOptionWinner.value);
@@ -392,7 +407,7 @@ function AddBet(props) {
       try {
         transferSuccess = await window.contract.methods
           .transfer(
-            "0x7f78c74b3C360d9452E94051C302e491A042024f",
+            adminWalletAddress,
             stakeInputRef.current.value * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
           )
           .send({ from: walletAddress });
@@ -413,7 +428,7 @@ function AddBet(props) {
         .then((response) => {
           console.log(response);
           console.log(response.data);
-          history.replace("/upcoming-events-and-fights");
+          history.replace("/");
         })
         .catch((error) => {
           console.log(error);

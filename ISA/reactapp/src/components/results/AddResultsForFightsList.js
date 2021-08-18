@@ -13,6 +13,7 @@ function AddResultsForFightsList() {
   console.log(location.state.eventId);
 
   const [fights, setFights] = useState([]);
+  const [adminWalletAddress, setAdminWalletAddress] = useState("");
   // const [walletAddressAndPrizeMap, setWalletAddressAndPrizeMap] =
     // useState(null);
   const fightsResults = new Map();
@@ -38,6 +39,18 @@ function AddResultsForFightsList() {
       .catch((error) => {
         console.log(error);
       });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "api/admin",
+    }).then((response) => {
+      console.log("API ADMIN INACTIVE USER ITEM ", response.data);
+      let admin = response.data;
+      setAdminWalletAddress(admin.wallet_address);
+    });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   //   console.log("FAJTERI U FIGHTER LIST", props.fights);
@@ -340,7 +353,7 @@ function AddResultsForFightsList() {
           console.log("PRED FOR ", walletAddressAndPrizeMap);
           // for (let [key, value] of walletAddressAndPrizeMap) {
           for (const [key, value] of Object.entries(walletAddressAndPrizeMap)) {
-            console.log("in " + key + " add " + value);
+            console.log("from " + adminWalletAddress + " add " + value + "in " + key);
             console.log("TIP ", typeof value);
             // if(value !== 0) {
             try {
@@ -349,7 +362,7 @@ function AddResultsForFightsList() {
                   key,
                   value * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
                 )
-                .send({ from: "0x7f78c74b3C360d9452E94051C302e491A042024f" });
+                .send({ from: adminWalletAddress });
             } catch {
               console.log("Transaction failed!");
             }

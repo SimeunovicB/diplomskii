@@ -32,6 +32,7 @@ function Login(props) {
           .then(function (response) {
             const content = response.data;
             history.replace("/");
+            props.setId(content.id);
             props.setName(content.name);
           })
           .catch(function (error) {

@@ -2,9 +2,9 @@ import classes from "./FightForEvent.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function FightForEvent(props) {
-
   const history = useHistory();
 
   const [isLoadingRed, setIsLoadingRed] = useState(false);
@@ -18,7 +18,8 @@ function FightForEvent(props) {
     props.redCornerFighter,
     props.blueCornerFighter,
     props.redCornerOdds,
-    props.eventId
+    props.eventId,
+    props.userId
   );
 
   useEffect(() => {
@@ -56,14 +57,32 @@ function FightForEvent(props) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const makeABetHandler = () => {
-    console.log("zivot je igra")
+    console.log("zivot je igra");
     console.log("fight id ", props.id);
-    history.push("/add-bet", {fightId: props.id, redCornerFighterId: props.redCornerFighter, blueCornerFighterId: props.blueCornerFighter, redCornerOdds: props.redCornerOdds, eventId: props.eventId})
-  }
+    history.push("/add-bet", {
+      fightId: props.id,
+      redCornerFighterId: props.redCornerFighter,
+      blueCornerFighterId: props.blueCornerFighter,
+      redCornerOdds: props.redCornerOdds,
+      eventId: props.eventId,
+    });
+  };
 
   const istina = true;
   if (istina) {
-    console.log("idemo gas");
+    console.log("idemo");
+  }
+
+  let betOnFightButton = <Link to="/login">Login to bet on a fight</Link>;
+  if(props.userId === 1) {
+    betOnFightButton = <div>Admin can't bet</div>
+  }
+  else if (props.userId && props.userId !== 1) {
+    betOnFightButton = (
+      <div>
+        <button onClick={makeABetHandler}>Bet on fight</button>
+      </div>
+    );
   }
 
   return (
@@ -77,9 +96,7 @@ function FightForEvent(props) {
             {redCornerFighter.name} {redCornerFighter.surname} vs{" "}
             {blueCornerFighter.name} {blueCornerFighter.surname}
           </div>
-          <div>
-            <button onClick={makeABetHandler}>Bet on fight</button>
-          </div>
+          {betOnFightButton}
           {/* </div> */}
         </div>
       )}

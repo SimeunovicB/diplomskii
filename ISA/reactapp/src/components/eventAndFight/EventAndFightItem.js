@@ -10,6 +10,9 @@ function EventAndFightItem(props) {
   const [numberOfFights, setNumberOfFights] = useState("");
 
 
+  console.log("PROPS EventAndFightItem", props);
+
+
 
   useEffect(() => {
     axios({
@@ -49,6 +52,7 @@ function EventAndFightItem(props) {
                   blueCornerFighter={fight.blueCornerFighter}
                   redCornerOdds={fight.redCornerOdds}
                   eventId={props.id}
+                  userId={props.userId}
                 />
               ))}
             </ul>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
 // import {useContext} from 'react';
@@ -11,10 +12,22 @@ function MainNavigation(props) {
       credentials: "include",
     });
 
+    props.setId("");
     props.setName("");
   };
-  let login, register, logout, myProfile;
-  if (!props.name) {
+  let login,
+    register,
+    logout,
+    myProfile,
+    addNewFighter,
+    myBets,
+    inactiveUsers,
+    upcomingFights,
+    pastFights,
+    addNewEvent,
+    upcomingEvents;
+
+  if (!props.id) {
     login = (
       <li>
         <Link to="/login">Login</Link>
@@ -26,57 +39,75 @@ function MainNavigation(props) {
       </li>
     );
   } else {
+    myProfile = (
+      <li>
+        <Link to="/my-profile">My profile</Link>
+      </li>
+    );
     logout = (
       <li onClick={logoutFunction}>
-        <Link to="/">Logout</Link>
+        <Link to="/login">Logout</Link>
       </li>
     );
   }
-  if(props.name) {
-    myProfile= (
+  if (props.id && props.id !== 1) {
+    myBets = (
       <li>
-        <Link to="/my-profile">My profile</Link>
+        <Link to="/my-bets">My bets</Link>
+      </li>
+    );
+    upcomingFights = (
+      <li>
+        <Link to="/">Upcoming fights</Link>
+      </li>
+    );
+  }
+  if (props.id === 1) {
+    addNewFighter = (
+      <li>
+        <Link to="/new-fighter">Add new fighter</Link>
+      </li>
+    );
+    inactiveUsers = (
+      <li>
+        <Link to="/inactive-users">Inactive users</Link>
+      </li>
+    );
+    pastFights = (
+      <li>
+        <Link to="/past-events-and-fights">Past fights</Link>
+      </li>
+    );
+    addNewEvent = (
+      <li>
+        <Link to="/new-event">Add new event</Link>
+      </li>
+    );
+    upcomingEvents = (
+      <li>
+        <Link to="/all-events">Upcoming events</Link>
       </li>
     );
   }
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>React meetups</div>
+      <div className={classes.logo}>Diplomski</div>
       <nav>
         <ul>
           {login}
           {register}
           {myProfile}
-          {/* <li>
-            <Link to="/prezime">Prezime</Link>
-          </li> */}
+
           <li>
             <Link to="/all-fighters">All fighters</Link>
           </li>
-          <li>
-            <Link to="/new-fighter">Add new fighter</Link>
-          </li>
-          <li>
-            <Link to="/my-bets">My bets</Link>
-          </li>
-          {/* <li>
-            <Link to="/all-fights">All fights</Link>
-          </li>
-          <li>
-            <Link to="/new-fight">Add new fight</Link>
-          </li> */}
-          <li>
-            <Link to="/upcoming-events-and-fights">Upcoming fights</Link>
-          </li>
-          <li>
-            <Link to="/past-events-and-fights">Past fights</Link>
-          </li>
-          <li>
-            <Link to="/new-event">Add new event</Link>
-          </li>
-          <li>
-            <Link to="/all-events">Upcoming events</Link>
-          </li>
+          {addNewFighter}
+          {myBets}
+          {inactiveUsers}
+          {upcomingFights}
+          {pastFights}
+          {addNewEvent}
+          {upcomingEvents}
           {logout}
         </ul>
       </nav>
