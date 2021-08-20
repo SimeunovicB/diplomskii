@@ -348,6 +348,17 @@ class GetUserAdmin(APIView):
         return response;
 
 
+class NumberOfUsers(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        print("IsUserAdmin");
+        isUserFirst = "no";
+        numberOfUsers = len(User.objects.all());
+        if numberOfUsers == 0:
+            isUserFirst = "yes";
+        response = Response(isUserFirst);
+        return response;
+
+
 class TestView(APIView):
     def get(self, request, format=None, *args, **kwargs):
         print("TEST VIEW")

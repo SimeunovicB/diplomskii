@@ -463,29 +463,29 @@ function AddBet(props) {
         <div className={classes.red}>
           {redCornerFighterWins}W : {redCornerFighterLosses}L
         </div>
-        <div className={classes.atribute}>Record</div>
+        <div className={classes.atribute}><b>Record</b></div>
         <div className={classes.blue}>
           {blueCornerFighterWins}W : {blueCornerFighterLosses}L
         </div>
       </div>
       <div className={classes.father}>
         <div className={classes.red}>{redCornerFighterAge}</div>
-        <div className={classes.atribute}>Age</div>
+        <div className={classes.atribute}><b>Age</b></div>
         <div className={classes.blue}>{blueCornerFighterAge}</div>
       </div>
       <div className={classes.father}>
         <div className={classes.red}>{redCornerFighterHeight}cm</div>
-        <div className={classes.atribute}>Height</div>
+        <div className={classes.atribute}><b>Height</b></div>
         <div className={classes.blue}>{blueCornerFighterHeight}cm</div>
       </div>
       <div className={classes.father}>
         <div className={classes.red}>{redCornerFighterWeight}kg</div>
-        <div className={classes.atribute}>Weight</div>
+        <div className={classes.atribute}><b>Weight</b></div>
         <div className={classes.blue}>{blueCornerFighterWeight}kg</div>
       </div>
       <div className={classes.father}>
         <div className={classes.red}>{redCornerFighterReach}cm</div>
-        <div className={classes.atribute}>Reach</div>
+        <div className={classes.atribute}><b>Reach</b></div>
         <div className={classes.blue}>{blueCornerFighterReach}cm</div>
       </div>
 
