@@ -129,7 +129,7 @@ WSGI_APPLICATION = 'ISA.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kontrolna',
+        'NAME': 'simijon',
         'USER': 'postgres',
         'PASSWORD': 'partizan',
         'HOST': 'localhost'

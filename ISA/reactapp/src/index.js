@@ -4,17 +4,18 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 // import { FavoritesContextProvider } from "./store/context";
-import axios from 'axios';
+import axios from "axios";
+// import HttpsRedirect from "react-https-redirect";
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/'
-
+axios.defaults.baseURL = "http://127.0.0.1:8000/";
 
 ReactDOM.render(
   // <FavoritesContextProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    {/* <HttpsRedirect> */}
       <App />
-    </BrowserRouter>
+    {/* </HttpsRedirect> */}
+  </BrowserRouter>,
   // </FavoritesContextProvider>,
-  ,
   document.getElementById("root")
 );
