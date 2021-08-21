@@ -16,6 +16,8 @@ function AddBet(props) {
 
   const stakeInputRef = useRef();
 
+  // const [fightId, setFightId] = useState(location.state.fightId);
+
   const [adminWalletAddress, setAdminWalletAddress] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
   const [balance, setBalance] = useState(null);
@@ -52,6 +54,14 @@ function AddBet(props) {
 
   const [loadedFighters, setLoadedFighters] = useState([]);
 
+  // const [successMessage, setSuccessMessage] = useState(
+  //   "" 
+  // );
+  const [pendingMessage, setPendingMessage] = useState(
+    "" //Transaction in progress, please wait.
+  );
+  const [errorMessage, setErrorMessage] = useState(""); //Error while attempting transaction!
+
   useEffect(() => {
     (async () => {
       const response = await fetch("http://127.0.0.1:8000/api/user", {
@@ -74,6 +84,7 @@ function AddBet(props) {
       console.log("API ADMIN ", response.data);
       let admin = response.data;
       setAdminWalletAddress(admin.wallet_address);
+
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -394,17 +405,24 @@ function AddBet(props) {
     console.log("window contract ide gasic", window.contract.methods);
     if (stakeInputRef.current.value === "" || selectedOptionWinner === null) {
       console.log("alo nisi uneo ulog i pobednika");
-      throw "Fill up all the fields in the form!";
-    // } 
-    // else if (stakeInputRef.current.value > props.user.coins) {
-      // console.log("nemas dovoljno coin-a gari");
+      // throw "Fill up all the fields in the form!";
+
+      setErrorMessageHandler("Fill all input fields!");
+      return;
+
+    } 
+    else if (stakeInputRef.current.value > balance) {
+      console.log("nemas dovoljno coin-a gari");
       // throw "You don't have enough Perpers for transaction";
+      setErrorMessageHandler("You don't have enough perper!");
+      return;
     } else {
       console.log("fight ", location.state.fightId);
       console.log("predicted_winner ", selectedOptionWinner.value);
       console.log("stake ", stakeInputRef.current.value);
       let transferSuccess;
       try {
+        setPendingMessageHandler();
         transferSuccess = await window.contract.methods
           .transfer(
             adminWalletAddress,
@@ -413,6 +431,9 @@ function AddBet(props) {
           .send({ from: walletAddress });
       } catch {
         console.log("Transaction failed!");
+        setErrorMessageHandler("Transaction failed!");
+        history.replace("/", { error: true});
+        return;
       }
       console.log(transferSuccess);
       axios({
@@ -428,17 +449,61 @@ function AddBet(props) {
         .then((response) => {
           console.log(response);
           console.log(response.data);
-          history.replace("/");
+          history.replace("/my-bets");
         })
         .catch((error) => {
           console.log(error);
+          setErrorMessageHandler("Error while adding bet!");
         });
     }
   }
 
+
+  // function setSuccessMessageHandler() {
+  //   setSuccessMessage("Bet successfully added.");
+  //   setPendingMessage("");
+  //   setErrorMessage("");
+  // }
+
+  function setPendingMessageHandler() {
+    // setSuccessMessage("");
+    setPendingMessage("Transaction in progress, please wait.");
+    setErrorMessage("");
+  }
+
+  function setErrorMessageHandler(errMess) {
+    // setSuccessMessage("");
+    setPendingMessage("");
+    setErrorMessage(errMess);
+  }
+
+
+  let validation = <div></div>;
+  if (
+    pendingMessage !== "" &&
+    errorMessage === ""
+  ) {
+    validation = (
+      <div id="validation" className={classes.alert_warning}>
+        {pendingMessage}{" "}
+        <img
+          src="https://acegif.com/wp-content/uploads/loading-25.gif"
+          width="50"
+        ></img>
+      </div>
+    ); //https://i.stack.imgur.com/ATB3o.gif
+  } else if (
+    pendingMessage === "" &&
+    errorMessage !== ""
+  ) {
+    validation = <div id="validation" className={classes.alert_danger}>{errorMessage}</div>;
+  }
+
+
   return (
     <Card>
       <div className={classes.content}>
+        {validation}
         <h2>
           {redCornerFighterName} {redCornerFighterSurname} vs{" "}
           {blueCornerFighterName} {blueCornerFighterSurname}
@@ -450,8 +515,7 @@ function AddBet(props) {
           alt="slika borca"
           height="200"
           width="200"
-        ></img>{" "}
-        vs{" "}
+        ></img>
         <img
           src={blueCornerFighterImg}
           alt="slika borca"
@@ -505,7 +569,9 @@ function AddBet(props) {
           <input type="number" required id="stake" ref={stakeInputRef} />
         </div>
         <div className={classes.actions}>
-          <button onClick={makeABet}>Make a bet</button>
+        <a href="#validation"><button onClick={makeABet}>Make a bet</button></a>
+        </div>
+        <div>
         </div>
       </div>
     </Card>

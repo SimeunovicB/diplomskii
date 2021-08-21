@@ -1,5 +1,6 @@
 import NewFightForm from "../fights/NewFightForm";
 import axios from 'axios';
+import classes from "./NewFight.module.css"
 
 
 function NewFight(props) {
@@ -55,7 +56,7 @@ function NewFight(props) {
 
 
   return (
-    <section>
+    <section className={classes.content}>
       <h1>Add new fight</h1>
       <NewFightForm onAddFight={addFightHandler} goBackToEvents={goBackToEventsHandler}/>
     </section>
