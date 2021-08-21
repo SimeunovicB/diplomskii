@@ -1,3 +1,29 @@
+// import logo from './logo.svg';
+// import './App.css';
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <img src={logo} className="App-logo" alt="logo" />
+//         <p>
+//           Edit <code>src/App.js</code> and save to reloaddd.
+//         </p>
+//         <a
+//           className="App-link"
+//           href="https://reactjs.org"
+//           target="_blank"
+//           rel="noopener noreferrer"
+//         >
+//           Learn React
+//         </a>
+//       </header>
+//     </div>
+//   );
+// }
+
+// export default App;
+
 import React, { useEffect, useState } from "react";
 import Layout from "./components/layout/Layout";
 import { Route, Switch } from "react-router-dom";
@@ -288,18 +314,23 @@ function App() {
     let balanceOfMe = await window.contract.methods
       .balanceOf("0x7f78c74b3C360d9452E94051C302e491A042024f")
       .call();
-    console.log("Balance u APP ", balanceOfMe);
+      console.log("Balance u APP ", balanceOfMe);
     console.log("USAO U LOAD");
   }
 
   load(this);
+
 
   function updateUserStateHandler(event) {
     console.log(event.target.value);
     setName(event.target.value);
   }
 
+
   return (
+    // <div style={{ 
+    //   backgroundImage: `url("https://i.postimg.cc/qvz9s70f/262315.jpg")` 
+    // }}>
     <div>
       <Layout id={id} setId={setId} name={name} setName={setName}>
         <Switch>
@@ -325,10 +356,10 @@ function App() {
             <AddResultsForFightsList />
           </Route>
           <Route path="/add-bet">
-            <AddBet user={user} />
+            <AddBet user={user}/>
           </Route>
           <Route path="/my-bets">
-            <MyBets user={user} />
+            <MyBets user={user}/>
           </Route>
           <Route path="/" exact>
             <UpcomingEventsAndFights />

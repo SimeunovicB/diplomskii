@@ -8,7 +8,21 @@ function PastEventAndFightItem(props) {
   const [loadedFights, setLoadedFights] = useState([]);
   const [resultsAdded, setResultsAdded] = useState(true);
 
+  const [eventId, setEventId] = useState("");
+  const [eventName, setEventName] = useState("");
+
   const history = useHistory();
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: 'events/' + props.id
+    }).then(response => {
+      let eventis = response.data;
+      setEventId(eventis.id);
+      setEventName(eventis.name);
+    })
+  }, [])
 
   useEffect(() => {
     axios({
@@ -31,12 +45,12 @@ function PastEventAndFightItem(props) {
 
   const viewFightsHandler = () => {
     console.log("view fights");
-    history.push("/past-fight-list", { eventId: props.id, eventName: props.name });
+    history.push("/past-fight-list", { eventId: eventId, eventName: eventName });
   };
 
   const addResultsHandler = () => {
     console.log("addResultsHandler");
-    history.push("/add-results-for-fights-list", { eventId: props.id, eventName: props.name });
+    history.push("/add-results-for-fights-list", { eventId: eventId, eventName: eventName });
   };
 
   const numberOfFights = loadedFights.length;
@@ -60,7 +74,7 @@ function PastEventAndFightItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
-          <h3>{props.name}</h3>
+          <h3>{eventName}</h3>
           <div className={classes.actions}>{buttons}</div>
         </div>
       </Card>

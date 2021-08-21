@@ -10,16 +10,29 @@ import Web3 from "web3";
 function AddResultsForFightsList() {
   const location = useLocation();
   const history = useHistory();
-  console.log(location.state.eventId);
+  console.log("IDEMOOOO ", location.state);
 
   const [fights, setFights] = useState([]);
   const [adminWalletAddress, setAdminWalletAddress] = useState("");
-  // const [walletAddressAndPrizeMap, setWalletAddressAndPrizeMap] =
-    // useState(null);
+
+  const [eventId, setEventId] = useState("");
+  const [eventName, setEventName] = useState("");
+
+  useEffect(() => {
+    if (location.state) {
+      setEventId(location.state.eventId);
+      setEventName(location.state.eventName);
+    }
+  }, []);
+
+  const [pendingMessage, setPendingMessage] = useState(
+    "" //Transaction in progress, please wait.
+  );
+  const [errorMessage, setErrorMessage] = useState(""); //Error while attempting transaction!
+
+  const [loggedWalletAddress, setLoggedWalletAddress] = useState("");
+
   const fightsResults = new Map();
-  // fightsResults.set("a", [1,13]);
-  // fightsResults.set("b", [2,18]);
-  // fightsResults.set("c", [3,-4]);
 
   let returnFightIds = [];
   let returnWinnerIds = [];
@@ -40,7 +53,6 @@ function AddResultsForFightsList() {
         console.log(error);
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
 
   useEffect(() => {
     axios({
@@ -313,39 +325,69 @@ function AddResultsForFightsList() {
     fightsResults.set(fightId, [winnerId, winningMethod]);
   };
 
-  function submitHandler() {
+  // function submitHandler() {
+  //   console.log("probica");
+  //   console.log("loggedWalletAddress", loggedWalletAddress);
+  //   console.log("adminWalletAddress", adminWalletAddress);
+  //   if (loggedWalletAddress === adminWalletAddress) {
+  //     console.log("ISTI");
+  //   } else if (loggedWalletAddress !== adminWalletAddress) {
+  //     console.log("NISU ISTI");
+  //   }
+  // }
+
+  function submitHandlera() {
+    console.log("USAO U submitHandlera");
     asyncSubmitHandler();
-
     async function asyncSubmitHandler() {
-      console.log("ide gas");
-      let walletAddressAndPrizeMap = null;
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      let logedWalletAddress = accounts[0];
+      
+      logedWalletAddress = logedWalletAddress.toUpperCase();
+      let adminWalletAddressUpperCase = adminWalletAddress.toUpperCase();
+      
+      console.log("logedWalletAddress", logedWalletAddress);
+      console.log("adminWalletAddress", adminWalletAddressUpperCase);
+      console.log("logedWalletAddress type ", typeof(logedWalletAddress));
+      console.log("adminWalletAddress type ", typeof(adminWalletAddressUpperCase));
+      console.log("USAO U ASYNC submitHandler");
 
-      function logMapElements(value, key) {
-        returnFightIds.push(key);
-        returnWinnerIds.push(value[0]);
-        returnMethods.push(value[1]);
-      }
+      if (logedWalletAddress === adminWalletAddressUpperCase) {
+        console.log("ISTE WALLET ADRESE");
+        setPendingMessageHandler();
+        let walletAddressAndPrizeMap = null;
 
-      fightsResults.forEach(logMapElements);
+        function logMapElements(value, key) {
+          returnFightIds.push(key);
+          returnWinnerIds.push(value[0]);
+          returnMethods.push(value[1]);
+        }
 
-      console.log(returnFightIds);
-      console.log(returnWinnerIds);
-      console.log(returnMethods);
+        fightsResults.forEach(logMapElements);
 
-      (async () => {
-        const response = await fetch("http://127.0.0.1:8000/api/results/event", {
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          method: "put",
-          body: JSON.stringify({
-            fightIds: returnFightIds,
-            winnerIds: returnWinnerIds,
-            methods: returnMethods,
-          }),
-        });
-        const map = await response.json();
-        console.log("IDE CONTENT", map);
-        console.log("MAPA ", map);
+        console.log(returnFightIds);
+        console.log(returnWinnerIds);
+        console.log(returnMethods);
+
+        (async () => {
+          const response = await fetch(
+            "http://127.0.0.1:8000/api/results/event",
+            {
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              method: "put",
+              body: JSON.stringify({
+                fightIds: returnFightIds,
+                winnerIds: returnWinnerIds,
+                methods: returnMethods,
+              }),
+            }
+          );
+          const map = await response.json();
+          console.log("IDE CONTENT", map);
+          console.log("MAPA ", map);
           console.log("TIP MAPE ", typeof map);
           walletAddressAndPrizeMap = map;
           console.log("PRIMIO GA ", walletAddressAndPrizeMap);
@@ -353,75 +395,73 @@ function AddResultsForFightsList() {
           console.log("PRED FOR ", walletAddressAndPrizeMap);
           // for (let [key, value] of walletAddressAndPrizeMap) {
           for (const [key, value] of Object.entries(walletAddressAndPrizeMap)) {
-            console.log("from " + adminWalletAddress + " add " + value + "in " + key);
-            console.log("TIP ", typeof value);
+            console.log("pre roundinga ", value);
+            let roundedValue = Math.round(value * 100) / 100;
+              console.log("rounded value ", roundedValue);
+            console.log(
+              "from " + adminWalletAddress + " add " + roundedValue + "in " + key
+            );
+            console.log("TIP ", typeof roundedValue);
             // if(value !== 0) {
-            try {
+            
+            // try {
+              
+              setPendingMessageHandler();
               transferSuccess = await window.contract.methods
                 .transfer(
                   key,
-                  value * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
+                  roundedValue * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
                 )
                 .send({ from: adminWalletAddress });
-            } catch {
-              console.log("Transaction failed!");
-            }
-            console.log(transferSuccess);
-    
+            // } 
+            // catch {
+              // console.log("Transaction failed!");
+              // setErrorMessageHandler("Error while adding results!");
+              // return;
             // }
+            console.log(transferSuccess);
           }
-      })();
-
-      // axios({
-      //   method: "put",
-      //   url: "api/results/event",
-      //   data: {
-      //     fightIds: returnFightIds,
-      //     winnerIds: returnWinnerIds,
-      //     methods: returnMethods,
-      //   },
-      // })
-      //   .then((response) => {
-      //     console.log(response);
-      //     console.log("jesam tu sam");
-      //     let map = response.data; //key = walletAddress, value = amount of coins to add
-      //     console.log("MAPA ", map);
-      //     console.log("TIP MAPE ", typeof map);
-      //     walletAddressAndPrizeMap = map;
-      //     // console.log("PRIMIO GA ", walletAddressAndPrizeMap);
-      //     // setWalletAddressAndPrizeMap(map);
-
-      //     //
-      //     // console.log(mapa['a'])
-      //     // console.log(mapa[1])
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-
-      // let transferSuccess;
-      // console.log("PRED FOR ", walletAddressAndPrizeMap);
-      // // for (let [key, value] of walletAddressAndPrizeMap) {
-      // for (const [key, value] of Object.entries(walletAddressAndPrizeMap)) {
-      //   console.log("in " + key + " add " + value);
-      //   console.log("TIP ", typeof value);
-      //   // if(value !== 0) {
-      //   try {
-      //     transferSuccess = await window.contract.methods
-      //       .transfer(
-      //         key,
-      //         value * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
-      //       )
-      //       .send({ from: "0x7f78c74b3C360d9452E94051C302e491A042024f" });
-      //   } catch {
-      //     console.log("Transaction failed!");
-      //   }
-      //   console.log(transferSuccess);
-
-      //   // }
-      // }
+        })();
+        // setPendingMessage();
+        history.replace("/past-events-and-fights");
+      } else if (logedWalletAddress !== adminWalletAddressUpperCase) {
+        console.log("NISU ISTE WALLET ADRESE")
+        setErrorMessageHandler("Wrong metamask account!");
+        return;
+      }
     }
-    history.replace("/past-events-and-fights");
+  }
+
+  function setPendingMessageHandler() {
+    // setSuccessMessage("");
+    console.log("USAO U setPendingMessageHandler");
+    setPendingMessage("Transaction in progress, please wait.");
+    setErrorMessage("");
+  }
+
+  function setErrorMessageHandler(errMess) {
+    // setSuccessMessage("");
+    setPendingMessage("");
+    setErrorMessage(errMess);
+  }
+
+  let validation = <div></div>;
+  if (pendingMessage !== "" && errorMessage === "") {
+    validation = (
+      <div id="validation" className={classes.alert_warning}>
+        {pendingMessage}{" "}
+        <img
+          src="https://acegif.com/wp-content/uploads/loading-25.gif"
+          width="50"
+        ></img>
+      </div>
+    ); //https://i.stack.imgur.com/ATB3o.gif
+  } else if (pendingMessage === "" && errorMessage !== "") {
+    validation = (
+      <div id="validation" className={classes.alert_danger}>
+        {errorMessage}
+      </div>
+    );
   }
 
   return (
@@ -429,7 +469,8 @@ function AddResultsForFightsList() {
       <Card>
         <div className={classes.form}>
           <div className={classes.content}>
-            <h2>{location.state.eventName}</h2>
+            {validation}
+            <h2>{eventName}</h2>
           </div>
           <ul className={classes.list}>
             {fights.map((fight) => (
@@ -445,7 +486,9 @@ function AddResultsForFightsList() {
             ))}
           </ul>
           <div className={classes.actions}>
-            <button onClick={submitHandler}>Add result</button>
+            <a href="#validation">
+              <button onClick={submitHandlera}>Add result</button>
+            </a>
           </div>
         </div>
       </Card>

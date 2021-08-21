@@ -289,6 +289,22 @@ function InactiveUserItem(props) {
   //   }
 
   async function makeUserActive() {
+    let transferSuccess;
+        try {
+          props.setPendingMessageItem();
+          transferSuccess = await window.contract.methods
+            .transfer(
+              props.wallet_address,
+              100 * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
+            )
+            .send({ from: adminWalletAddress });
+        } catch {
+          props.setErrorMessageItem();
+          console.log("Transaction failed!");
+          return 0;
+        }
+        props.setSuccessMessageItem();
+        console.log(transferSuccess);
     (async () => {
       const response = await fetch("http://127.0.0.1:8000/api/user/active", {
         headers: { "Content-Type": "application/json" },
@@ -300,22 +316,11 @@ function InactiveUserItem(props) {
       });
       const user = await response.json();
       console.log("USER U INACTIVE ", user);
-      let transferSuccess;
-        try {
-          transferSuccess = await window.contract.methods
-            .transfer(
-              user.wallet_address,
-              100 * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
-            )
-            .send({ from: adminWalletAddress });
-        } catch {
-          console.log("Transaction failed!");
-        }
-        console.log(transferSuccess);
       }
     )();
     props.newInactiveUsers();
   }
+
 
   return (
     <div>
@@ -323,14 +328,12 @@ function InactiveUserItem(props) {
         <div>Loading...</div>
       ) : (
         <div className={classes.fight}>
-          {/* <div className={classes.actions}> */}
           <div>
             {props.name} {props.surname}
           </div>
           <div>
             <button onClick={makeUserActive}>Make User Active</button>
           </div>
-          {/* </div> */}
         </div>
       )}
     </div>
