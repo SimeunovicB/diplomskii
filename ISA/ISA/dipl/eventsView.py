@@ -101,9 +101,9 @@ class AddResultsForEvent(APIView):
             return_price_for_one_fight = dealing_with_bets(fight);
             for key in return_price_for_one_fight:
                 if key not in walletAddresAndPrizeMap:
-                    walletAddresAndPrizeMap[key] = return_price_for_one_fight[key];
+                    walletAddresAndPrizeMap[key] = round(return_price_for_one_fight[key],2);
                 elif key in walletAddresAndPrizeMap:
-                    walletAddresAndPrizeMap[key] = walletAddresAndPrizeMap[key] + return_price_for_one_fight[key];
+                    walletAddresAndPrizeMap[key] = round(walletAddresAndPrizeMap[key],2) + round(return_price_for_one_fight[key],2);
             i = i + 1;
         print(walletAddresAndPrizeMap);
         response = Response(
@@ -124,6 +124,7 @@ def dealing_with_bets(fight):
             bet.success = "success";
             if fight.redCornerFighter.id == fight.winner_id:
                 coins_won = bet.stake / fight.redCornerOdds * 100;
+                coins_won = round(coins_won, 2);
                 user = bet.user;
                 user.coins = user.coins + round(coins_won, 2);
                 user.save();
