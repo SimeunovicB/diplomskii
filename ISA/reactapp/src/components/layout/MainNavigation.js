@@ -91,7 +91,7 @@ function MainNavigation(props) {
   }
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>Diplomski</div>
+      <div className={classes.logo}>Thesis</div>
       <nav>
         <ul>
           {login}

@@ -410,7 +410,7 @@ function AddResultsForFightsList() {
               transferSuccess = await window.contract.methods
                 .transfer(
                   key,
-                  roundedValue * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
+                  value.toFixed(2) * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
                 )
                 .send({ from: adminWalletAddress });
             // } 
