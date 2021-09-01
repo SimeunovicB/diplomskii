@@ -1,11 +1,9 @@
 import classes from "./InactiveUserItem.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import Web3 from "web3";
 
 function InactiveUserItem(props) {
-  const history = useHistory();
 
   const [isLoading, setIsLoading] = useState(false);
   const [adminWalletAddress, setAdminWalletAddress] = useState("");
