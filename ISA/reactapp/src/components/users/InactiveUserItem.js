@@ -332,7 +332,7 @@ function InactiveUserItem(props) {
             {props.name} {props.surname}
           </div>
           <div>
-            <button onClick={makeUserActive}>Make User Active</button>
+            <button onClick={makeUserActive}>Activate</button>
           </div>
         </div>
       )}

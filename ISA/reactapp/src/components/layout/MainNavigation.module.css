@@ -5,13 +5,13 @@
     align-items: center;
     justify-items: center;
     justify-content: space-between;
-    background-color: #77002e;
+    background-color: #86C232;
     padding: 0 10%;
 }
 
 .logo {
     font-size: 2rem;
-    color: white;
+    color: #222629;
     font-weight: bold;
 }
 
@@ -30,13 +30,13 @@
 .header a {
     text-decoration: none;
     font-size: 1.5rem;
-    color: #fcb8d2;
+    color: #222629;
 }
 
 .header a:hover,
 .header a:active,
 .header a.active {
-    color: white;
+    color: #222629;
 }
 
 .badge {

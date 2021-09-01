@@ -38,7 +38,7 @@ function NewEventForm(props) {
           <input type="time" required id="time" ref={timeInputRef} />
         </div>
         <div className={classes.actions}>
-          <button>Add Event</button>
+          <button>Submit</button>
         </div>
       </form>
     </Card>

@@ -2,6 +2,7 @@ import BetList from "../bets/BetList";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import classes from "./MyBets.module.css";
+import Card from "../ui/Card";
 
 function MyBets(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +66,7 @@ function MyBets(props) {
 
   return (
     <div>
+      <Card>
       {/* <h1>My bets</h1> */}
       {upcomingBets.length === 0 &&
       successfulBets.length === 0 &&
@@ -81,6 +83,7 @@ function MyBets(props) {
           isLoading={isLoading}
         />
       )}
+      </Card>
     </div>
   );
 }

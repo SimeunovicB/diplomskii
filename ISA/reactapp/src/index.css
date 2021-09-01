@@ -5,7 +5,12 @@
 body {
   font-family: sans-serif;
   margin: 3rem;
-  background-color: #dfdfdf;
+  background-color: black;
+  /* background-image: url("https://i.postimg.cc/qvz9s70f/262315.jpg"); */
+  /* background-image: url("https://wallpaperaccess.com/full/262364.jpg"); */
+  background-image: url("https://i0.wp.com/www.definewireless.com/wp-content/uploads/2018/04/mma-background-9.jpg?fit=1200%2C750&ssl=1");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 h1, h2 {

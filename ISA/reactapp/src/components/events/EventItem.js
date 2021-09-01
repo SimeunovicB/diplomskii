@@ -23,11 +23,11 @@ function EventItem(props) {
             <div className={classes.father}>
               <div className={classes.first}>
                 <button onClick={showFightsForEvent}>
-                  View fights on event
+                  View fights
                 </button>
               </div>
               <div className={classes.second}>
-                <button onClick={addFight}>Add Fight For Event</button>
+                <button onClick={addFight}>Add Fights</button>
               </div>
             </div>
           </div>

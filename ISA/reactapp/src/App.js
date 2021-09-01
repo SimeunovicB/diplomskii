@@ -27,7 +27,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./components/layout/Layout";
 import { Route, Switch } from "react-router-dom";
-import Home from "./components/pages/Home";
 import AllFighters from "./components/pages/AllFighters";
 import NewFighter from "./components/pages/NewFighter";
 import Login from "./components/pages/Login";
@@ -385,6 +384,7 @@ function App() {
         </Switch>
       </Layout>
     </div>
+    // </div>
   );
 }
 

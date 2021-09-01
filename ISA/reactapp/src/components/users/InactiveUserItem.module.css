@@ -53,14 +53,27 @@
   font: inherit;
   font-size: 15px;
   cursor: pointer;
-  color: #77002e;
-  border: 1px solid #77002e;
-  background-color: transparent;
+  background-color: #86C232;
+  border: 1px solid #86C232;
+  color: white;
   padding: 0.5rem 1.5rem;
   border-radius: 4px;
+  font-weight: bold;
 }
 
 .fight button:hover,
 .fight button:active {
-  background-color: #ffe2ed;
+  background-color: #97d63e;
+  border-color: #97d63e;
 }
+
+/* .actions button {
+  font: inherit;
+  cursor: pointer;
+  background-color: #86C232;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #86C232;
+  border-radius: 4px;
+  font-weight: bold;
+} */

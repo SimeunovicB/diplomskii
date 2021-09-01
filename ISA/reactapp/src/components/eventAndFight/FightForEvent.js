@@ -79,7 +79,7 @@ function FightForEvent(props) {
   }
   else if (props.userId && props.userId !== 1) {
     betOnFightButton = (
-      <div>
+      <div className={classes.actions}>
         <button onClick={makeABetHandler}>Bet on fight</button>
       </div>
     );

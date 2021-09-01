@@ -79,7 +79,9 @@ function EventFights(props) {
 
   return (
     <div>
-      <h2>Fights for {props.eventName} event</h2>
+      <div className={classes.header}>
+        <h2>Fights for {props.eventName} event</h2>
+      </div>
       <FightList fights={loadedFights} />
       <div className={classes.actions}>
         <button onClick={goBackToEventsAction}>Back to events</button>

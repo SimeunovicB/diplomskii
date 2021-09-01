@@ -78,11 +78,13 @@ function Register() {
             data: {
               userId: user.id,
             },
-          }).then((response) => {
-            console.log(response);
-          }).catch(error => {
-            console.log(error);
           })
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
         history.replace("/login");
       });
@@ -95,8 +97,10 @@ function Register() {
   return (
     <div>
       <Card>
+        <div className={classes.header}>
+          <h1>Registration</h1>
+        </div>
         <form className={classes.form} onSubmit={submitHandler}>
-          <h1 className="h3 mb-3 fw-normal">Registration</h1>
           <div className={classes.control}>
             <label htmlFor="floatingInput">Name</label>
             <input

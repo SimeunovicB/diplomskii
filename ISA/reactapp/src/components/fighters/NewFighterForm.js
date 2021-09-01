@@ -127,7 +127,7 @@ function NewFighterForm(props) {
           <input type="number" required id="reach" ref={reachInputRef} />
         </div>
         <div className={classes.actions}>
-          <button onClick={submitHandler}>Add Fighter</button>
+          <button onClick={submitHandler}>Submit</button>
         </div>
         {/* </form> */}
       </div>
