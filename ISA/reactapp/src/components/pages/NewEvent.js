@@ -2,14 +2,29 @@ import { useHistory } from "react-router-dom";
 import NewEventForm from "../events/NewEventForm";
 import axios from "axios";
 import Card from "../ui/Card";
+import { useState, useEffect } from 'react';
 import classes from "./NewEvent.module.css";
 
 function NewEvent() {
   const history = useHistory();
+
+  const [userId, setUserId] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/user", {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const content = await response.json();
+      setUserId(content.id);
+    })();
+  }, []);
+
   function addEventHandler(eventData) {
     axios({
       method: "post",
-      url: "events/",
+      url: "events/?userId=" + userId,
       data: {
         name: eventData.name,
         date: eventData.date,

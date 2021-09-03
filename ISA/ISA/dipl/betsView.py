@@ -4,6 +4,7 @@ from .serializers import BetSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from .permissions import AddBetPermission;
 
 class BetViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
@@ -12,6 +13,8 @@ class BetViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         print("tako to ide buraz");
+        if AddBetPermission.has_permission(self,request) == False:
+            return Response({"detail": "You don't have permission to add a bet."}, status=401)
         print(request.data);
         fight_id = request.data["fight"];
         fight = Fight.objects.get(id=fight_id);

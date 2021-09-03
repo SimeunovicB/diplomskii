@@ -440,6 +440,8 @@ function AddBet(props) {
       // throw "You don't have enough Perpers for transaction";
       setErrorMessageHandler("You don't have enough perper!");
       return;
+    } else if(props.user.id === null || props.user.id === 1) {
+      setErrorMessageHandler("You don't have permission to add a bet.");
     } else {
       console.log("fight ", location.state.fightId);
       console.log("predicted_winner ", selectedOptionWinner.value);
@@ -489,11 +491,6 @@ function AddBet(props) {
   //   setErrorMessage("");
   // }
 
-  useEffect(() => {
-    console.log("I DE MO")  
-  }, [potentialWin])
-
-  const forceUpdateComponent = useCallback(() => setPotentialWin(10), []);
 
   function betBlur() {
     console.log("betBlur")
@@ -512,10 +509,6 @@ function AddBet(props) {
         oddsRef.current.value = (stakeInputRef.current.value * blueCornerOdds).toFixed(2);
       }
     }
-  }
-
-  function proba() {
-    console.log("ide gass")
   }
 
 

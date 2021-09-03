@@ -48,7 +48,7 @@ class User(AbstractUser):
     password = models.CharField(max_length = 255)
     username = models.CharField(max_length=255, unique = True)
     wallet_address = models.CharField(max_length = 255, default="Wallet address")
-    coins = models.FloatField(default = 100)
+    is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     REQUIRED_FIELDS = []
 

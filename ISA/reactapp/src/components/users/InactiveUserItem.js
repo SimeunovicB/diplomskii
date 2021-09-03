@@ -4,12 +4,23 @@ import { useState, useEffect } from "react";
 import Web3 from "web3";
 
 function InactiveUserItem(props) {
-
   const [isLoading, setIsLoading] = useState(false);
   const [adminWalletAddress, setAdminWalletAddress] = useState("");
+  const [userId, setUserId] = useState();
 
   console.log("PROPS InactiveUserItem ", props);
   console.log(props.id);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/user", {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const content = await response.json();
+      setUserId(content.id);
+    })();
+  }, []);
 
   useEffect(() => {
     axios({
@@ -288,37 +299,43 @@ function InactiveUserItem(props) {
 
   async function makeUserActive() {
     let transferSuccess;
-        try {
-          props.setPendingMessageItem();
-          transferSuccess = await window.contract.methods
-            .transfer(
-              props.wallet_address,
-              100 * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
-            )
-            .send({ from: adminWalletAddress });
-        } catch {
-          props.setErrorMessageItem();
-          console.log("Transaction failed!");
-          return 0;
-        }
-        props.setSuccessMessageItem();
-        console.log(transferSuccess);
+    if (userId !== 1) {
+      console.log("Unauthoritized!")
+      props.setErrorMessageItem();
+      return 0;
+    }
+    try {
+      props.setPendingMessageItem();
+      transferSuccess = await window.contract.methods
+        .transfer(
+          props.wallet_address,
+          100 * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
+        )
+        .send({ from: adminWalletAddress });
+    } catch {
+      props.setErrorMessageItem();
+      console.log("Transaction failed!");
+      return 0;
+    }
+    props.setSuccessMessageItem();
+    console.log(transferSuccess);
     (async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/user/active", {
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        method: "put",
-        body: JSON.stringify({
-            userId: props.id
-        }),
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/user/active?adminId=" + userId,
+        {
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          method: "put",
+          body: JSON.stringify({
+            userId: props.id,
+          }),
+        }
+      );
       const user = await response.json();
       console.log("USER U INACTIVE ", user);
-      }
-    )();
+    })();
     props.newInactiveUsers();
   }
-
 
   return (
     <div>

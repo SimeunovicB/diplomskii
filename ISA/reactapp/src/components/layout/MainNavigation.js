@@ -56,6 +56,13 @@ function MainNavigation(props) {
         <Link to="/my-bets">My bets</Link>
       </li>
     );
+    // upcomingFights = (
+    //   <li>
+    //     <Link to="/">Upcoming fights</Link>
+    //   </li>
+    // );
+  }
+  if(props.id !== 1) {
     upcomingFights = (
       <li>
         <Link to="/">Upcoming fights</Link>
