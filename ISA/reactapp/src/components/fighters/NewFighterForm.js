@@ -87,11 +87,11 @@ function NewFighterForm(props) {
       > */}
       <div className={classes.form}>
         <div className={classes.control}>
-          <label htmlFor="name">Fighter Name</label>
+          <label htmlFor="name">Name</label>
           <input type="text" required id="title" ref={nameInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="surname">Fighter Surname</label>
+          <label htmlFor="surname">Surname</label>
           <input type="text" required id="surname" ref={surnameInputRef} />
         </div>
         {/* <div className={classes.control}>
@@ -99,35 +99,35 @@ function NewFighterForm(props) {
           <input type="file" id="img" name="img" accept="image/*"></input>
         </div> */}
         <div className={classes.control}>
-          <label htmlFor="img">Fighter Image</label>
+          <label htmlFor="img">Image</label>
           <ImageUpload onAddImage={addImageHandler} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="wins">Fighter Wins</label>
+          <label htmlFor="wins">Wins</label>
           <input type="number" required id="wins" ref={winsInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="losses">Fighter Losses</label>
+          <label htmlFor="losses">Losses</label>
           <input type="number" required id="losses" ref={lossesInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="age">Fighter Age</label>
+          <label htmlFor="age">Age</label>
           <input type="number" required id="age" ref={ageInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="height">Fighter Height(cm)</label>
+          <label htmlFor="height">Height(cm)</label>
           <input type="number" required id="height" ref={heightInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="weight">Fighter Weight(kg)</label>
+          <label htmlFor="weight">Weight(kg)</label>
           <input type="number" required id="weight" ref={weightInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="reach">Fighter Reach(cm)</label>
+          <label htmlFor="reach">Reach(cm)</label>
           <input type="number" required id="reach" ref={reachInputRef} />
         </div>
         <div className={classes.actions}>
-          <button onClick={submitHandler}>Add Fighter</button>
+          <button onClick={submitHandler}>Submit</button>
         </div>
         {/* </form> */}
       </div>

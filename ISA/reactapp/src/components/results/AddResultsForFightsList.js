@@ -17,6 +17,7 @@ function AddResultsForFightsList() {
 
   const [eventId, setEventId] = useState("");
   const [eventName, setEventName] = useState("");
+  const [userId, setUserId] = useState();
 
   useEffect(() => {
     if (location.state) {
@@ -53,6 +54,19 @@ function AddResultsForFightsList() {
         console.log(error);
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/user", {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      const content = await response.json();
+      console.log("IDE CONTENT", content);
+      setUserId(content.id);
+    })();
+  }, []);
 
   useEffect(() => {
     axios({
@@ -338,74 +352,87 @@ function AddResultsForFightsList() {
 
   function submitHandlera() {
     console.log("USAO U submitHandlera");
+
     asyncSubmitHandler();
     async function asyncSubmitHandler() {
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      let logedWalletAddress = accounts[0];
-      
-      logedWalletAddress = logedWalletAddress.toUpperCase();
-      let adminWalletAddressUpperCase = adminWalletAddress.toUpperCase();
-      
-      console.log("logedWalletAddress", logedWalletAddress);
-      console.log("adminWalletAddress", adminWalletAddressUpperCase);
-      console.log("logedWalletAddress type ", typeof(logedWalletAddress));
-      console.log("adminWalletAddress type ", typeof(adminWalletAddressUpperCase));
-      console.log("USAO U ASYNC submitHandler");
+      if (userId === 1) {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        let logedWalletAddress = accounts[0];
 
-      if (logedWalletAddress === adminWalletAddressUpperCase) {
-        console.log("ISTE WALLET ADRESE");
-        setPendingMessageHandler();
-        let walletAddressAndPrizeMap = null;
+        logedWalletAddress = logedWalletAddress.toUpperCase();
+        let adminWalletAddressUpperCase = adminWalletAddress.toUpperCase();
 
-        function logMapElements(value, key) {
-          returnFightIds.push(key);
-          returnWinnerIds.push(value[0]);
-          returnMethods.push(value[1]);
-        }
+        console.log("logedWalletAddress", logedWalletAddress);
+        console.log("adminWalletAddress", adminWalletAddressUpperCase);
+        console.log("logedWalletAddress type ", typeof logedWalletAddress);
+        console.log(
+          "adminWalletAddress type ",
+          typeof adminWalletAddressUpperCase
+        );
+        console.log("USAO U ASYNC submitHandler");
 
-        fightsResults.forEach(logMapElements);
+        if (logedWalletAddress === adminWalletAddressUpperCase) {
+          console.log("ISTE WALLET ADRESE");
+          setPendingMessageHandler();
+          let walletAddressAndPrizeMap = null;
 
-        console.log(returnFightIds);
-        console.log(returnWinnerIds);
-        console.log(returnMethods);
+          function logMapElements(value, key) {
+            returnFightIds.push(key);
+            returnWinnerIds.push(value[0]);
+            returnMethods.push(value[1]);
+          }
 
-        (async () => {
-          const response = await fetch(
-            "http://127.0.0.1:8000/api/results/event",
-            {
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              method: "put",
-              body: JSON.stringify({
-                fightIds: returnFightIds,
-                winnerIds: returnWinnerIds,
-                methods: returnMethods,
-              }),
-            }
-          );
-          const map = await response.json();
-          console.log("IDE CONTENT", map);
-          console.log("MAPA ", map);
-          console.log("TIP MAPE ", typeof map);
-          walletAddressAndPrizeMap = map;
-          console.log("PRIMIO GA ", walletAddressAndPrizeMap);
-          let transferSuccess;
-          console.log("PRED FOR ", walletAddressAndPrizeMap);
-          // for (let [key, value] of walletAddressAndPrizeMap) {
-          for (const [key, value] of Object.entries(walletAddressAndPrizeMap)) {
-            console.log("pre roundinga ", value);
-            let roundedValue = Math.round(value * 100) / 100;
-              console.log("rounded value ", roundedValue);
-            console.log(
-              "from " + adminWalletAddress + " add " + roundedValue + "in " + key
+          fightsResults.forEach(logMapElements);
+
+          console.log(returnFightIds);
+          console.log(returnWinnerIds);
+          console.log(returnMethods);
+
+          (async () => {
+            const response = await fetch(
+              "http://127.0.0.1:8000/api/results/event",
+              {
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                method: "put",
+                body: JSON.stringify({
+                  adminId: userId,
+                  fightIds: returnFightIds,
+                  winnerIds: returnWinnerIds,
+                  methods: returnMethods,
+                }),
+              }
             );
-            console.log("TIP ", typeof roundedValue);
-            // if(value !== 0) {
-            
-            // try {
-              
+            const map = await response.json();
+            console.log("IDE CONTENT", map);
+            console.log("MAPA ", map);
+            console.log("TIP MAPE ", typeof map);
+            walletAddressAndPrizeMap = map;
+            console.log("PRIMIO GA ", walletAddressAndPrizeMap);
+            let transferSuccess;
+            console.log("PRED FOR ", walletAddressAndPrizeMap);
+            // for (let [key, value] of walletAddressAndPrizeMap) {
+            for (const [key, value] of Object.entries(
+              walletAddressAndPrizeMap
+            )) {
+              console.log("pre roundinga ", value);
+              let roundedValue = Math.round(value * 100) / 100;
+              console.log("rounded value ", roundedValue);
+              console.log(
+                "from " +
+                  adminWalletAddress +
+                  " add " +
+                  roundedValue +
+                  "in " +
+                  key
+              );
+              console.log("TIP ", typeof roundedValue);
+              // if(value !== 0) {
+
+              // try {
+
               setPendingMessageHandler();
               transferSuccess = await window.contract.methods
                 .transfer(
@@ -413,21 +440,25 @@ function AddResultsForFightsList() {
                   roundedValue * 100 //ovde ide puta 100 zbog dve decimale iza zagrade kod Perper-a
                 )
                 .send({ from: adminWalletAddress });
-            // } 
-            // catch {
+              // }
+              // catch {
               // console.log("Transaction failed!");
               // setErrorMessageHandler("Error while adding results!");
               // return;
-            // }
-            console.log(transferSuccess);
-          }
-        })();
-        // setPendingMessage();
-        history.replace("/past-events-and-fights");
-      } else if (logedWalletAddress !== adminWalletAddressUpperCase) {
-        console.log("NISU ISTE WALLET ADRESE")
-        setErrorMessageHandler("Wrong metamask account!");
-        return;
+              // }
+              console.log(transferSuccess);
+            }
+          })();
+          // setPendingMessage();
+          history.replace("/past-events-and-fights");
+        } else if (logedWalletAddress !== adminWalletAddressUpperCase) {
+          console.log("NISU ISTE WALLET ADRESE");
+          setErrorMessageHandler("Wrong metamask account!");
+          return;
+        }
+      } else {
+        console.log("Authorization!")
+        setErrorMessageHandler("You don't have permissions to add results!");
       }
     }
   }

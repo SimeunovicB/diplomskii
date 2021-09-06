@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from datetime import datetime
+from .permissions import AddResultsPermission
 
 class EventTestView(APIView):
     def get(self, request, format=None, *args, **kwargs):
@@ -70,6 +71,8 @@ class AddResultsForEvent(APIView):
     def put(self, request, format=None, *args, **kwargs):
         walletAddresAndPrizeMap = dict({})
         print("AddResultsForEvent")
+        if AddResultsPermission.has_permission(self,request) == False:
+            return Response({"detail": "You don't have permission to add results."}, status=401)
         print(request.data["fightIds"]);
         print(request.data["winnerIds"]);
         print(request.data["methods"]);

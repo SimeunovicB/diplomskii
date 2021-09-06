@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PastEventAndFightList from "../eventAndFight/PastEventAndFightList";
+import Card from "../ui/Card";
+import classes  from "./PastEventsAndFights.module.css"
 
 function PastEventsAndFights() {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,9 +37,13 @@ function PastEventsAndFights() {
 
   return (
     <div>
-      <h1>Past events</h1>
-      <PastEventAndFightList events={loadedEvents} />
-      {/* <PastEventAndFightList events={loadedEvents} /> */}
+      <Card>
+        <div className={classes.header}>
+        <h1>Past events</h1>
+        </div>
+        <PastEventAndFightList events={loadedEvents} />
+        {/* <PastEventAndFightList events={loadedEvents} /> */}
+      </Card>
     </div>
   );
 }

@@ -85,6 +85,7 @@ function BetItem(props) {
   let predictedWinnerShow = null;
   let betStatusShow = null;
   let priceShow = null;
+  let potentialWin = <div></div>
 
   if (props.success === "success" || props.success === "failure") {
     if (winnerId === redCornerFighterId) {
@@ -110,20 +111,28 @@ function BetItem(props) {
 
   if(props.success === "upcoming") {
     betStatusShow = <div><b>Bet status: Pending</b></div>
-    priceShow = <div>Bet amount {props.stake}</div>
+    priceShow = <div>Bet amount {props.stake} PER</div>
+    if(props.predicted_winner === redCornerFighterId) {
+      let amountWon = props.stake/redCornerFighterOdds*100;
+      amountWon = amountWon.toFixed(2);
+      potentialWin = <div>Your potential prize is {amountWon} PER</div>
+    } else if(props.predicted_winner === blueCornerFighterId) {
+      let amountWon = props.stake/blueCornerFighterOdds*100;
+      amountWon = amountWon.toFixed(2);
+      potentialWin = <div>Your potential prize is {amountWon} PER</div>    }
   } else if(props.success === "success") {
     betStatusShow = <div><b>Bet status: Success</b></div>
     if(props.predicted_winner === redCornerFighterId) {
       let amountWon = props.stake/redCornerFighterOdds*100;
       amountWon = amountWon.toFixed(2);
-      priceShow = <div>You won {amountWon}</div>
+      priceShow = <div>You won {amountWon} PER</div>
     } else if(props.predicted_winner === blueCornerFighterId) {
       let amountWon = props.stake/blueCornerFighterOdds*100;
       amountWon = amountWon.toFixed(2);
-      priceShow = <div>You won {amountWon}</div>    }
+      priceShow = <div>You won {amountWon} PER</div>    }
   } else if(props.success === "failure") {
     betStatusShow = <div><b>Bet status: Failure</b></div>
-    priceShow = <div>You lost {props.stake}</div>
+    priceShow = <div>You lost {props.stake} PER</div>
   }
 
   // } else if (props.success === "failure") {
@@ -159,6 +168,7 @@ function BetItem(props) {
           {winnerShow}
           {predictedWinnerShow}
           {priceShow}
+          {potentialWin}
           {betStatusShow}
           {/* <h3>
             {redCornerFighter.name} {redCornerFighter.surname} vs{" "}

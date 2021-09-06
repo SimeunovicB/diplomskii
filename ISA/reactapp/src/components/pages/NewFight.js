@@ -1,6 +1,7 @@
 import NewFightForm from "../fights/NewFightForm";
 import axios from 'axios';
 import classes from "./NewFight.module.css"
+import { useState, useEffect } from 'react';
 
 
 function NewFight(props) {
@@ -9,12 +10,26 @@ function NewFight(props) {
   console.log("NEW FIGHT KONACNO", props.eventId);
 
 
+  const [userId, setUserId] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/user", {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const content = await response.json();
+      setUserId(content.id);
+    })();
+  }, []);
+
+
   function addFightHandler(fightData) {
     console.log("redCornerFighter ", fightData.redCornerFighter);
     console.log("blueCornerFighter ", fightData.blueCornerFighter);
     axios({
       method: "post",
-      url: "fights/",
+      url: "fights/?userId=" + userId,
       data: {
         redCornerFighter: fightData.redCornerFighter,
         blueCornerFighter: fightData.blueCornerFighter,

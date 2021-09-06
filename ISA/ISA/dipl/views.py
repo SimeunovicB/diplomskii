@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
+from .permissions import HasPermission, HasNoPermission, AdminViewSetPermission, MakeUserActivePermission;
 import jwt, datetime
 
 class RegisterView(APIView):
@@ -16,47 +17,31 @@ class RegisterView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+
 class LoginView(APIView):
     def post(self, request):
-        print("ide gas")
-        # username = request.data['username']
-        # password = request.data['password']
         username = request.data['enteredUsername']
         password = request.data['enteredPassword']
-        print(username)
-        print(password)
-
         user = User.objects.filter(username=username).first()
-
         if user is None:
             raise AuthenticationFailed('User not found!')
         if not user.check_password(password):
             raise AuthenticationFailed('Incorrect password!')
-
         print("USER")
         print(user)
-
         payload = {
             'id': user.id,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes = 60),
             'iat': datetime.datetime.utcnow()
         }
-
         print("PAYLOAD")
         print(payload)
-
-
         token = jwt.encode(payload, "secret", algorithm="HS256")
         print(token)
-
         response = Response( { 'jwt' : token })
-        print("Ide")
-        # response.set_cookie(key='jwt', value=token, httponly=True, secure=True, samesite=None)
         response.set_cookie(key='jwt', value=token, httponly=True, secure=True, samesite='None')
-        print("Gas")
-
         return response;
-        # return Response({ 'jwt' : token })
+
 
 class UserView(APIView):
     def get(self, request):
@@ -98,7 +83,7 @@ class FighterViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BasicAuthentication,)
     # permission_classes = (HasPermission,)
     # authentication_classes = (IsAuthenticated,)
-    permission_classes = (AllowAny,)
+    permission_classes = (AdminViewSetPermission,)
     queryset = Fighter.objects.all()
     serializer_class = FighterSerializer
 
@@ -132,7 +117,7 @@ class FightViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BasicAuthentication,)
     # permission_classes = (HasPermission,)
     # authentication_classes = (IsAuthenticated,)
-    permission_classes = (AllowAny,)
+    permission_classes = (AdminViewSetPermission,)
     queryset = Fight.objects.all()
     serializer_class = FightSerializer
 
@@ -163,6 +148,7 @@ class FightViewSet(viewsets.ModelViewSet):
 
 class EventViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
+    permission_classes = (AdminViewSetPermission,)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
@@ -278,6 +264,7 @@ class GetFighters(APIView):
 class GetFightsForEvent(APIView):
     def get(self, request, format=None, *args, **kwargs):
         queryset = [];
+        permission_classes = (HasPermission,)
         eventId = request.query_params['eventId'];
         event = Event.objects.get(id=eventId);
         fightsFromEvent = event.fight_set.all();
@@ -318,6 +305,8 @@ class GetInactiveUsers(APIView):
 class MakeUserActive(APIView):
     def put(self, request, format=None, *args, **kwargs):
         print("MakeUserActive");
+        if MakeUserActivePermission.has_permission(self,request) == False:
+            return Response({"detail": "You don't have permission to make a user active."}, status=401)
         user_id = request.data["userId"];
         user = User.objects.get(id=user_id);
         user.is_active = True;
@@ -350,7 +339,7 @@ class GetUserAdmin(APIView):
 
 class NumberOfUsers(APIView):
     def get(self, request, format=None, *args, **kwargs):
-        print("IsUserAdmin");
+        print("NumberOfUsers");
         isUserFirst = "no";
         numberOfUsers = len(User.objects.all());
         if numberOfUsers == 0:
@@ -363,6 +352,12 @@ class TestView(APIView):
     def get(self, request, format=None, *args, **kwargs):
         print("TEST VIEW")
         print(request);
+        a = 1;
+        b = "1";
+        if a == b:
+            print("a = b");
+        elif a != b:
+            print("a != b")
         response = Response(
             # serializer_class.data,
             "TEST VIEW",

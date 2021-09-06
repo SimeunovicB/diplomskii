@@ -6,8 +6,13 @@ import Select from "react-select";
 import { useLocation, useHistory } from "react-router-dom";
 import Web3 from "web3";
 
+import {useCallback} from 'react';
+
 function AddBet(props) {
   const location = useLocation();
+
+  const oddsRef = useRef();
+
   console.log("LOCATION ", location.state);
 
   const history = useHistory();
@@ -52,6 +57,11 @@ function AddBet(props) {
   const [redCornerFighterReach, setRedCornerFighterReach] = useState(null);
   const [blueCornerFighterReach, setBlueCornerFighterReach] = useState(null);
 
+  const [redCornerOdds, setRedCornerOdds] = useState(null);
+  const [blueCornerOdds, setBlueCornerOdds] = useState(null);
+
+  const [potentialWin, setPotentialWin] = useState(0);
+
   const [loadedFighters, setLoadedFighters] = useState([]);
 
   // const [successMessage, setSuccessMessage] = useState(
@@ -74,6 +84,20 @@ function AddBet(props) {
       setWalletAddress(content.wallet_address);
     })();
   }, []);
+
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "fights/" + location.state.fightId,
+    }).then((response) => {
+      console.log("FIGHT U ADD BET ", response.data);
+      let redCornerPercentageOdds = response.data.redCornerOdds;
+      setRedCornerOdds((100/redCornerPercentageOdds).toFixed(2));
+      let blueCornerPercentageOdds = 100 - redCornerPercentageOdds;
+      setBlueCornerOdds((100/blueCornerPercentageOdds).toFixed(2));
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
   useEffect(() => {
@@ -416,6 +440,8 @@ function AddBet(props) {
       // throw "You don't have enough Perpers for transaction";
       setErrorMessageHandler("You don't have enough perper!");
       return;
+    } else if(props.user.id === null || props.user.id === 1) {
+      setErrorMessageHandler("You don't have permission to add a bet.");
     } else {
       console.log("fight ", location.state.fightId);
       console.log("predicted_winner ", selectedOptionWinner.value);
@@ -464,6 +490,27 @@ function AddBet(props) {
   //   setPendingMessage("");
   //   setErrorMessage("");
   // }
+
+
+  function betBlur() {
+    console.log("betBlur")
+    let redFighterNameAndSurname = redCornerFighterName + " " + redCornerFighterSurname;
+    let blueFighterNameAndSurname = blueCornerFighterName + " " + blueCornerFighterSurname;
+    console.log("POTENTIAL TO WIN ", potentialWin)
+    // 
+    console.log("POTENTIAL TO WIN ", potentialWin)
+    if(selectedOptionWinner != null && stakeInputRef.current.value !== null) {
+      console.log(selectedOptionWinner.label);
+      if(selectedOptionWinner.label === redFighterNameAndSurname) {
+        console.log("crveni");
+        oddsRef.current.value = (stakeInputRef.current.value * redCornerOdds).toFixed(2);
+      } else if(selectedOptionWinner.label === blueFighterNameAndSurname) {
+        console.log("plavi");
+        oddsRef.current.value = (stakeInputRef.current.value * blueCornerOdds).toFixed(2);
+      }
+    }
+  }
+
 
   function setPendingMessageHandler() {
     // setSuccessMessage("");
@@ -525,6 +572,15 @@ function AddBet(props) {
       </div>
       <div className={classes.father}>
         <div className={classes.red}>
+          {redCornerOdds}
+        </div>
+        <div className={classes.atribute}><b>Odds</b></div>
+        <div className={classes.blue}>
+          {blueCornerOdds}
+        </div>
+      </div>
+      <div className={classes.father}>
+        <div className={classes.red}>
           {redCornerFighterWins}W : {redCornerFighterLosses}L
         </div>
         <div className={classes.atribute}><b>Record</b></div>
@@ -553,7 +609,7 @@ function AddBet(props) {
         <div className={classes.blue}>{blueCornerFighterReach}cm</div>
       </div>
 
-      <div className={classes.form}>
+      <div className={classes.form} onClick={betBlur}>
         <div className={classes.control}>
           <label htmlFor="redCornerFighter">Winner prediction</label>
           <div>
@@ -561,13 +617,27 @@ function AddBet(props) {
               defaultValue={selectedOptionWinner}
               onChange={setSelectedOptionWinner}
               options={loadedFighters}
+              onBlur={betBlur}
             />
           </div>
         </div>
         <div className={classes.control}>
           <label htmlFor="age">Amount of PER to bet</label>
-          <input type="number" required id="stake" ref={stakeInputRef} />
+          <input type="number" required id="stake" onChange={betBlur} onBlur={betBlur} ref={stakeInputRef} />
         </div>
+        {/* <div className={classes.control}>
+          <label htmlFor="age">Potential PER win</label>
+          <input type="number" required id="stake" defaultValue={potentialWin}/>
+        </div> */}
+        <div className={classes.control}>
+            <label htmlFor="floatingPassword">Potential PER to win</label>
+            <input
+              type="number"
+              className="form-control"
+              ref={oddsRef}
+              readOnly
+            />
+          </div>
         <div className={classes.actions}>
         <a href="#validation"><button onClick={makeABet}>Make a bet</button></a>
         </div>
