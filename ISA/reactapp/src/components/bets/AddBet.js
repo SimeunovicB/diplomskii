@@ -630,7 +630,7 @@ function AddBet(props) {
           <input type="number" required id="stake" defaultValue={potentialWin}/>
         </div> */}
         <div className={classes.control}>
-            <label htmlFor="floatingPassword">Potential PER to bet</label>
+            <label htmlFor="floatingPassword">Potential PER to win</label>
             <input
               type="number"
               className="form-control"

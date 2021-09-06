@@ -17,47 +17,31 @@ class RegisterView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+
 class LoginView(APIView):
     def post(self, request):
-        print("ide gas")
-        # username = request.data['username']
-        # password = request.data['password']
         username = request.data['enteredUsername']
         password = request.data['enteredPassword']
-        print(username)
-        print(password)
-
         user = User.objects.filter(username=username).first()
-
         if user is None:
             raise AuthenticationFailed('User not found!')
         if not user.check_password(password):
             raise AuthenticationFailed('Incorrect password!')
-
         print("USER")
         print(user)
-
         payload = {
             'id': user.id,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes = 60),
             'iat': datetime.datetime.utcnow()
         }
-
         print("PAYLOAD")
         print(payload)
-
-
         token = jwt.encode(payload, "secret", algorithm="HS256")
         print(token)
-
         response = Response( { 'jwt' : token })
-        print("Ide")
-        # response.set_cookie(key='jwt', value=token, httponly=True, secure=True, samesite=None)
         response.set_cookie(key='jwt', value=token, httponly=True, secure=True, samesite='None')
-        print("Gas")
-
         return response;
-        # return Response({ 'jwt' : token })
+
 
 class UserView(APIView):
     def get(self, request):
@@ -355,8 +339,6 @@ class GetUserAdmin(APIView):
 
 class NumberOfUsers(APIView):
     def get(self, request, format=None, *args, **kwargs):
-        if HasNoPermission.has_permission(self,request) == False:
-            return Response({"detail": "You don't have permission to cancel the reservation."}, status=401)
         print("NumberOfUsers");
         isUserFirst = "no";
         numberOfUsers = len(User.objects.all());

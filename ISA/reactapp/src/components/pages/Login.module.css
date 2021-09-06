@@ -48,9 +48,29 @@
   background-color: rgb(245, 245, 245);
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding-top: 10px;
 }
 
 .header {
   margin-left: -2%;
   padding-top: 1%;
 }
+
+.alert_danger {
+  /* font-size: 20px; */
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+  padding: 15px;
+  margin: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+  /* display: inline-block; */
+  margin: 3% 20% 1% 20%;
+}
+
+p.ex1 {display: none;}
+p.ex2 {display: inline;}
+p.ex3 {display: block;}
+p.ex4 {display: inline-block;}
